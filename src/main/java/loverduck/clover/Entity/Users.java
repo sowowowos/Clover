@@ -1,22 +1,19 @@
 package loverduck.clover.Entity;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Users {
     @Id
-    @SequenceGenerator(name = "USER_SEQ", sequenceName = "USER_SEQ", allocationSize = 1)
-    @GeneratedValue(generator = "USER_SEQ", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -30,12 +27,12 @@ public class Users {
     @Column(unique = true)
     @NotNull
     private String nickname;
-
     private Integer type;
-    @OneToOne(optional = false)
+
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     private UserDetail userDetail;
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Wallet wallet;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Company company;
 }
