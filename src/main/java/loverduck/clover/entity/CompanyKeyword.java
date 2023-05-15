@@ -14,7 +14,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class CompanyKeyword {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "company_keyword_seq", sequenceName = "company_keyword_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "company_keyword_seq")
     private Long id;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

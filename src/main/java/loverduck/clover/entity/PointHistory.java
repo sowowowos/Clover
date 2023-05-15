@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 @Builder
 public class PointHistory {
     @Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
+    @SequenceGenerator(name = "point_history_seq", sequenceName = "point_history_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "point_history_seq")
     private Long id;
     @NotNull
     private Long amount;

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Builder
 public class LikedFunding {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "liked_funding_seq")
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Funding funding;

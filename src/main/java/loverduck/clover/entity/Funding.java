@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
 @Builder
 public class Funding {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "funding_seq", sequenceName = "funding_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "funding_seq")
     private Long id;
     @NotNull
     private String title;

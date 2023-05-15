@@ -3,11 +3,7 @@ package loverduck.clover.entity;
 import com.sun.istack.NotNull;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -17,7 +13,8 @@ import javax.persistence.ManyToOne;
 @Builder
 public class Ordered {
     @Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
+    @SequenceGenerator(name = "ordered_seq", sequenceName = "ordered_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ordered_seq")
     private Long id;
     @NotNull
     private Long amount;

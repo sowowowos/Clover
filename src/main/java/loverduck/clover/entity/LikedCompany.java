@@ -11,7 +11,8 @@ import javax.persistence.*;
 @Builder
 public class LikedCompany {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "liked_company_seq", sequenceName = "liked_company_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "liked_company_seq")
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Company company;

@@ -14,7 +14,8 @@ import javax.persistence.*;
 @Builder
 public class FundingReply {
     @Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
+    @SequenceGenerator(name = "funding_reply_seq", sequenceName = "funding_reply_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "funding_reply_seq")
     private Long id;
 
     @Column(nullable = false)
