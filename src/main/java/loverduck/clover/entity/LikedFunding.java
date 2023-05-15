@@ -1,4 +1,4 @@
-package loverduck.clover.Entity;
+package loverduck.clover.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,10 +12,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Keyword {
+public class LikedFunding {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false)
-    private String keyword;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Funding funding;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Users user;
 }

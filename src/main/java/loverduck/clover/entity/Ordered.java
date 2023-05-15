@@ -1,4 +1,4 @@
-package loverduck.clover.Entity;
+package loverduck.clover.entity;
 
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -15,17 +15,15 @@ import javax.persistence.ManyToOne;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Reply {
+public class Ordered {
     @Id
     @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
     private Long id;
-
     @NotNull
-    private String content;
+    private Long amount;
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    private Board board;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Funding funding;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Users user;
 }

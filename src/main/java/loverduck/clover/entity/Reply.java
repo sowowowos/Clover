@@ -1,11 +1,13 @@
-package loverduck.clover.Entity;
+package loverduck.clover.entity;
 
 import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
@@ -13,10 +15,17 @@ import javax.persistence.Id;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Wallet {
+public class Reply {
     @Id
     @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
     private Long id;
+
     @NotNull
-    private Long amount;
+    private String content;
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    private Board board;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Users user;
 }

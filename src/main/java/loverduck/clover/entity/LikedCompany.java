@@ -1,4 +1,4 @@
-package loverduck.clover.Entity;
+package loverduck.clover.entity;
 
 import lombok.*;
 
