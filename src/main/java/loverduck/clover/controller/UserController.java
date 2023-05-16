@@ -173,7 +173,18 @@ public class UserController {
 	}
 	
 	/**
+	 * 마이페이지 - 기업 펀드 신청 (등록하기)
+	 * insert 펀드를 등록시킨다. ->등록되면 내역으로 보내기
+	 */
+	@RequestMapping("/fundSubmit")
+	public String fundSubmit() {
+		
+		return "mypage/historyCorp";
+	}
+	
+	/**
 	 * 마이페이지 - 기업 (펀딩 신청) - 펀딩 신청 내역
+	 * 펀드 신청 조회
 	 */
 	@RequestMapping("/historyCorp")
 	public String historyCorp() {
