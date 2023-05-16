@@ -1,13 +1,18 @@
 package loverduck.clover.entity;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import loverduck.clover.repository.UserDetailRepository;
 import loverduck.clover.repository.UsersRepository;
 import loverduck.clover.repository.WalletRepository;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.annotation.Rollback;
+
+import javax.persistence.EntityManager;
 
 @Slf4j
 @DataJpaTest
@@ -20,29 +25,68 @@ class UsersTest {
     @Autowired
     private UserDetailRepository userDetailRepository;
 
+    @Autowired
+    TestEntityManager testEntityManager;
+    JPAQueryFactory qFactory;
+
+
+    @BeforeEach
+    void beforeEach(TestInfo testInfo) {
+        EntityManager em = testEntityManager.getEntityManager();
+        qFactory = new JPAQueryFactory(em);
+        // here initialize setup for each test
+        System.out.println("Before Strat test >>>> " + testInfo.getTestMethod().get().getName());
+    }
+
+    @AfterEach
+    void afterEach(TestInfo testInfo) {
+        // here initialize setup for each test
+        System.out.println("Afetr End test >>>> " + testInfo.getTestMethod().get().getName());
+    }
+
     @Test
+//    @Rollback(false)
+    @DisplayName("test 사용자 추가")
     void insertDatabaseUsers() {
-//        for (int i = 0; i < 100; i++) {
-        Wallet w = Wallet.builder().amount(0L).build();
-        walletRepository.save(w);
-        UserDetail ud = UserDetail.builder().build();
-        userDetailRepository.save(ud);
         Users user = Users.builder()
-                .userid("test${i}")
-                .password("test${i}")
-                .email("test${i}@test.com")
+                .userid("test")
+                .email("example@example.com")
+                .password("1234")
                 .nickname("test")
                 .type(0)
-                .wallet(w)
-                .company(null)
                 .build();
-        Users u = usersRepository.save(user);
-//        }
+        usersRepository.save(user);
+    }
 
+    @Test
+//    @Rollback(value = false)
+    @DisplayName("test 이름을 가진 사용자에게 지갑 추가")
+    void insertDatabaseWallet() {
+        Users u = qFactory.selectFrom(QUsers.users)
+                .where(QUsers.users.userid.eq("test"))
+                .fetchOne();
+        Wallet wallet = Wallet.builder()
+                .user(u)
+                .amount(1000000L)
+                .build();
+        walletRepository.save(wallet);
+    }
 
-        Users findUser = usersRepository.findById(u.getId()).orElse(null);
-
-        if (findUser != null) log.info(findUser.getEmail());
-        else log.info("NULL!!!!");
+    @Test
+//    @Rollback(value = false)
+    @DisplayName("test 사용자의 세부정보 설정")
+    void insertDatabaseUserDetail() {
+        Users u = qFactory.selectFrom(QUsers.users)
+                .where(QUsers.users.userid.eq("test"))
+                .fetchOne();
+        UserDetail ud = UserDetail.builder()
+                .user(u)
+                .address("Seoul, Korea")
+                .detailAddress("testLocation")
+                .name("Testuser Kim")
+                .phone("010-0000-0000")
+                .postalCode("00000")
+                .build();
+        userDetailRepository.save(ud);
     }
 }
