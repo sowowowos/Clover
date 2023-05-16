@@ -18,4 +18,6 @@ public class Wallet {
     private Long id;
     @NotNull
     private Long amount;
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    private Users user;
 }

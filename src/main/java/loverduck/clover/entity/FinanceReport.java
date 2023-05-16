@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -56,5 +53,7 @@ public class FinanceReport {
      * 사원수
      */
     private String employees;
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    private Company company;
 }
 
