@@ -30,9 +30,9 @@ public class Users {
     private String nickname;
     private Integer type;
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserDetail userDetail;
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Wallet wallet;
     @OneToOne(fetch = FetchType.LAZY)
     private Company company;

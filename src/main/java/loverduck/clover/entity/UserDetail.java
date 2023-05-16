@@ -22,4 +22,6 @@ public class UserDetail {
     private String postalCode;
     private String address;
     private String detailAddress;
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    private Users user;
 }
