@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.crop-info {
+	border: 1px solid #DEDEDE;	
+	border-radius: 1.5rem;
+	padding: 5rem;
+}
+
+.keyword {
+	background-color: #ebeded;
+	color: #0042A0;
+	padding: 0.3rem 0.8rem;
+	border-radius: 1rem;
+	margin: 0 0 0 0.5rem;
+}
+
+.menu{
+	border: 1px solid #DEDEDE;	
+	border-radius: 1rem;
+	padding: 3rem;
+	text-align: center;
+}
+
+.menu li {
+	margin: 1rem 0;
+	list-style:none;
+	font-size: 1rem;
+}
