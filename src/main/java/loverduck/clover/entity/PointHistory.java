@@ -1,11 +1,25 @@
 package loverduck.clover.entity;
 
-import com.sun.istack.NotNull;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-
-import javax.persistence.*;
 import java.time.LocalDateTime;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+
+import com.sun.istack.NotNull;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Getter
@@ -21,7 +35,11 @@ public class PointHistory {
     @NotNull
     private Long amount;
     @NotNull
-    private Integer Type;
+    private Integer type;
+//    @NotNull
+//    @CreatedDate
+//    private LocalDateTime createdDate; //추가
+    @NotNull
     @CreationTimestamp
     private LocalDateTime createdAt;
 
