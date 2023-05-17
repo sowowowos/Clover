@@ -1,14 +1,155 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Title</title>
-<!-- 	개인정보 수정폼 - 기업 -->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+    <title>Title</title>
+    <!-- 	개인정보 수정폼 - 기업 -->
 </head>
 <body>
-개인정보 수정폼 - 기업
+<div>
+    <div class="nav"></div>
+    <div class="banner"></div>
+    <div class="container">
+        <div class="section row">
+            <div class="col-3 p-3" style="background-color: #f1f1f1;">
+                this is sidebar
+            </div>
+            <div class="article col-9 p-3">
+                <h3 class="m-2" style="color: #0042A0"><b>개인정보 수정</b></h3>
+                <hr>
+                <form class="p-5 m-auto align-items-start mb-5"
+                      style="border-color: #0042A0 !important;">
+                    <div class="mb-4">
+                        <label for="name">
+                            기업명
+                            <ruby>*</ruby>
+                        </label><input type="text" class="form-control" id="name" placeholder="" disabled>
+                    </div>
+                    <div class="mb-4">
+                        <label for="name">
+                            사업자등록번호
+                            <ruby>*</ruby>
+                        </label><input type="text" class="form-control" id="name" placeholder="" disabled>
+                    </div>
+                    <div class="mb-4 row">
+                        <label for="sector" class="col-6">
+                            산업 선택
+                            <ruby>*</ruby>
+                        </label>
+                        <label for="logo" class="col-6">
+                            회사 대표 로고 이미지
+                            <ruby>*</ruby>
+                        </label>
+                        <!-- Example single danger button -->
+                        <div class="dropdown col-6">
+                            <input type="text" class="form-control mb-2" id="sector"
+                                   placeholder="" disabled>
+                        </div>
+                        <div class="col-6">
+                            <input type="file" class="form-control mb-2" id="logo"
+                                   placeholder="">
+                        </div>
+                    </div>
+                    <div class="mb-4 row">
+                        <div class="row col-12">
+                            <label for="exampleInputPostalcode">주소
+                                <ruby>*</ruby>
+                            </label>
+                            <div class="col-4">
+                                <input type="email" class="form-control mb-2" id="exampleInputPostalcode"
+                                       placeholder="" disabled>
+                            </div>
+                            <button type="submit" class="btn col-3 btn-secondary mb-2">우편번호</button>
+                        </div>
+                        <label for="exampleInputAddress"></label>
+                        <div class="col-12">
+                            <input type="email" class="form-control mb-2" id="exampleInputAddress" placeholder=""
+                                   disabled>
+                        </div>
+                        <label for="exampleInputDeailAdress"></label>
+                        <div class="col-12">
+                            <input type="email" class="form-control mb-2" id="exampleInputDeailAdress" placeholder="">
+                        </div>
+                        <div class="mb-4">
+                            <label for="exampleInputPhone" class="form-label">기업 전화번호
+                                <ruby>*</ruby>
+                            </label>
+                            <input type="tel" class="form-control" id="exampleInputPhone" aria-describedby="emailHelp"
+                                   placeholder="">
+                            <div id="phoneHelp" class="form-text"></div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="exampleInputEmail1" class="form-label">기업 이메일
+                                <ruby>*</ruby>
+                            </label>
+                            <div class="row justify-content-start">
+                                <div class="col-9">
+                                    <input type="email" class="form-control" id="exampleInputEmail1"
+                                           aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <button type="submit" class="btn btn-primary col-3" style="background: #0042A0">인증 하기
+                                </button>
+                            </div>
+                            <div id="emailHelp" class="form-text">이미 존재하는 이메일입니다.</div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="url">
+                                기업 공식 URL
+                                <ruby>*</ruby>
+                            </label>
+                            <input type="text" class="form-control" id="url" aria-describedby="emailHelp"
+                                   placeholder="">
+                        </div>
+                        <div class="mb-4">
+                            <hr>
+                        </div>
+                        <div class="mb-4">
+                            <label for="exampleInputName" class="form-label">담당자 이름
+                                <ruby>*</ruby>
+                            </label>
+                            <input type="email" class="form-control" id="exampleInputName" aria-describedby="emailHelp"
+                                   placeholder="" disabled>
+                        </div>
+                        <div class="mb-4">
+                            <label for="exampleInputNickname" class="form-label">아이디
+                                <ruby>*</ruby>
+                            </label>
+                            <input type="email" class="form-control" id="exampleInputNickname"
+                                   placeholder="" disabled>
+                        </div>
+                        <div class="mb-4">
+                            <label for="exampleInputPassword1" class="form-label">비밀번호
+                                <ruby>*</ruby>
+                            </label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="">
+                            <div id="passwordHelp" class="form-text">8~16 영문 대,소문자, 숫자, 특수문자를 포함해주세요.</div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="exampleInputPassword2" class="form-label">비밀번호 확인
+                                <ruby>*</ruby>
+                            </label>
+                            <input type="password" class="form-control" id="exampleInputPassword2" placeholder="">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary my-3 w-100" style="background: #0042A0">회원가입</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer"></div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+
 </body>
 </html>
