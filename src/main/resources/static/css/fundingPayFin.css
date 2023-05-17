@@ -1,0 +1,99 @@
+@charset "EUC-KR";
+
+.section {
+	box-sizing: content-box !important;
+}
+
+.info-detail-container {
+	width: 55%;
+	height: 80%;
+	/*background-color: gray;*/
+	margin: auto;
+	/*border: 1px solid blue;*/
+	/* justify-content: center;
+	align-items: center; */
+}
+
+.sequence-img-container {
+	width: 100%;
+	padding: 2rem 0;
+}
+
+.sequence-img {
+	width: 60%;
+	margin: auto;
+	display: block;
+}
+
+.funding-info-img {
+	border-radius: 5px;
+	width: 270px;
+}
+
+.funding-info-name {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.funding-logo {
+	width: 4rem;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.info-input-container {
+	height: 100%;
+	/*background-color: gray;*/
+	border-top: 2px solid #0042A0;
+}
+
+/*펀딩 완료 정보*/
+.funding-info1 {
+	
+}
+
+.funding-info-title {
+	margin-top: 1.5rem;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.funding-info-container1 {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	padding: 1rem;
+	border: 1px solid gray;
+	border-radius: 5px;
+	height: 10rem;
+}
+
+.funding-fin {
+	margin: 2rem 0;
+	justify-content: center;
+	align-content: center;
+	justify-content: center;
+}
+
+.funding-fin-title {
+	text-align: center;
+	font-size: 1.5rem;
+	color: #0042A0;
+	font-weight: 600;
+}
+
+.funding-fin-detail {
+    text-align: center;
+    font-size: 0.8rem;
+    text-decoration: underline;
+    margin: 0.4rem;
+    color: gray;
+}
+.card-title-keyword {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	margin-right: 0.5rem;
+}
+.
