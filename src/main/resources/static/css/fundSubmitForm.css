@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+.container {
+	display: flex;
+}
+
+/* 사이드바 */
+.menu {
+	border: 1px solid #DEDEDE;
+	border-radius: 1rem;
+	padding: 3rem;
+	text-align: center;
+}
+
+.menu li {
+	margin: 1rem 0;
+	list-style: none;
+	font-size: 1rem;
+}
+/* 펀딩 절차 설명 */
+.submit-seq-container {
+	margin: 1rem 0;
+	border: 1px solid gray;
+}
+
+/* 펀딩 제목 및 소개 입력폼 */
+.submit-container {
+	width: 100%;
+	margin: 1rem 1.5rem;
+}
+
+.submit-container-title {
+	display: flex;
+}
+
+.submit-container-exp {
+	display: flex;
+}
+
+.submit-detail-container {
+	width: 100%;
+	display: flex;
+}
+
+.submit-detail-input {
+	border-right:1px solid gray;
+	/* background-color: red; */
+	width: 100%;
+}
+
+.input-title{
+	font-weight: 700;
+}
+
+.submit-detail-check {
+	background-color: #E5ECF5;
+	width: 100%;
+	padding-left: 2rem;
+}
+.submit-button{
+	text-align: center;
+	margin:2rem 0;
+}
