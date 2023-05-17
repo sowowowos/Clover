@@ -1,14 +1,153 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Title</title>
-<!-- 	기업 펀드 신청 폼 -->
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- 서버 돌릴 시 '../static/ 빼기! -->
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/reset.css">
+<link rel="stylesheet" href="/css/fundSubmitForm.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+	crossorigin="anonymous">
+<title>CLOVER | 펀딩 신청</title>
 </head>
+
+<!-- 펀딩신청 페이지 -->
 <body>
-<h2>기업 펀드 신청 폼</h2>
+	<div>
+		<!-- Navbar -->
+		<div class="nav"></div>
+
+		<div class="container">
+			<!-- 메뉴 -->
+			<div class="col-2">
+				<div class="menu mt-4">
+					<li>펀딩 현황</li>
+					<li>투자자 문의내역</li>
+					<li>펀딩 신청</li>
+					<li>정산</li>
+					<li>포인트</li>
+				</div>
+			</div>
+
+			<!-- 펀딩신청폼 컨테이너-->
+			<div class="submit-container">
+				<div>펀딩신청</div>
+
+				<!-- 펀딩절차설명  -->
+				<div class="submit-seq-container">
+					<div>펀딩절차</div>
+					<div>
+						<div>1.펀딩신청</div>
+						<div>기업은 펀딩을 받기 위해 펀딩에 대한 상세정보를 기입해 신청하세요.</div>
+					</div>
+					<div>
+						<div>2. 펀딩심사 및 관리자 승인</div>
+						<div>기업은 펀딩을 받기 위해 펀딩에 대한 상세정보를 기입해 신청하세요.</div>
+					</div>
+					<div>
+						<div>3. 펀딩 오픈</div>
+						<div>기업은 펀딩을 받기 위해 펀딩에 대한 상세정보를 기입해 신청하세요.</div>
+					</div>
+					<div>
+						<div>4. 펀딩 완료</div>
+						<div>기업은 펀딩을 받기 위해 펀딩에 대한 상세정보를 기입해 신청하세요.</div>
+					</div>
+				</div>
+
+				<!-- 펀딩 제목 및 소개 입력폼  -->
+				<div class="">
+					<div class="submit-container-title">
+						<div>펀딩 제목 *</div>
+						<div class="input-group mb-2">
+							<input type="text" class="form-control">
+						</div>
+
+					</div>
+					<div class="submit-container-exp">
+						<div>펀딩 소개 *</div>
+						<div class="input-group mb-2">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+
+				<!-- 펀딩투자금액 입력 및 주의사항 -->
+				<div class="submit-detail-container">
+					<div class="submit-detail-input">
+						<div class="input-title">펀딩투자금액</div>
+						<div>최저 달성 금액*</div>
+						<div>
+							<input type="number" placeholder="50만원 이상의 금액을 작성해주세요">원
+						</div>
+						<div>최고 달성 금액*</div>
+						<div>
+							<input type="number" placeholder="50만원 이상의 금액을 작성해주세요">원
+						</div>
+					</div>
+					<div></div>
+					<div class="submit-detail-check">
+						<div>주의사항</div>
+					</div>
+				</div>
+
+				<!-- 펀딩 일정 입력 및 주의사항 -->
+				<div class="submit-detail-container">
+					<div class="submit-detail-input">
+						<div class="input-title">펀딩 일정</div>
+						<div>시작일*</div>
+						<div>
+							<input type="date">
+						</div>
+						<div>종료일*</div>
+						<div>
+							<input type="date">
+						</div>
+						<div>투자금 정산</div>
+						<div>종료일 다음 날부터 3일 이내로 WALLET에 지급</div>
+					</div>
+					<div></div>
+					<div class="submit-detail-check">
+						<div>주의사항</div>
+					</div>
+				</div>
+
+				<!-- 배당금 입력 및 주의사항 -->
+				<div class="submit-detail-container">
+					<div class="submit-detail-input">
+						<div class="input-title">배당</div>
+						<div>투자자에게 3개월 후 배당금 지급</div>
+
+						<div>배당금*</div>
+						<div>
+							<input type="number" >원
+						</div>
+					</div>
+					<div></div>
+					<div class="submit-detail-check">
+						<div>주의사항</div>
+					</div>
+				</div>
+				<div class="submit-button">
+					<button type="button" class="btn btn-primary btn-lg">신청 하기</button>
+					<button type="button" class="btn btn-secondary btn-lg">취소</button>
+				</div>
+
+
+
+			</div>
+		</div>
+	</div>
+
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+		crossorigin="anonymous"></script>
 </body>
 </html>
