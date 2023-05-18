@@ -34,4 +34,7 @@ public class Company {
     private List<CompanyKeyword> companyKeywords;
     @ManyToOne(fetch = FetchType.LAZY)
     private FinanceReport financeReport;
+    
+    @OneToMany(mappedBy = "company")
+    private List<Funding> funds;
 }
