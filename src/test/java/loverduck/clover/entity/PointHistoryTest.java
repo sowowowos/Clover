@@ -54,30 +54,29 @@ class PointHistoryTest {
 	}
 	
 	@Test
-	// @Rollback(value = false)
-	@DisplayName("id가 1인 지갑에 테스트 포인트 추가")
+	@Rollback(value = false)
+	@DisplayName("id가 1인 지갑에 테스트 포인트 출금 히스토리 저장 ")
 	void insertChargePoint() {
+		
+		Long amount = 5000L;
 		LocalDateTime dateTime = LocalDateTime.now();
 
 		// Given
 		Wallet wid = walletRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("Wallet not found"));
 
-		// Funding f = fundingRepository.findById(1L)
-		// .orElseThrow(() -> new IllegalArgumentException("Funding not found"));
-
 		PointHistory ph = PointHistory.builder()
-						.amount(100000L)
+						.amount(amount)
 						.type(0)
 						.createdAt(dateTime)
 						.wallet(wid)
 						.build();
 
 		// When
-		// 테스트할 동작 수행 (생략)
+		// 테스트할 동작 수행
 		pointHistoryRepository.save(ph);
 
 		// Then
-		// 검증 로직 작성 (생략)
+		// 검증 로직 작성
 	}
 
 	// 포인트 충전시 wallet 잔액 변경 - updateAmount
@@ -85,16 +84,13 @@ class PointHistoryTest {
 	// 포인트 충전(+)
 	@Test
 	@Rollback(value = false)
-	@DisplayName("id가 1인 지갑에 테스트 포인트 사용")
+	@DisplayName("id가 1인 지갑 테스트 포인트 추가")
 	void updateChargePoint() {
-		Long amount = 10000L;
+		Long amount = 5000L;
 
 		// Given
 		Wallet wid = walletRepository.findById(1L)
 				.orElseThrow(() -> new IllegalArgumentException("Wallet not found"));
-
-		EntityManager entityManager = testEntityManager.getEntityManager();
-		qFactory = new JPAQueryFactory(entityManager);
 		
 		QPointHistory qPointHistory = QPointHistory.pointHistory;
 
@@ -112,12 +108,6 @@ class PointHistoryTest {
 				.where(qPointHistory.id.eq(lastPointHistory.getId()))
 				.execute();
 
-		// When
-		// 테스트할 동작 수행 (생략)
-		// Then
-		// 검증 로직 작성 (생략)
-	}
-
-	
+	}	
 
 }
