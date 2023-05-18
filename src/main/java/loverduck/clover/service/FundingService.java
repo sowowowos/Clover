@@ -16,6 +16,9 @@ public interface FundingService {
 	 */
 	void fundSubmit(Funding funding);
 	
-
+	/**
+	 * 펀딩 전체 목록 조회 
+	 */
+	List<Funding> fundingList();
 
 }

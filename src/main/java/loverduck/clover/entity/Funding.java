@@ -16,8 +16,9 @@ import java.time.LocalDateTime;
 @Builder
 public class Funding {
     @Id
-    @SequenceGenerator(name = "funding_seq", sequenceName = "funding_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "funding_seq")
+//    @SequenceGenerator(name = "funding_seq", sequenceName = "funding_seq", allocationSize = 1)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "funding_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
     private String title;
@@ -37,7 +38,7 @@ public class Funding {
     private Double dividend;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Company company;
 
 }

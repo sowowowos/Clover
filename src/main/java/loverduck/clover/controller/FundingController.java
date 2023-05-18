@@ -1,22 +1,34 @@
 package loverduck.clover.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.RequiredArgsConstructor;
+import loverduck.clover.entity.Funding;
+import loverduck.clover.service.FundingService;
 
 /**
  *  펀딩 전체 목록 페이지, 펀딩 상세 페이지, 펀딩 투자하기 
  */
 @Controller
+@RequiredArgsConstructor
 public class FundingController {
 
-	
+	@Autowired
+	private final FundingService fundingService;
 	
 	/**
 	 * 펀딩 전체 목록 페이지
 	 */
 	@RequestMapping("/fundingList")
-	public String fundingList() {
-		
+	public String fundingList(Model model) {
+		List<Funding> fundingList = fundingService.fundingList();
+		System.out.println("gogogo " + fundingList.size());
+        model.addAttribute("fundingList", fundingList);
 		return "/fundingList";
 	}
 	
