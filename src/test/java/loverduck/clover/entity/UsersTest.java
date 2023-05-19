@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import loverduck.clover.repository.UserDetailRepository;
 import loverduck.clover.repository.UsersRepository;
 import loverduck.clover.repository.WalletRepository;
+import loverduck.clover.service.UsersService;
+
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -30,6 +32,7 @@ class UsersTest {
     JPAQueryFactory qFactory;
 
 
+    
     @BeforeEach
     void beforeEach(TestInfo testInfo) {
         EntityManager em = testEntityManager.getEntityManager();
@@ -45,7 +48,7 @@ class UsersTest {
     }
 
     @Test
-//    @Rollback(false)
+    @Rollback(false)
     @DisplayName("test 사용자 추가")
     void insertDatabaseUsers() {
         Users user = Users.builder()
@@ -59,7 +62,7 @@ class UsersTest {
     }
 
     @Test
-//    @Rollback(value = false)
+    @Rollback(value = false)
     @DisplayName("test 이름을 가진 사용자에게 지갑 추가")
     void insertDatabaseWallet() {
         Users u = qFactory.selectFrom(QUsers.users)
@@ -73,7 +76,7 @@ class UsersTest {
     }
 
     @Test
-//    @Rollback(value = false)
+    @Rollback(value = false)
     @DisplayName("test 사용자의 세부정보 설정")
     void insertDatabaseUserDetail() {
         Users u = qFactory.selectFrom(QUsers.users)
@@ -88,5 +91,38 @@ class UsersTest {
                 .postalCode("00000")
                 .build();
         userDetailRepository.save(ud);
+    }
+    
+    @Test
+    @Rollback(false)
+    @DisplayName("User_Userdetail 사용자 추가")
+    void insertUsers() {
+        Users users = Users.builder()
+        		.userid("jang")
+                .email("jang@example.com")
+                .password("1234")
+                .nickname("jang")
+                .type(0)
+                .build();
+        
+        
+        
+        UserDetail ud = UserDetail.builder()
+        		.phone("1111")
+        		.address("선릉")
+        		.detailAddress("123")
+        		.build();
+        
+        Users dbUser = usersRepository.save(users);
+		
+     ud.setUser(dbUser); //부모의 key(id)참조 
+     userDetailRepository.save(ud);	
+		
+		
+		//System.out.println(dbUser.getEmail()+" 패스워드 "+dbUser.getPassword()+" 유저아이디 "+dbUser.getUserid());
+		
+		
+        
+       // userService.register(user, ud);
     }
 }
