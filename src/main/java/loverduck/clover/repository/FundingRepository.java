@@ -17,5 +17,6 @@ public interface FundingRepository extends JpaRepository<Funding, Long>, Queryds
 //	void fundingList();
 	
 	List<Funding> findByCompanyName(String name);
-
+	
+	List<Funding> findByTitleContaining(String keyword);
 }

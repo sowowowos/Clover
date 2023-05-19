@@ -42,5 +42,8 @@ public interface FundingService {
 	 */
 	List<FundingReply> commentList(Long id);
 
-	
+	/**
+	 * 펀딩 제목 기준 검색 
+	 */
+	List<Funding> searchFundingByTitle(String keyword);
 }
