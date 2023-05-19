@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Funding;
@@ -45,13 +46,16 @@ public class FundingController {
 	 */
 	@RequestMapping("/fundingDetail/{id}")
 	public String fundingDetail(@PathVariable Long id, Model model) {
+		// 펀딩 정보 출력 
 		Funding fund = fundingService.fundingDetail(id);
 		model.addAttribute("fund", fund);
 		
+		// 해당 펀딩의 기업의 진행 중인 펀딩들 출력 
 //		List<Funding> nowFunds = fundingService.findByCompanyName(fund.getCompany());
 		System.out.println(fund.getCompany().getFunds());
 		model.addAttribute("nowFunds", fund.getCompany().getFunds());
 		
+		// 해당 펀딩의 댓글 출력 
 		List<FundingReply> commentList = fundingService.commentList(id);
         System.out.println("commentList ->" + commentList);
         if (commentList != null && !commentList.isEmpty()) {
@@ -102,6 +106,17 @@ public class FundingController {
 		fundingService.fundingComment(fundingReply);
 		
 		return "redirect:/fundingDetail/{id}";
+	}
+	
+	/**
+	 * 펀딩 제목 기준 검색 
+	 */
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String searchFunding(@RequestParam("keyword") String keyword, Model model) {
+	    List<Funding> searchResults = fundingService.searchFundingByTitle(keyword);
+	    model.addAttribute("searchResults", searchResults);
+	    model.addAttribute("keyword", keyword);
+	    return "/searchResults"; 
 	}
 	
 	
