@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -22,6 +23,8 @@ public class UserDetail {
     private String postalCode;
     private String address;
     private String detailAddress;
+    
+    @Setter
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Users user;
 }
