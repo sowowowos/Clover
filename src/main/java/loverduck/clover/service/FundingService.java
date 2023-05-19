@@ -3,6 +3,7 @@ package loverduck.clover.service;
 import java.util.List;
 
 import loverduck.clover.entity.Funding;
+import loverduck.clover.entity.FundingReply;
 
 public interface FundingService {
 	
@@ -30,4 +31,16 @@ public interface FundingService {
 	 * 기업 이름 기준 진행 중인 펀드 목록 조회 
 	 */
 	List<Funding> findByCompanyName(String name);
+	
+	/**
+	 * 펀딩 상세 페이지 댓글 작성 
+	 */
+	void fundingComment(FundingReply fundingReply);
+	
+	/**
+	 * 펀딩 상세 페이지 댓글 목록 출력 
+	 */
+	List<FundingReply> commentList(Long id);
+
+	
 }

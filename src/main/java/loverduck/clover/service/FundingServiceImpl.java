@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Funding;
+import loverduck.clover.entity.FundingReply;
+import loverduck.clover.repository.FundingReplyRepository;
 import loverduck.clover.repository.FundingRepository;
 
 @Service
@@ -17,7 +19,7 @@ import loverduck.clover.repository.FundingRepository;
 public class FundingServiceImpl implements FundingService{
 
 	private final FundingRepository fundingRepository;
-	
+	private final FundingReplyRepository fundingReplyRepository;
 
 	@Override
 	public List<Funding> historyCorp() {
@@ -48,6 +50,18 @@ public class FundingServiceImpl implements FundingService{
 	public List<Funding> findByCompanyName(String name) {
 		List<Funding> funds = fundingRepository.findByCompanyName(name);
 		return funds;
+	}
+
+	@Override
+	public void fundingComment(FundingReply fundingReply) {
+		 fundingReplyRepository.save(fundingReply);
+
+	}
+	
+	@Override
+	public List<FundingReply> commentList(Long id) {
+	    List<FundingReply> commentList = fundingReplyRepository.findByFundingId(id);
+	    return commentList;
 	}
 
 }
