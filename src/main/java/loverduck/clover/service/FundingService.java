@@ -20,5 +20,14 @@ public interface FundingService {
 	 * 펀딩 전체 목록 조회 
 	 */
 	List<Funding> fundingList();
-
+	
+	/**
+	 * 펀딩 상세 조회 
+	 */
+	Funding fundingDetail(Long id);
+	
+	/**
+	 * 기업 이름 기준 진행 중인 펀드 목록 조회 
+	 */
+	List<Funding> findByCompanyName(String name);
 }

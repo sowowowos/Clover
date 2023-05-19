@@ -48,9 +48,7 @@
 				
 				<div class="division-line"></div>
 				<div class="card-deck card-container">
-				<!-- <div th:text="funding List = > ${fundingList.toString()}"/> -->
 				    <div th:each="funding : ${fundingList}" class="card card-box">
-				    	<div th:text="${funding}"></div>
 				        <img class="card-img-top" src="/img/granhand_sample_01.png" alt="Card image cap">
 				        <div class="card-body card-body-gap">
 				            <div class="card-title-container">

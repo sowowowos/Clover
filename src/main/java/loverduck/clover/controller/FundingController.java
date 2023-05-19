@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,6 @@ public class FundingController {
 	@RequestMapping("/fundingList")
 	public String fundingList(Model model) {
 		List<Funding> fundingList = fundingService.fundingList();
-		System.out.println("gogogo " + fundingList.size());
         model.addAttribute("fundingList", fundingList);
 		return "/fundingList";
 	}
@@ -35,11 +35,18 @@ public class FundingController {
 	/**
 	 * 펀딩 상세 페이지
 	 */
-	@RequestMapping("/fundingDetail")
-	public String fundingDetail() {
+	@RequestMapping("/fundingDetail/{id}")
+	public String fundingDetail(@PathVariable Long id, Model model) {
+		Funding fund = fundingService.fundingDetail(id);
+		model.addAttribute("fund", fund);
+		
+//		List<Funding> nowFunds = fundingService.findByCompanyName(fund.getCompany());
+		System.out.println(fund.getCompany().getFunds());
+		model.addAttribute("nowFunds", fund.getCompany().getFunds());
 		
 		return "/fundingDetail";
 	}
+
 	
 	/**
 	 * 펀딩 투자하기 - 약관동의
