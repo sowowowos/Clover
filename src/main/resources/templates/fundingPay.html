@@ -13,9 +13,170 @@
 	rel="stylesheet"
 	integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
 	crossorigin="anonymous">
+<!-- 아임포트 라이브러리 -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<!-- iamport.payment.js -->
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script type="text/javascript">
+	/* 추후 로그인된 유저 세션 정보 가져오기 */
+
+	/* function getUserDetails() {
+	 $.ajax({
+	 url: '/api/getUserDetails',  // 현재 로그인된 아이디와 회원 상세 정보를 가져오는 API 엔드포인트 URL
+	 method: 'GET',
+	 success: function(response) {
+	 // 성공적으로 데이터를 가져왔을 때의 처리
+	 // 가져온 데이터를 활용하여 결제 API 호출을 처리합니다
+	 console.log(response);
+	 // ... 결제 API를 호출하는 함수를 호출하고, 데이터를 전달합니다 ...
+	 makePayment(response);
+	 },
+	 error: function(xhr, status, error) {
+	 // AJAX 요청이 실패했을 때의 처리
+	 console.error(error);
+	 // ... 에러 처리 로직을 구현하세요 ...
+	 }
+	 });
+	 }
+	 */
+</script>
+<!-- 구매 희망주 입력 시 총 펀딩 금액 값 변경 - 1주당금액*희망주 / 해당값 -->
+<script type="text/javascript">
+	$(document).ready(function() {
+	$('#fundHope').on('input',function() {
+		var fundHope = parseFloat($(
+				'#fundHope').val().replace(
+				/,/g, ''));
+		var fundTotal = 10000 * fundHope; //펀딩 구매 희망주
+		var alloTotal = 2 * fundHope; //배당금 예상 금액
+		var finalTotal = fundTotal + alloTotal; // 최종 예상 금액
+
+		if (isNaN(fundTotal)) {
+			$('#fundTotal').text('0');
+			$('#alloTotal').text('0');
+			$('#finalTotal').text('0');
+		} else {
+			$('#fundTotal').text(fundTotal.toLocaleString());
+			$('#alloTotal').text(alloTotal.toLocaleString());
+			$('#finalTotal').text(finalTotal.toLocaleString());
+		}
+
+		var fT = fundTotal.toLocaleString();
+		var currentPoint = parseFloat($(
+				'#currentPoint').text()
+				.replace(/,/g, '')); // 현재 포인트 잔액
+
+		//총펀딩금액 > 현재 잔여포인트 - 잔액부족 msg 출력
+		if (fundTotal.toLocaleString() > currentPoint) {
+			$('#lackNowPoint').html('! 포인트잔액이 부족합니다. WALLET을 충전해주세요');
+		}
+
+	});
+
+	/* 수익금 지급 예상일 - 오늘 날짜 기준 3개월 후  */
+	/* --> 추후 펀딩 종료 기간 설정시 해당 종료일 기준 3개월 후로 코드 변경 */
+	function getCurrentDate() {
+		var today = new Date();
+		return today.getFullYear() + '년 '
+				+ (today.getMonth() + 1) + '월 '
+				+ today.getDate() + '일';
+	}
+
+	// 3개월 후의 날짜 계산
+	function getFutureDate() {
+		var futureDate = new Date();
+		futureDate.setMonth(futureDate.getMonth() + 3);
+		return futureDate.getFullYear() + '년 '
+				+ (futureDate.getMonth() + 1) + '월 '
+				+ futureDate.getDate() + '일';
+	}
+
+	// exchangeDate 요소에 표시
+	document.getElementById('exchangeDate').textContent = getFutureDate();
+
+});//ready End
+</script>
+<script>
+	var IMP = window.IMP;
+	var code = "imp78536886"; //가맹점 식별코드
+	IMP.init(code);
+
+	function requestPay() {
+		var money = document.getElementById('charge_money').value;
+		if (money == null) {
+			alert("충전할 금액을 입력해주세요.");
+		}
+		var name = name;
+
+		IMP.request_pay({
+			pg : "html5_inicis", //pg사 구분코드 - 이니시스 웹표준
+			pay_method : 'card', //결제수단 구분코드 - 신용카드
+			merchant_uid : 'point_' + new Date().getTime(), //주문번호
+			name : '테스트상품', //결제대상 16byte이내
+			amount : money, //결제금액
+			buyer_name : '조아영', //주문자명
+			buyer_tel : '010-1234-5678', //주문자연락처
+			buyer_email : 'whdkdud3710@naver.com', //주문자 이메일
+			buyer_addr : '서울특별시 강남구', //주문자주소
+			buyer_postcode : '10293', //주문자 우편번호
+			pc_redirect_url : 'src/templates/mypage/pointChargeFin' //결제완료 후 이동 URL
+		}, function(rsp) {
+			//callback
+			if (rsp.success) {
+				$.ajax({
+					url : "/mypage/pointCharge",
+					type : "GET",
+					data : {
+						amount : rsp.amount
+					}
+				}).done(function(data) {
+					if (result) {
+						var msg = "[결제 완료]";
+						msg += " 결제 방법 = " + rsp.pay_method;
+						msg += " 결제 금액 = " + rsp.paid_amount;
+						console.log(msg);
+
+						alert("결제가 완료되었습니다.");
+						window.location.href = rsp.next_redirect_pc_url; // 웹 페이지 이동
+					} else {
+						//결제실패
+					}
+				});
+			} else {
+				var msg = "[결제 실패 : " + rsp.error_code + "]";
+				msg += " 에러 내용 : " + rsp.error_msg;
+				console.log(msg);
+
+				//충전 금액 입력 null 일 경우 발생 에러 메세지
+				//[결제 실패 : F1001] 에러 내용 : 결제요청금액이 0원입니다. 빌링키발급을 위해 customer_uid가 지정될 때에만 0원이 허용됩니다. 요청 amount :
+
+				alert("결제를 실패하였습니다.");
+			}
+		});
+	}
+</script>
+
 
 <title>CLOVER | 펀딩</title>
 <!--  펀딩 투자하기 - 펀딩하기 -->
+<style>
+#my_modal {
+	display: none;
+	width: 300px;
+	padding: 20px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
+
+#my_modal .modal_close_btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+</style>
 </head>
 <body>
 	<div>
@@ -55,64 +216,97 @@
 							<div class="funding-info-container2">
 								<div>펀딩 최대금액 제한(해당 펀딩 최대금액의 25%)</div>
 								<div>
-									<input>주
+									<input type="text" id="fundHope" class="">주
 								</div>
 							</div>
-							<div style="text-align:right;">펀딩 구매 희망주 변경은 5/31까지 가능합니다.</div>
+							<div style="text-align: right;">펀딩 구매 희망주 변경은 5/31까지 가능합니다.</div>
 						</div>
 						<div class="funding-info3">
 							<div class="funding-info-title">최종 펀딩정보</div>
 							<div class="funding-info-container3">
 								<div class="funding-amount-title">
-									<div>총펀딩금액</div>
+									<div>총 펀딩 금액</div>
 									<div class="funding-amount">
 										<div>1주당금액*구매희망주</div>
-										<div>200,000원</div>
+										<div id="fundTotal"></div>
+										원
 									</div>
 
 								</div>
 								<div>
 									<div class="funding-amount">
 										<div>배당금 예상 금액</div>
-										<div>220원</div>
+										<div id="alloTotal"></div>
+										원
 									</div>
 									<div class="funding-amount">
 										<div>최종 예상 수익금액</div>
-										<div>200,220원</div>
+										<div id="finalTotal"></div>
+										원
 									</div>
 									<div class="funding-amount">
 										<div>수익금 지급 예상일</div>
-										<div>2023년 9월 15일</div>
+										<div id="exchangeDate"></div>
 									</div>
 								</div>
 							</div>
 						</div>
+
+
+
 						<div class="funding-info4">
-							<div class="funding-info-title">결제</div>
+							<div class="funding-info-title">포인트 충전</div>
+							<div class="funding-info-container4">
+								<div class="funding-pay-title">
+									<div style="display: flex; justify-content: space-between">
+										<input type="text" id="charge_money" class="form-control"
+											placeholder="충전할 금액을 입력해주세요.">
+										<button type="button" onclick="requestPay()"
+											class="btn btn-primary">충전</button>
+									</div>
+								</div>
+							</div>
+							<div id="lackNowPoint"></div>
+						</div>
+						<!-- 포인트가 모자를 경우 모자른 금액 만큼 충전 후 결제될 수 있도록 여러 방안-->
+						<div class="funding-info4">
+							<div class="funding-info-title">최종 포인트 사용 정보</div>
 							<div class="funding-info-container4">
 								<div class="funding-pay-title">
 									<div>CLOVER WALLET</div>
-									<div>
-										<button type="button" class="btn btn-primary">충전</button>
+
+								</div>
+								<div>
+									<div class="funding-amount">
+										<div>현재 포인트</div>
+										<div id=""></div>
+									</div>
+									<div class="funding-amount">
+										<div>사용 예정 포인트</div>
+										<div id=""></div>
+									</div>
+									<div class="funding-amount">
+										<div>잔여포인트(현재 포인트 - 사용예정포인트)</div>
+										<div id=""></div>
 									</div>
 								</div>
-								<div class="funding-pay-point">
+								<!-- <div class="funding-pay-point">
 									<div>잔여포인트</div>
-									<div>13,000원</div>
-								</div>
+									<div id="currentPoint">13,000</div>
+									원
+								</div> -->
 							</div>
-							<div>! 포인트잔액이 부족합니다. WALLET을 충전해주세요</div>
+							<div id="lackNowPoint"></div>
 						</div>
+
 
 						<!-- 약관동의 -->
 						<div class="funding-info5">
 							<div class="form-check">
 								<label class="form-check-label" for="flexCheckDefault">
-									해당기업이 설정한 펀딩금액의 최소 금액만큼 투자금 미달성시
-									<br> 해당펀딩은 취소되며, 투자자가 펀딩한
+									해당기업이 설정한 펀딩금액의 최소 금액만큼 투자금 미달성시 <br> 해당펀딩은 취소되며, 투자자가 펀딩한
 									금액을 돌려받을 수있습니다.
-								</label> 
-								<input class="form-check-input" type="checkbox" value=""
+								</label> <input class="form-check-input" type="checkbox" value=""
 									id="flexCheckDefault">
 							</div>
 							<div class="form-check">
