@@ -12,5 +12,6 @@ public interface UsersRepository extends JpaRepository<Users, Long>, QuerydslPre
     @Query("select u from Users u where u.userid = :userid")
     Users findByUserid(String userid);
 
+    boolean existsByEmail(String email);
 
 }

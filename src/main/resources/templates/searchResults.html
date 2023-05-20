@@ -14,14 +14,13 @@
 	integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
 	crossorigin="anonymous">
 
-<title>Title</title>
-<!-- 펀딩 전체 목록 페이지 -->
+<title>CLOVER</title>
+<!-- 펀딩 검색 결과 페이지 -->
 </head>
 <body>
 	<div>
 		<div class="nav"></div>
-		<div class="banner"></div>
-
+		
 		<div class="category d-flex flex-row ">
 			<ul class="category-list list-group list-group-horizontal ">
 				<li data-index="0">📜전체</li>
@@ -37,23 +36,15 @@
 
 		<div class="container">
 			<div class="section">
-				<div class="d-flex flex-row mt-4 mb-2 ">
-					<ul class="list-group list-group-horizontal sort-list ">
-						<li>인기순</li>
-						<li>모집금액순</li>
-						<li>마감임박순</li>
-						<li>최신순</li>
-					</ul>
-				</div>
-				
 				<div class="division-line"></div>
+				<div>"<span th:text="${keyword}"></span>" 로 검색된 결과 </div>
 				<div class="card-deck card-container">
-				    <div th:each="funding : ${fundingList}" class="card card-box">
+				    <div th:each="funding : ${searchResults}" class="card card-box">
 				        <img class="card-img-top" src="/img/granhand_sample_01.png" alt="Card image cap">
 				        <div class="card-body card-body-gap">
 				            <div class="card-title-container">
 				                <img class="card-logo" src="/img/granhand_logo_01.png" alt="Card image cap">
-				                <h5 class="card-title" th:text="${funding.company.name}"></h5>
+				                <h5 class="card-title" th:text="${funding.title}"></h5>
 				                <div class="rounded bg-primary text-white card-dday">D-60</div>
 				            </div>
 				            <p class="card-text">

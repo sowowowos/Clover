@@ -4,6 +4,8 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Getter
@@ -19,11 +21,14 @@ public class Users {
 
     @NotNull
     @Column(unique = true)
+    @NotEmpty
     private String userid;
     @NotNull
+    @NotEmpty
     private String password;
     @Column(unique = true)
     @NotNull
+    @NotEmpty
     private String email;
     @Column(unique = true)
     @NotNull

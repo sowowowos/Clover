@@ -1,14 +1,48 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Title</title>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Title</title>
 <!-- 	매인페이지 -->
 </head>
 <body>
+	<h2>메인</h2>
+
+	
+    <p th:if="${session.loginUserId != null}">
+  
+        로그인한 사용자의 정보:
+        <br>
+        아이디: <span th:text="${session.loginUserId}"></span>
+        <br>
+        이메일: <span th:text="${session.loginEmail}"></span>
+    </p>
+ 
+   	<div th:unless="${session.loginUserId != null}" class="row">
+		<div class="col">
+			<button class="w-100 btn btn-dark btn-lg"
+				onclick="location.href='login.html'"
+				th:onclick="|location.href='@{/loginForm}'|" type="button">
+				로그인</button>
+		</div>
+		<div class="col">
+            <button class="w-100 btn btn-secondary btn-lg" type="button"
+                    th:onclick="|location.href='@{/registerInvestor}'|">
+                회원 가입
+            </button>
+        </div>
+  
+    </div>
+ 
+    
+    <form th:if="${session.loginUserId != null}" action="/logout" method="get">
+        <button type="submit">로그아웃</button>
+    </form>
+
+
 
 </body>
 </html>
