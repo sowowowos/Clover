@@ -17,63 +17,99 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
 	crossorigin="anonymous"></script>
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 <!-- 아임포트 라이브러리 -->
-<!-- iamport.payment.js -->
-<!-- jQuery -->
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <!-- iamport.payment.js -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-<script>
+<script type="text/javascript">
 	var IMP = window.IMP;
 	var code = "imp78536886"; //가맹점 식별코드
 	IMP.init(code);
 
 	function requestPay() {
+		
 		var money = document.getElementById('charge_money').value;
-		if (money == null) {
+		if (money == null ||  money === "") {
 			alert("충전할 금액을 입력해주세요.");
+			return;
 		}
+		
+		/*pointHistory에 필요한 정보  */
+		/* type, amount, create_at, funding_id, wallet_id */
+		
+		/* 추후 session에 회원정보가 존재할 경우, 아래처럼 수정 예정 */
+        /* var user_id = [[${session.userid}]];
+        var user_email =  [[${session.email}]];
+        var user_name =  [[${session.name}]]; */        
+        
+        var user_id = 1;	//유저 아이디(pk)
+        var wallet_id = 1; 	//유저 월렛 id
+        var user_email =  'example@example.com';
+        var user_name =  '조아영';
+        var user_phone = '010-1234-5678';
+        var funding_id = '1';
+        var funding_name = '파도, 인진에서 "파력 에너지"로 다시 태어나다';    
+        var type = 0; //충전 0, 사용 1, 환전 2
+        var currentTime = new Date();
+        
+        
 
 		IMP.request_pay({
 			pg : "html5_inicis", //pg사 구분코드 - 이니시스 웹표준
 			pay_method : 'card', //결제수단 구분코드 - 신용카드
 			merchant_uid : 'point_' + new Date().getTime(), //주문번호
-			name : '테스트상품', //결제대상 16byte이내
+			name : funding_name, //결제대상 16byte이내
 			amount : money, //결제금액
-			buyer_name : '조아영', //주문자명
-			buyer_tel : '010-1234-5678', //주문자연락처
-			buyer_email : 'whdkdud3710@naver.com', //주문자 이메일
-			buyer_addr : '서울특별시 강남구', //주문자주소
-			buyer_postcode : '10293', //주문자 우편번호
-			pc_redirect_url : 'src/templates/mypage/pointChargeFin' //결제완료 후 이동 URL
+			buyer_name : user_name, //주문자명
+			buyer_tel : user_phone, //주문자연락처
+			buyer_email : user_email, //주문자 이메일
+			
+			//pc_redirect_url : '/mypage/pointCharge' //결제완료 후 이동 URL
 		}, function(rsp) {
-			//callback
-			if (rsp.success) {
-				$.ajax({
-					url : "/mypage/pointCharge",
-					type : "GET",
-					data : {
-						amount : rsp.amount
-					}
-				}).done(function(data) {
-					if (result) {
-						var msg = "[결제 완료]";
-						msg += " 결제 방법 = " + rsp.pay_method;
-						msg += " 결제 금액 = " + rsp.paid_amount;
-						console.log(msg);
+			console.log(rsp);
+			
+			if (rsp.success) { //결제 성공시
+				var msg = "[결제 완료]";
+				msg += " 결제 방법 = " + rsp.pay_method;
+				msg += " 결제 금액 = " + rsp.paid_amount;
+				msg += " 주문자명 = " + rsp.buyer_name;
+				console.log(msg);
+				alert("결제가 완료되었습니다.");
+				
+				
+				//데이터 전송
+				$.ajax({					
+					url : "/mypage/pointCharge"+wallet_id,
+					type : "POST",
+					dataType:"json",
+					data : {amount : rsp.paid_amount, 
+						type : type,
+						wallet_id : wallet_id},
+					success: function(response) {
+				        var amount = response.amount;
+				        var data = response.data;
+				        var date = response.date;
+				        
+				        $("date").text(date);
+				        //$("#nowPoint").text(amount);
+				        $("#status").text(amount);
 
-						alert("결제가 완료되었습니다.");
-						window.location.href = rsp.next_redirect_pc_url; // 웹 페이지 이동
-					} else {
-						//결제실패
-					}
+				        console.log("Amount: " + amount);
+				        console.log("Data: " + data);
+				    },
+				    error: function(jqXHR, textStatus, errorThrown) {
+				        // 에러 처리를 하는 부분입니다.
+				        console.error("Request failed: " + textStatus, errorThrown);
+				    }
+					
 				});
-			} else {
+				//window.location.href = rsp.next_redirect_pc_url; // 웹 페이지 이동
+
+			} else { //결제 실패시
 				var msg = "[결제 실패 : " + rsp.error_code + "]";
 				msg += " 에러 내용 : " + rsp.error_msg;
 				console.log(msg);
@@ -95,7 +131,15 @@
 		<div class="nav"></div>
 		<div class="banner"></div>
 
-		<div class="category"></div>
+		<div class="category">
+				<div th:if="${phDetail != null}">
+				    <h3>포인트 상세 내역</h3>
+				    <p>포인트 ID: <span th:text="${phDetail.id}"></span></p>
+				    <p>포인트 금액: <span th:text="${phDetail.amount}"></span></p>
+				    <p>포인트 타입: <span th:text="${phDetail.type}"></span></p>
+				    <!-- 필요한 속성들을 추가로 출력하거나 포맷팅하여 표시할 수 있습니다 -->
+				</div>
+		</div>
 		<div class="container">
 			<div class="section">
 
@@ -122,7 +166,7 @@
 						</svg>
 								잔여포인트
 							</div>
-							<div class="col-md-3">point</div>
+							<div class="col-md-3" ></div>point
 						</div>
 
 						<!-- 최소 금액은  -->
@@ -136,7 +180,7 @@
 							  <path
 										d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
 							</svg>
-								충전 최소 금액 : 1000원
+								충전 최소 금액 : 100원
 							</div>
 						</div>
 
@@ -198,9 +242,9 @@
 						<!-- 내역시간 금액 -->
 						<div class="list" style="margin: 1rem">
 							<div class="row">
-								<div class="col-2">5.19</div>
-								<div class="col-8">충전</div>
-								<div class="col-2">10,000</div>
+								<div id="date" class="col-2"></div>
+								<div id="status" class="col-8">충전</div>
+								<div id="point" class="col-2">10,000</div>
 							</div>
 							<div class="row">
 								<div class="col-md-8 offset-md-2">18:39</div>
@@ -244,6 +288,8 @@
 			</div>
 			<!-- section End -->
 		</div>
+		
+
 
 		<div class="footer"></div>
 	</div>
