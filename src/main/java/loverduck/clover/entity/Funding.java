@@ -36,6 +36,8 @@ public class Funding {
     private LocalDateTime endDate;
     @NotNull
     private Double dividend;
+    @NotNull
+    private Integer status;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
