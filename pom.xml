@@ -19,6 +19,7 @@
 		<java.version>11</java.version>
 		<spring-boot-admin.version>2.7.4</spring-boot-admin.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -87,9 +88,15 @@
 			<version>${querydsl.version}</version>
 		</dependency>
 
+		<!-- json 형태 변환을 위한 dependency 추가  -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.12.3</version>
+		</dependency>
 		<!-- spring security <dependency> <groupId>org.springframework.boot</groupId> 
 			<artifactId>spring-boot-starter-security</artifactId> </dependency> -->
-		
+
 		<!-- validation -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
