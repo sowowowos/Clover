@@ -46,4 +46,9 @@ public interface FundingService {
 	 * 펀딩 제목 기준 검색 
 	 */
 	List<Funding> searchFundingByTitle(String keyword);
+	
+	/**
+	 * 기업 이름 기준 검색 
+	 */
+	List<Funding> searchFundingByCompany(String keyword);
 }

@@ -1,5 +1,6 @@
 package loverduck.clover.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -109,12 +110,17 @@ public class FundingController {
 	}
 	
 	/**
-	 * 펀딩 제목 기준 검색 
+	 * 검색 
 	 */
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String searchFunding(@RequestParam("keyword") String keyword, Model model) {
-	    List<Funding> searchResults = fundingService.searchFundingByTitle(keyword);
-	    model.addAttribute("searchResults", searchResults);
+	    List<Funding> searchResults1 = fundingService.searchFundingByTitle(keyword);
+	    List<Funding> searchResults2 = fundingService.searchFundingByCompany(keyword);
+
+	    
+
+	    model.addAttribute("searchResults1", searchResults1);
+	    model.addAttribute("searchResults2", searchResults2);
 	    model.addAttribute("keyword", keyword);
 	    return "/searchResults"; 
 	}
