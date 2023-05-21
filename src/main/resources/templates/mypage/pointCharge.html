@@ -130,13 +130,15 @@
 
 				        console.log("Amount: " + amount);
 				        console.log("Data: " + data);
+				        
+				        //locaiton.href="/mypage/pointChargeFin";
 				    },
 				    error: function(jqXHR, textStatus, errorThrown) {
 				        // 에러 처리를 하는 부분입니다.
 				        console.error("Request failed: " + textStatus, errorThrown);
 				    }
 					
-				});
+				}); //ajaxEnd
 				//window.location.href = rsp.next_redirect_pc_url; // 웹 페이지 이동
 
 			} else { //결제 실패시
@@ -150,7 +152,7 @@
 				alert("결제를 실패하였습니다.");
 			}
 		});
-	}
+	}//requestPay() End
 </script>
 
 <title>CLOVER | MYPAGE - 포인트 충전</title>

@@ -22,6 +22,8 @@ public interface PointHistoryService {
 	 * 포인트 충전/사용 내역에 따른 wallet amount 값 변경
 	 */
 	
-	public Integer updateWalletAmount(Long id);
+	Integer updateWalletAmount(Long id);
+	
+	Integer minusWalletAmount(Long id);
 
 }
