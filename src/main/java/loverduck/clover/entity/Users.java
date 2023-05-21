@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
@@ -30,13 +31,29 @@ public class Users {
     @NotNull
     @NotEmpty
     private String email;
+    
+    /**
+     * 투자자 : 닉네임
+     * 기업 : 기업명
+     */
     @Column(unique = true)
     @NotNull
+    @NotBlank(message = "닉네임 필수 입력사항입니다.")
     private String nickname;
+    
+    /**
+     * 1 : 투자자
+     * 0 : 기업
+     */
     private Integer type;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private UserDetail userDetail;
+    
+    
+    private String phone;
+    private String postalCode;
+    private String address;
+    private String detailAddress;
+    
+    
     @ManyToOne(fetch = FetchType.LAZY)
     private Wallet wallet;
     @OneToOne(fetch = FetchType.LAZY)
