@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(force = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -17,6 +16,7 @@ public class Wallet {
     @SequenceGenerator(name = "wallet_seq", sequenceName = "wallet_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "wallet_seq")
     private Long id;
+    @Setter
     @NotNull
     private Long amount;
     @OneToOne(optional = false, fetch = FetchType.LAZY)

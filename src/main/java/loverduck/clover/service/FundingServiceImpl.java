@@ -63,5 +63,14 @@ public class FundingServiceImpl implements FundingService{
 	    List<FundingReply> commentList = fundingReplyRepository.findByFundingId(id);
 	    return commentList;
 	}
-
+	
+	@Override
+	public List<Funding> searchFundingByTitle(String keyword) {
+        return fundingRepository.findByTitleContaining(keyword);
+    }
+	
+	@Override
+	public List<Funding> searchFundingByCompany(String keyword){
+		return fundingRepository.findByCompanyName(keyword);
+	}
 }

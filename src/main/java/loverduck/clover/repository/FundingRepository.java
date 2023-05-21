@@ -11,11 +11,11 @@ import loverduck.clover.entity.Funding;
 public interface FundingRepository extends JpaRepository<Funding, Long>, QuerydslPredicateExecutor<Funding> {
 	
 	/**
-	 * 펀딩 전체 목록 조회 
+	 * 기업 이름 기준 검색 
 	 */
-//	@Modifying
-//	void fundingList();
-	
-	List<Funding> findByCompanyName(String name);
-
+	List<Funding> findByCompanyName(String keyword);
+	/**
+	 * 펀딩 제목 기준 검색 
+	 */
+	List<Funding> findByTitleContaining(String keyword);
 }
