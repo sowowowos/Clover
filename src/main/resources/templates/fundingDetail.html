@@ -85,17 +85,6 @@
 				    		
 				    		<!-- 아이콘 -->
 				    		<div class="row justify-content-end mt-3">
-				    			<a id="kakao-link-btn" href="javascript:kakaoShare()">
-								  <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" />
-								</a>
-				    		
-				    			<div class="col-2">
-				    				<a id="btnKakao" href="">
-					    				<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16" style="color: #0042A0;">
-										  <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
-										</svg>
-									</a>
-				    			</div>
 				    			<div class="col-2">
 				    				<a href="">
 				    					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16" style="color: #0042A0;">
@@ -109,7 +98,21 @@
 										  <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
 										</svg>
 				    				</a>
-				    				
+				    			</div>
+				    			<!-- 공유하기 -->
+				    			<div class="d-flex justify-content-end">
+					    			<!-- Kakao -->
+					    			<a id="kakao-link-btn" href="javascript:kakaoShare()">
+									  <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" width=40 height=40/>
+									</a>
+									<!-- Twitter -->
+									<a id="twitter-link-btn" href="javascript:twitterShare()">
+									  <img src="https://cdn.icon-icons.com/icons2/2157/PNG/512/twitter_logo_icon_132881.png" width=60 height=60/>
+									</a>
+									<!-- Facebook -->
+									<a id="facebook-link-btn" href="javascript:facebookShare()">
+									  <img src="https://cdn-icons-png.flaticon.com/512/3536/3536394.png" width=50 height=50/>
+									</a>
 				    			</div>
 				    		</div>
 				    	</div>
@@ -196,6 +199,8 @@
 
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
+	/* 카카오톡 공유 */
+	
   // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
   Kakao.init('efbcb7d594888e3c7036cab80e426ecc');
 
@@ -224,6 +229,20 @@
       installTalk: true,
     });
   }
+  
+  /* 트위터 공유 */
+  function twitterShare() {
+	    var sendText = "CLOVER"; // 전달할 텍스트
+	    var sendUrl = "naver.com/"; // 전달할 URL
+	    window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+	}
+  
+  /* 페이스북 공유 */
+  function facebookShare() {
+	    var sendUrl = "naver.com/"; // 전달할 URL
+	    window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl);
+	}
+  
 </script>
 </body>
 </html>
