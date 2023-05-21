@@ -69,13 +69,19 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 	        Wallet wallet = entityManager.find(Wallet.class, id); // 해당 id에 해당하는 Wallet 조회
 	        if (wallet != null) {
 	            Long currentAmount = wallet.getAmount();
-	            Long newAmount = currentAmount + result; 
+	            Long newAmount = Long.valueOf(result); 
 	            wallet.setAmount(newAmount); // 연산 결과 새로운 amount 값 업데이트
 	            entityManager.merge(wallet); // 업데이트된 Wallet 저장
 	        }
 	    }
 
 	    return result;
+	}
+
+	@Override
+	public Integer minusWalletAmount(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
