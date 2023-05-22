@@ -54,8 +54,8 @@
 							<label for="name"> 사업자등록번호
 								<ruby>*
 								</ruby>
-							</label><input type="text" class="form-control" id="registerNumber"
-								name="registerNumber" placeholder="" required autofocus>
+							</label><input type="text" class="form-control" id="no"
+								name="no" placeholder="" required autofocus>
 						</div>
 						<!-- 산업 선택 -->
 						<div class="mb-4 row">
@@ -69,7 +69,7 @@
 							<!-- Example single danger button -->
 							<div class="dropdown col-6">
 								<input type="text" class="form-control mb-2" id="sector"
-									placeholder="" required autofocus>
+									name="sector" placeholder="" required autofocus>
 							</div>
 							<div class="col-6">
 								<input type="file" class="form-control mb-2" id="logo"
@@ -86,7 +86,7 @@
 								<div class="col-4">
 									<input type="text" class="form-control mb-2"
 										id="sample6_postcode" name="postalCode" placeholder="우편번호"
-										disabled required autofocus>
+										readonly="readonly" required autofocus>
 								</div>
 								<input type="button" class="btn col-4 btn-secondary mb-2"
 									onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
@@ -96,14 +96,14 @@
 							<div class="col-12">
 
 								<input type="text" class="form-control mb-2"
-									id="sample6_address" name="address" placeholder="주소" disabled
-									required autofocus>
+									id="sample6_address" name="address" placeholder="주소" 
+									readonly="readonly" required autofocus>
 							</div>
 
 							<label for="exampleInputDeailAdress"></label>
 							<div class="col-12">
 								<input type="text" class="form-control mb-2"
-									id="sample6_extraAddress" placeholder="참고항목" disabled>
+									id="sample6_extraAddress" placeholder="참고항목" readonly="readonly">
 							</div>
 							<div class="col-12">
 								<input type="text" class="form-control mb-2"
@@ -147,8 +147,8 @@
 								URL
 								<ruby>*
 								</ruby>
-							</label> <input type="text" class="form-control" id="url"
-								aria-describedby="emailHelp" placeholder="" required autofocus>
+							</label> <input type="text" class="form-control" id="homepage"
+								name="homepage" aria-describedby="emailHelp" placeholder="" required autofocus>
 						</div>
 						<!-- 구분선 -->
 						<div class="mb-4">

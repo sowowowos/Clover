@@ -25,9 +25,6 @@ public class UsersServiceImpl implements UsersService {
 		
 		Users dbUser = usersRep.save(users);
 		
-		//userDetail.setUser(dbUser); //부모의 key(id)참조 
-		//userDetailRep.save(userDetail);
-		
 		return 1;
 	}
 	
@@ -62,6 +59,23 @@ public class UsersServiceImpl implements UsersService {
 		Users users = usersRep.findByEmail(email);
 		
 		return users!= null;
+	}
+
+
+
+
+
+
+	@Override
+	public Users update(String password, String nickname, String phone, String postalCode, String address,
+			String detailAddress, String email) {
+		
+		usersRep.updateUser(nickname, password, phone, postalCode, address, detailAddress, email);
+		
+		Users dbUser = usersRep.findByEmail(email);
+		
+		return dbUser;
+		
 	}
 
 

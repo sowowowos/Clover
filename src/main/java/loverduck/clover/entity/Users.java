@@ -32,13 +32,17 @@ public class Users {
     @NotEmpty
     private String email;
     
+    @Column(unique = true)
+    @NotNull
+    @NotEmpty
+    private String name;
+    
     /**
      * 투자자 : 닉네임
      * 기업 : 기업명
      */
     @Column(unique = true)
     @NotNull
-    @NotBlank(message = "닉네임 필수 입력사항입니다.")
     private String nickname;
     
     /**

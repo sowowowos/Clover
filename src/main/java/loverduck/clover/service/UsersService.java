@@ -22,5 +22,9 @@ public interface UsersService {
 	 */
 	boolean checkEmailExists(String email);
 	
+	/**
+	 * 수정하기 - 비밀번호, 닉네임, 폰, 주소3개
+	 */
+	Users update(String password, String nickname, String phone,String postalCode,String address, String detailAddress, String email);
 
 }

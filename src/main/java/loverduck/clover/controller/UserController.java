@@ -58,8 +58,8 @@ public class UserController {
 	 */
 	@PostMapping("/registerInvestor")
 	public String register(String name, String nickname, String email, String userid, String password, String password2, String phone,String postalCode,String address, String detailAddress ) {
-	
-		Users dbUser = new Users(null, userid, password, email, nickname, 1, phone, postalCode, address, detailAddress, null, null);
+
+		Users dbUser = new Users(null, userid, password, email,name , nickname,  1, phone, postalCode, address, detailAddress, null, null);
 
 		int userCreateForm = usersService.register(dbUser);
 		
@@ -77,11 +77,15 @@ public class UserController {
 
 	/**
 	 * 회원가입 기업
+	 * 추가로 받는 정보 : 사업자 등록번호, 산업선택, 기업url
+	 *                    no       sector    homepage
 	 */
 	@PostMapping("/registerCorp")
-	public String register2(String name, String nickname, String email, String userid, String password, String password2, String phone,String postalCode,String address, String detailAddress ) {
+	public String register2(String name, String nickname, String email, String userid, String password, String password2, 
+			String phone,String postalCode,String address, String detailAddress,
+			String no, String sector, String homepage) {
 		
-		Users dbUser = new Users(null, userid, password, email, nickname, 2, phone, postalCode, address, detailAddress, null, null);
+		Users dbUser = new Users(null, userid, password, email , name , nickname, 0, phone, postalCode, address, detailAddress, null, null);
 
 		//System.out.println("출력 "+ dbUser.getEmail()+" "+dbUser.getNickname()+" "+dbUser.getUserid() );
 		
@@ -121,7 +125,6 @@ public class UserController {
 		try {
 
 	        Users dbUser = usersService.logincheck(email, password);
-//	        System.out.println("ex: "+dbUser.getEmail());
 	        
 	        session.setAttribute("loginUserId", dbUser.getUserid());
 	        session.setAttribute("loginEmail", dbUser.getEmail());
@@ -142,13 +145,10 @@ public class UserController {
 	 */
 	@RequestMapping("/kakao")
 	public String kakaoLogin(@RequestParam("code") String code, HttpSession session) {
-		//System.out.println("code : "+code);
 		String access_Token = kakaoService.getAccessToken(code);
-		//System.out.println("controller : "+access_Token);
-		
+
 		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_Token);
-		//System.out.println("login controller : "+userInfo);
-		
+	
 //	    클라이언트의 이메일이 존재할 때 세션에 해당 이메일 등록 토큰은 x
 		if(userInfo.get("email")!=null) {
 //			session.setAttribute("loginEmail", userInfo.get("email"));
@@ -158,7 +158,7 @@ public class UserController {
 			String nickname = (String) userInfo.get("nickname");
 			session.setAttribute("loginEmail", email);
 						
-			Users dbUser = new Users(nickname, access_Token, email, nickname);
+			Users dbUser = new Users(nickname, access_Token, email, nickname, null);
 			
 			session.setAttribute("user", dbUser);
 			
@@ -185,21 +185,84 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	
 	/**
 	 * 마이페이지 - 투자자 (개인정보 수정폼)
 	 */
-	@RequestMapping("/updateInvestor")
-	public String updateInvestor() {
+	@GetMapping("/updateInvestor")
+	public String updateInvestorForm() {
+
 		return "mypage/updateInvestor";
+	}
+	
+	/**
+	 * 마이페이지 - 투자자 (개인정보 수정폼 수정하기)
+	 */
+	@PostMapping("/updateInvestor")
+	public String updateInvestor( String nickname, String password,String phone,String postalCode,String address, String detailAddress , HttpSession session)  {
+		Users dbUser = (Users) session.getAttribute("user");
+		
+		String email = dbUser.getEmail();
+		System.out.println(email+" 이메일이다 ");
+		if(nickname==null) {
+			nickname = dbUser.getNickname();
+		}
+		if(phone==null) {
+			phone = dbUser.getPhone();
+		}
+		if(postalCode==null) {
+			postalCode = dbUser.getPostalCode();
+		}
+		if(address==null) {
+			address = dbUser.getAddress();
+		}
+		if(detailAddress==null) {
+			detailAddress = dbUser.getDetailAddress();
+		}
+		
+		Users UpUser = usersService.update(password, nickname, phone, postalCode, address, detailAddress, email);
+		
+		session.setAttribute("user", UpUser);
+		
+		return "redirect:/";
 	}
 	
 	/**
 	 * 마이페이지 - 기업 (개인정보 수정폼)
 	 */
-	@RequestMapping("/updateCorp")
-	public String updateCorp() {
+	@GetMapping("/updateCorp")
+	public String updateCorpForm() {
 		return "mypage/updateCorp";
+	}
+	/**
+	 * 마이페이지 - 기업 (개인정보 수정폼)
+	 */
+	@PostMapping("/updateCorp")
+	public String updateCorp( String nickname, String password,String phone,String postalCode,String address, String detailAddress , HttpSession session)  {
+		Users dbUser = (Users) session.getAttribute("user");
+		
+		String email = dbUser.getEmail();
+	
+		if(nickname==null) {
+			nickname = dbUser.getNickname();
+		}
+		if(phone==null) {
+			phone = dbUser.getPhone();
+		}
+		if(postalCode==null) {
+			postalCode = dbUser.getPostalCode();
+		}
+		if(address==null) {
+			address = dbUser.getAddress();
+		}
+		if(detailAddress==null) {
+			detailAddress = dbUser.getDetailAddress();
+		}
+		
+		Users UpUser = usersService.update(password, nickname, phone, postalCode, address, detailAddress, email);
+		
+		session.setAttribute("user", UpUser);
+		
+		return "redirect:/";
 	}
 	
 	/**
