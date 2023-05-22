@@ -108,6 +108,12 @@ function fundingPay () {
 		console.log("fundingPay() nowPoint = " + nowPoint );
 		console.log(fT>nowPoint);
 		
+		if (fundHope == null ||  fundHope === "") {
+			alert("펀딩 구매 희망주를 입력하세요.");
+			document.getElementById('fundHope').focus();
+			return;
+		}
+		
 		if(fT>nowPoint){ //총 펀딩 금액이 현재 잔여 포인트보다 많을 경우 --> 포인트 충전 필요
 			document.getElementById('lackPoint').style.display="";
 			document.getElementById('charge_money').focus();
@@ -132,19 +138,15 @@ function fundingPay () {
 						funding_id : funding_id},
 				success: function(response) {
 			        var amount = response.amount;
-			        var data = response.data;
-			        var date = response.date;
-			        
-			        $("date").text(date);
-			        //$("#nowPoint").text(amount);
-			        $("#status").text(amount);
+			        var date = response.date;			        
 
 			        console.log("Amount: " + amount);
-			        console.log("Data: " + data);
+			       // console.log("Data: " + data);
+			       alert("되니?")
 			        
 			        /////////////현재 데이터 저장은 성공/////////////////
 			        /////////////페이지 이동만 되면 완료////////////////
-			        //locaiton.href='fundingPayFin';
+			        location.href='/fundingPayFin?amount='+amount+"&wallet_id="+wallet_id+"&date="+date;
 			    },
 			    error: function(jqXHR, textStatus, errorThrown) {
 			        // 에러 처리를 하는 부분입니다.
@@ -153,11 +155,7 @@ function fundingPay () {
 			});//ajax End
 		}
 
-		if (fundHope == null ||  fundHope === "") {
-			alert("펀딩 구매 희망주를 입력하세요.");
-			document.getElementById('fundHope').focus();
-			return;
-		}
+		
 		
 		//버튼 비활성화
 		//document.getElementById('fundingPayButton').disabled = true;	  	

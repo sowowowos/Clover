@@ -1,5 +1,6 @@
 package loverduck.clover.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -19,6 +20,8 @@ public class Wallet {
     @Setter
     @NotNull
     private Long amount;
+    
+    @JsonIgnore
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Users user;
 }
