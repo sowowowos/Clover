@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Funding;
@@ -101,6 +102,24 @@ public class FundingController {
 	    model.addAttribute("nowPoint", nowPoint);
 	    
 		return "/fundingPay";
+	}
+	
+	
+	@RequestMapping("/fundingPayFin")
+	public ModelAndView fundingPayFin(
+			 Long amount,
+			 Long wallet_id, 
+			 Long funding_id, String date) {
+		//추후 세션 로그인 회원 정보에 따른 wallet_id로 코드 수정할 예정
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("amount", amount);
+		mv.addObject("wallet_id", wallet_id);
+		mv.addObject("funding_id", funding_id);
+		mv.addObject("date", date);
+		
+		mv.setViewName("fundingPayFin");
+		
+		return mv;
 	}
 	
 	/**
