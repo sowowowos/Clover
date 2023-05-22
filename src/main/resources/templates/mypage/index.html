@@ -36,7 +36,32 @@
         </div>
   
     </div>
- 
+    
+      <p th:if="${session.company !=null}">
+  
+        기업 회원 환영해요
+        <br>
+        기업명: <span th:text="${session.company.name}"></span>
+        <br>
+        이메일: <span th:text="${session.company.email}"></span>
+        <button class="w-100 btn btn-secondary btn-lg" type="button"
+                    th:onclick="|location.href='@{/updateCorp}'|">
+                회원 정보 수정
+            </button>
+      </p>
+       <p th:if="${session.company ==null && session.loginEmail != null}">
+  
+        투자자 회원 환영해요
+        <br>
+        명: <span th:text="${session.user.name}"></span>
+        <br>
+        이메일: <span th:text="${session.user.email}"></span>
+        <button class="w-100 btn btn-secondary btn-lg" type="button"
+                    th:onclick="|location.href='@{/updateInvestor}'|">
+                회원 정보 수정
+            </button>
+      </p>
+
     
     <form th:if="${session.loginEmail != null}" action="/logout" method="get">
         <button type="submit">로그아웃</button>

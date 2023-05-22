@@ -9,8 +9,16 @@
     <link rel="stylesheet" href="/css/reset.css">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 
-    <title>Title</title>
+    <title>Clover | 로그인</title>
     <!-- 	로그인페이지 -->
+    
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+}
+</style>
 </head>
 <body>
 
@@ -27,7 +35,7 @@
              
                 <form class="p-5 m-auto w-100" style="" action="" method="post" th:action="@{/loginCheck}" th:object="${users}" >
                 	<!-- 오류 메시지 표시 -->
-   				 <p th:if="${error}" class="error-message" th:text="${error}" style="color: red;"></p>
+   				 
                     <div class="mb-2">
                         <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="이메일" 
                         required autofocus>
@@ -35,19 +43,18 @@
                     <div class="mb-2">
                         <input type="password" class="form-control" id="exampleInputPassword1" name="password"   placeholder="비밀번호" required>
                     </div>
+                    <p th:if="${error}" class="error-message" th:text="${error}" style="color: red; font-size: 0.8rem;"></p>
                     <button type="submit" class="btn btn-primary my-3 w-100" style="background: #0042A0">로그인</button>
-                    
+                   
+                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=889ae827e01a868e8659538a26baff3d&redirect_uri=http://localhost:8080/kakao&response_type=code">
+		          		 <button type="button" class="btn w-100" style="background: #FEE500;" >카카오 계정으로 로그인</button>
+		          		
+		        	</a>
                 </form>
              
-                <a href="https://kauth.kakao.com/oauth/authorize?client_id=889ae827e01a868e8659538a26baff3d&redirect_uri=http://localhost:8080/kakao&response_type=code">
-		           <button type="button" class="btn my-3 w-100" style="background: #FEE500">카카오 계정으로 로그인</button>
-		        </a>
-                	
-
-            
                 <div class="row text-center">
-	                <a href="#" class="">회원정보 찾기</a>
-	                <a href="#">회원가입</a> <!-- th:href="@{/registerInvestor}" -->
+	                
+	                <a th:href="@{/registerInvestor}">회원가입</a> <!--<a href="#" class="">회원정보 찾기</a>  -->
                 </div>
                 
             </article>

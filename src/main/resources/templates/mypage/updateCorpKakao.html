@@ -9,8 +9,8 @@
 <link rel="stylesheet" href="/css/common.css">
 <link rel="stylesheet" href="/css/reset.css">
 <link href="/css/bootstrap.min.css" rel="stylesheet" />
-<title>Title</title>
-<!-- 	개인정보 수정폼 - 기업 -->
+<title>Clover | 개인정보 추가입력 - 기업</title>
+<!-- 	개인정보 추가폼  카카오톡 - 기업 -->
 <style>
 .formAll{
 	padding-left: 1rem;
@@ -30,25 +30,24 @@
 						<b>개인정보 수정</b>
 					</h3>
 					<hr>
-					<form action="/updateCorp" method="post"
+					<form action="/updateCorpKakao" method="post"
 						onsubmit="return register(event)"
 						class="p-5 align-items-start mb-5 col-9 "
 						style="border-color: #0042A0 !important;"> <!-- p-5 -->
 						
-						<!-- 바꿀 수 있는 항목 : 주소 3개 , url ,phone, 비밀번호 -->
 						<div class="mb-4 ">
 							<label for="name"> 기업명
 								<ruby>*
 								</ruby>
 							</label><input type="text" class="form-control" id="exampleInputNickname" placeholder=""
-								name="nickname" th:value="${session.user.nickname}" disabled>
+								name="nickname" required autofocus >
 						</div>
 						<div class="mb-4">
 							<label for="name"> 사업자등록번호
 								<ruby>*
 								</ruby>
-							</label><input type="text" class="form-control" id="name" placeholder=""
-								th:value="${session.company.no}" disabled>
+							</label><input type="text" class="form-control" id="no" placeholder=""
+								name="no" required autofocus >
 						</div>
 						<!-- sector 산업선택 -->
 						<div class="mb-4 row">
@@ -61,12 +60,12 @@
 							</label>
 							<!-- Example single danger button -->
 							<div class="dropdown col-6">
-								<input type="text" class="form-control mb-2" id="sector"
-									th:value="${session.company.sector}" placeholder="" disabled>
+								<input type="text" class="form-control mb-2" id="sector" name="sector"
+									placeholder="" required autofocus >
 							</div>
 							<div class="col-6">
 								<input type="file" class="form-control mb-2" id="logo"
-									placeholder="" disabled="disabled">
+									placeholder=""  >
 							</div>
 						</div>	
 							<!-- 주소 -->
@@ -79,7 +78,7 @@
 								<div class="col-4">
 									<input type="text" class="form-control mb-2"
 										id="sample6_postcode" name="postalCode" readonly="readonly"
-										  th:value="${session.user.postalCode}">
+										  >
 								</div>
 								<input type="button" class="btn col-4 btn-secondary mb-2"
 									onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
@@ -90,7 +89,7 @@
 
 								<input type="text" class="form-control mb-2"
 									id="sample6_address" name="address"  readonly="readonly"
-									 th:value="${session.user.address}">
+									 >
 							</div>
 
 							<label for="exampleInputDeailAdress"></label>
@@ -101,7 +100,7 @@
 							<div class="col-12">
 								<input type="text" class="form-control mb-2"
 									id="sample6_detailAddress" name="detailAddress"
-									 th:value="${session.user.detailAddress}">
+									 >
 							</div>
 						</div>
 						<!-- 주소끝 -->
@@ -113,12 +112,12 @@
 										전화번호
 										<ruby>*
 										</ruby>
-									</label> <input type="tel" class="form-control" id="exampleInputPhone"
-										aria-describedby="emailHelp" placeholder="" th:value="${session.user.phone}">
+									</label> <input type="tel" class="form-control" id="exampleInputPhone" name ="phone"
+										aria-describedby="emailHelp" placeholder="" >
 									<div id="phoneHelp" class="form-text"></div>
 								</div>
 								<div class="mb-4">
-									<label for="exampleInputEmail1" class="form-label">이메일
+									<label for="exampleInputEmail1" class="form-label">기업 이메일
 										<ruby>*
 										</ruby>
 									</label> <input type="email" class="form-control" id="exampleInputEmail1"
@@ -131,7 +130,7 @@
 										<ruby>*
 										</ruby>
 									</label> <input type="text" class="form-control" id="homepage" name="homepage"
-										th:value="${session.company.homepage}" aria-describedby="emailHelp" placeholder="">
+										 aria-describedby="emailHelp" placeholder="">
 								</div>
 								<div class="mb-4">
 									<hr>
@@ -140,42 +139,24 @@
 									<label for="exampleInputName" class="form-label">담당자 이름
 										<ruby>*
 										</ruby>
-									</label> <input type="email" class="form-control" id="exampleInputName"
-										aria-describedby="emailHelp" placeholder=""
-										th:value="${session.user.name}" disabled="disabled">
+									</label> <input type="text" class="form-control" id="exampleInputName"
+										aria-describedby="emailHelp" placeholder="" name="name"
+										th:value="${session.user.name}" required autofocus >
 								</div>
 								<div class="mb-4">
 									<label for="exampleInputNickname" class="form-label">아이디
 										<ruby>*
 										</ruby>
-									</label> <input type="email" class="form-control"
-										id="exampleInputNickname" placeholder="" 
-										th:value="${session.user.userid}" disabled>
+									</label> <input type="text" class="form-control"
+										id="exampleInputNickname" placeholder="" name="userid"
+										th:value="${session.user.userid}" disabled >
 								</div>
-								<div class="mb-4">
-									<label for="exampleInputPassword1" class="form-label">비밀번호
-										<ruby>*
-										</ruby>
-									</label> <input type="password" class="form-control"
-										id="exampleInputPassword1" name="password" placeholder=""
-										required >
-									<div id="passwordHelp" class="form-text"></div>
-									<!-- 8~16 영문 대,소문자, 숫자, 특수문자를 포함해주세요. -->
-								</div>
-								<div class="mb-4">
-									<label for="exampleInputPassword2" class="form-label">비밀번호
-										확인
-										<ruby>*
-										</ruby>
-									</label> <input type="password" class="form-control"
-										id="exampleInputPassword2" onblur="validatePassword()"
-										name="password2" placeholder="" required >
-									<div id="passwordHelp2" class="form-text"></div>
-								</div>
+								
+								
 							</div>
 							<button type="submit" class="btn btn-primary my-3 w-100"
 								style="background: #0042A0"
-								onclick="register(event)">수정완료</button>
+								onclick="register(event)">추가입력완료</button>
 					</form>
 				</div> <!-- col-9 -->
 			</div>
@@ -185,58 +166,7 @@
 
 
 <script>
-		function validatePassword() {
-			var passwordInput = document
-					.getElementById("exampleInputPassword1");
-			var passwordConfirmInput = document
-					.getElementById("exampleInputPassword2");
-			var passwordHelp = document.getElementById("passwordHelp");
-			var passwordConfirmHelp = document.getElementById("passwordHelp2");
-
-			var password = passwordInput.value;
-			var passwordConfirm = passwordConfirmInput.value;
-
-			// 비밀번호 유효성 체크
-			if (!isValidPassword(password)) {
-				passwordHelp.innerText = "8~16 영문 대,소문자, 숫자, 특수문자를 포함해주세요.";
-				passwordHelp.style.color = "red";
-			} else {
-				passwordHelp.innerText = ""; // 비밀번호 유효성이 만족되면 메시지를 비웁니다.
-				passwordHelp.style.color = "green";
-			}
-
-			// 비밀번호 확인 체크
-			if (password !== "") {
-				if (password === passwordConfirm) {
-					passwordConfirmHelp.innerText = "비밀번호가 일치합니다.";
-					passwordConfirmHelp.style.color = "green";
-				} else {
-					passwordConfirmHelp.innerText = "비밀번호가 일치하지 않습니다.";
-					passwordConfirmHelp.style.color = "red";
-				}
-			} else {
-				passwordConfirmHelp.innerText = ""; // 입력값이 없을 때 메시지를 비웁니다.
-				passwordConfirmHelp.style.color = "red";
-			}
-		}
-
-		function isValidPassword(password) {
-			// 비밀번호 유효성 체크 로직을 여기에 작성
-			// 예시: 8~16 글자 수, 영문 대소문자, 숫자, 특수문자 포함 등의 조건을 확인하여 유효성을 판단
-			// 유효한 경우 true 반환, 그렇지 않은 경우 false 반환
-			var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
-			return passwordPattern.test(password);
-		}
-
-		document.addEventListener("DOMContentLoaded", function() {
-			var passwordInput = document
-					.getElementById("exampleInputPassword1");
-			var passwordConfirmInput = document
-					.getElementById("exampleInputPassword2");
-
-			passwordInput.addEventListener("input", validatePassword);
-			passwordConfirmInput.addEventListener("input", validatePassword);
-		});
+	
 	</script>
 	
 	<script>
@@ -244,39 +174,10 @@
 		
 		var check =0;
 		
-		var passwordInput = document
-				.getElementById("exampleInputPassword1");
-		var passwordConfirmInput = document
-				.getElementById("exampleInputPassword2");
-		var passwordConfirmHelp = document.getElementById("passwordHelp2");
-		var passwordConfirmHelp1 = document.getElementById("passwordHelp");
-
-		var password = passwordInput.value;
-		var passwordConfirm = passwordConfirmInput.value;
-
-		if (passwordConfirmHelp1.style.color != "green") {
-			event.preventDefault();
-			alert("비밀번호는 최소 8자 이상이어야 하며, 숫자, 영문 대문자, 영문 소문자를 모두 포함해야 합니다.");
-			return false;
-		}else{
-			check++;
-		}
-		
-		if (password !== passwordConfirm) {
-			passwordConfirmHelp.innerText = "비밀번호가 같지 않습니다.";
-			passwordConfirmHelp.style.color = "red";
-			event.preventDefault(); // 폼 제출 막기
-			alert("비밀번호가 서로 다릅니다.");
-			return false; // 폼 제출 막기
-		}else{
-			check++;
-		}
-
-		
+	
 		var postalCode = document.getElementById("sample6_postcode").value;
 		var address = document.getElementById("sample6_address").value;
-		var pw1 = document.getElementById("exampleInputPassword1").value;
-		var pw2 = document.getElementById("exampleInputPassword2").value;
+		
 		var nickname = document.getElementById("exampleInputNickname").value;
 		var phone = document.getElementById("exampleInputPhone").value;
 		var detailAddress = document.getElementById("sample6_detailAddress").value;
@@ -290,13 +191,7 @@
 		}else{
 			check++;
 		}
-		if (pw1.trim() === "" || pw2.trim() === "") {
-			event.preventDefault(); // 폼 제출 막기
-			alert("비밀번호를 입력하세요.");
-			return false;
-		}else{
-			check++;
-		}
+		
 		if(nickname.trim() ===""){
 			event.preventDefault();
 			alert("닉네임을 입력하세요");
@@ -312,15 +207,7 @@
 			check++
 		}
 	
-		
-		if(check==6){
-			// 회원가입 처리 로직
-			var registerForm = document.getElementById("registerForm");
-			registerForm.submit();
-		}else{
-			console.log(check+"개 완료");
-			return false;
-		}
+		return true;
 		
 	}
 	</script>

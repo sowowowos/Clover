@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
-
+import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Users;
 import loverduck.clover.service.KakaoServiceImpl;
 import loverduck.clover.service.UsersService;
@@ -49,7 +49,7 @@ public class UserController {
 	 */
 	@GetMapping("/registerInvestor")
 	public String registerInvestor() {
-		System.out.println("투자자폼");
+		
 		return "registerInvestor";
 	}
 	
@@ -78,7 +78,7 @@ public class UserController {
 	/**
 	 * 회원가입 기업
 	 * 추가로 받는 정보 : 사업자 등록번호, 산업선택, 기업url
-	 *                    no       sector    homepage
+	 *                      no     sector  homepage
 	 */
 	@PostMapping("/registerCorp")
 	public String register2(String name, String nickname, String email, String userid, String password, String password2, 
@@ -86,10 +86,10 @@ public class UserController {
 			String no, String sector, String homepage) {
 		
 		Users dbUser = new Users(null, userid, password, email , name , nickname, 0, phone, postalCode, address, detailAddress, null, null);
-
-		//System.out.println("출력 "+ dbUser.getEmail()+" "+dbUser.getNickname()+" "+dbUser.getUserid() );
-		
+		Company dbCompany = new Company(null, no, nickname, address, detailAddress, phone, email, homepage, null, null, 0, sector, null, null, null);
+				
 		int userCreateForm = usersService.register(dbUser);
+		int companyCreate = usersService.register2(dbCompany);
 		
 		return "redirect:/";
 	}
@@ -116,6 +116,7 @@ public class UserController {
 		return "login";
 	}
 	
+
 	/**
 	 * 로그인하기
 	 * post -> 페이지 전환 없이 값만 전달
@@ -130,8 +131,15 @@ public class UserController {
 	        session.setAttribute("loginEmail", dbUser.getEmail());
 	        
 	        session.setAttribute("user", dbUser);
-	        
-	        
+
+	        //회원 로그인 할때 투자자면 1 기업이면 0 
+	        //기업회원이면 세션에 company 정보 저장
+	        if(dbUser.getType()==0) {
+
+	        	Company dbCom = usersService.findCompany(email);
+		        session.setAttribute("company", dbCom);
+	        }
+
 	        return "redirect:/";
 	    } catch (IllegalArgumentException e) {
 	        model.addAttribute("error", e.getMessage());
@@ -158,7 +166,7 @@ public class UserController {
 			String nickname = (String) userInfo.get("nickname");
 			session.setAttribute("loginEmail", email);
 						
-			Users dbUser = new Users(nickname, access_Token, email, nickname, null);
+			Users dbUser = new Users(email, access_Token, email, nickname, nickname);
 			
 			session.setAttribute("user", dbUser);
 			
@@ -166,12 +174,19 @@ public class UserController {
 			if(emailExists == false) {
 				//이메일 존재 안할때 저장하기
 				usersService.register(dbUser);
-			}
-			
-			
+			}else {
+				return "redirect:/";
+			}		
 		}
 		
+		Users us = (Users) session.getAttribute("user");
+		
+		if(us.getType()==null) {
+			return "mypage/choose";
+		}
 		return "redirect:/";
+	
+		
 	}
 	
 	/**
@@ -182,6 +197,61 @@ public class UserController {
 
 		session.invalidate();
 			    
+		return "redirect:/";
+	}
+	/**
+	 * 카톡 로그인 후 투자자 회원으로 시작하기 폼
+	 */
+	@GetMapping("/updateInvestorKakao")
+	public String kakaoInvestorForm() {
+		
+		
+		return "mypage/updateInvestorKakao";
+	}
+	/**
+	 * 카톡 로그인 후 투자자 회원으로 시작하기
+	 */
+	@PostMapping("/updateInvestorKakao")
+	public String kakaoInvestorUpdate(String name, String nickname, String password,String phone,String postalCode,String address, String detailAddress , HttpSession session)  {
+		Users dbUser = (Users) session.getAttribute("user");
+		
+		String email = dbUser.getEmail();
+		
+		Users UpUser = usersService.updateAll(name, nickname, 1, phone, postalCode, address, detailAddress, email);
+
+		session.setAttribute("user", UpUser);
+		
+		return "redirect:/";
+	}
+	
+	/**
+	 * 카톡 로그인 후 기업 회원으로 시작하기 폼
+	 */
+	@GetMapping("/updateCorpKakao")
+	public String kakaoCorpForm() {
+		
+		
+		return "mypage/updateCorpKakao";
+	}
+	/**
+	 * 카톡 로그인 후 기업 회원으로 시작하기
+	 */
+	@PostMapping("/updateCorpKakao")
+	public String kakaoCorpUpdate(String name, String nickname,String phone,String postalCode,String address, 
+			String detailAddress , String no, String sector, String homepage, HttpSession session)  {
+		Users dbUser = (Users) session.getAttribute("user");
+		
+		String email = dbUser.getEmail();
+		
+		Users UpUser = usersService.updateAll(name, nickname, 0, phone, postalCode, address, detailAddress, email);
+		
+		session.setAttribute("user", UpUser);
+		
+		Company dbCompany = new Company(null, no, nickname, address, detailAddress, phone, email, homepage, null, null, 0, sector, null, null, null);
+		int companyCreate = usersService.register2(dbCompany);
+		
+		session.setAttribute("company", dbCompany);
+		
 		return "redirect:/";
 	}
 	
@@ -202,7 +272,7 @@ public class UserController {
 		Users dbUser = (Users) session.getAttribute("user");
 		
 		String email = dbUser.getEmail();
-		System.out.println(email+" 이메일이다 ");
+
 		if(nickname==null) {
 			nickname = dbUser.getNickname();
 		}
