@@ -89,7 +89,7 @@ public class FundingController {
 		return "/fundingAgree";
 	}
 	
-	/**
+	/** 
 	 * 펀딩 투자하기 - 펀딩하기
 	 * ->KG이니시스 결제창으로 가야한다
 	 */

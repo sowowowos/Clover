@@ -13,6 +13,13 @@
 	rel="stylesheet"
 	integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
 	crossorigin="anonymous">
+<!-- 구글 폰트 -->
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap')
+	;
+</style>
+
 <!-- 아임포트 라이브러리 -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -45,156 +52,168 @@
 	 */
 </script>
 
-<script type="text/javascript">
-$(document).ready(function() {
-	
-	 /* 구매 희망주 입력 시 총 펀딩 금액 값 변경 - 1주당금액*희망주 / 해당값 */
-	$('#fundHope').on('input',function() {
-		var fundHope = parseFloat($('#fundHope').val().replace(/,/g, ''));
-		var fundTotal = 10000 * fundHope; //펀딩 구매 희망주
-		var alloTotal = 2 * fundHope; //배당금 예상 금액
-		var finalTotal = fundTotal + alloTotal; // 최종 예상 금액
+<script type="text/javascript" th:inline="javascript">
+	$(document).ready(function() {
+		/* 구매 희망주 입력 시 총 펀딩 금액 값 변경 - 1주당금액*희망주 / 해당값 */
+		$('#fundHope').on('input',function() {
+			var fundHope = parseFloat($('#fundHope')
+					.val().replace(/,/g, ''));
+			var fundTotal = 10000 * fundHope; //펀딩 구매 희망주
+			var alloTotal = 2 * fundHope; //배당금 예상 금액
+			var finalTotal = fundTotal + alloTotal; // 최종 예상 금액
 
-		if (isNaN(fundTotal)) {
-			$('#fundTotal').text('0');
-			$('#alloTotal').text('0');
-			$('#finalTotal').text('0');
-			$('#expectPoint').text('0');
-		} else {
-			$('#fundTotal').text(fundTotal.toLocaleString());
-			$('#alloTotal').text(alloTotal.toLocaleString());
-			$('#finalTotal').text(finalTotal.toLocaleString());
-			$('#expectPoint').text(fundTotal.toLocaleString());
+			if (isNaN(fundTotal)) {
+				$('#fundTotal').text('0원');
+				$('#alloTotal').text('0원');
+				$('#finalTotal').text('0원');
+				$('#expectPoint').text('0point');
+			} else {
+				$('#fundTotal').text(
+						fundTotal.toLocaleString()
+								+ '원');
+				$('#alloTotal').text(
+						alloTotal.toLocaleString()
+								+ '원');
+				$('#finalTotal').text(
+						finalTotal.toLocaleString()
+								+ '원');
+				$('#expectPoint').text(
+						fundTotal.toLocaleString()
+								+ ' point');
+			}
+
+			var fT = fundTotal;
+			var nowPoint = [[${nowPoint}]];
+			//var nowPoint = [[${nowPoint}]];
+
+			console.log("fT = " + fT);
+			console.log("nowPoint = " + nowPoint);
+		});
+
+		/* 수익금 지급 예상일 - 오늘 날짜 기준 3개월 후  */
+		/* --> 추후 펀딩 종료 기간 설정시 해당 종료일 기준 3개월 후로 코드 변경 */
+		function getCurrentDate() {
+			var today = new Date();
+			return today.getFullYear() + '년 '
+					+ (today.getMonth() + 1) + '월 '
+					+ today.getDate() + '일';
 		}
 
-		var fT = fundTotal;
-		var nowPoint = [[${nowPoint}]];
-		
-		console.log("fT = " +fT);
-		console.log("nowPoint = " + nowPoint );
-	 });	
-	
-	/* 수익금 지급 예상일 - 오늘 날짜 기준 3개월 후  */
-	/* --> 추후 펀딩 종료 기간 설정시 해당 종료일 기준 3개월 후로 코드 변경 */
-	function getCurrentDate() {
-		var today = new Date();
-		return today.getFullYear() + '년 '
-				+ (today.getMonth() + 1) + '월 '
-				+ today.getDate() + '일';
-	}
+		// 3개월 후의 날짜 계산
+		function getFutureDate() {
+			var futureDate = new Date();
+			futureDate.setMonth(futureDate.getMonth() + 3);
+			return futureDate.getFullYear() + '년 '
+					+ (futureDate.getMonth() + 1) + '월 '
+					+ futureDate.getDate() + '일';
+		}
 
-	// 3개월 후의 날짜 계산
-	function getFutureDate() {
-		var futureDate = new Date();
-		futureDate.setMonth(futureDate.getMonth() + 3);
-		return futureDate.getFullYear() + '년 '
-				+ (futureDate.getMonth() + 1) + '월 '
-				+ futureDate.getDate() + '일';
-	}
+		// exchangeDate 요소에 표시
+		document.getElementById('exchangeDate').textContent = getFutureDate();
 
-	// exchangeDate 요소에 표시
-	document.getElementById('exchangeDate').textContent = getFutureDate();
+	});//ready End
 
-});//ready End
-
-//투자하기 버튼 클릭시
-function fundingPay () {
+	//투자하기 버튼 클릭시
+	function fundingPay() {
 		var fundHope = document.getElementById('fundHope').value;
-		var fundTotal = $('#fundTotal').text();		
+		var fundTotal = $('#fundTotal').text();
 		var fT = fundTotal.replace(/,/g, "");
-		var nowPoint = [[${nowPoint}]];
-		
-		console.log("fundingPay() fT = " +fT);
-		console.log("fundingPay() nowPoint = " + nowPoint );
-		console.log(fT>nowPoint);
-		
-		if (fundHope == null ||  fundHope === "") {
+		var nowPoint = "${nowPoint}";
+
+		console.log("fundingPay() fT = " + fT);
+		console.log("fundingPay() nowPoint = " + nowPoint);
+		console.log(fT > nowPoint);
+
+		if (fundHope == null || fundHope === "") {
 			alert("펀딩 구매 희망주를 입력하세요.");
 			document.getElementById('fundHope').focus();
 			return;
 		}
-		
-		if(fT>nowPoint){ //총 펀딩 금액이 현재 잔여 포인트보다 많을 경우 --> 포인트 충전 필요
-			document.getElementById('lackPoint').style.display="";
+
+		if (fT > nowPoint) { //총 펀딩 금액이 현재 잔여 포인트보다 많을 경우 --> 포인트 충전 필요
+			document.getElementById('lackPoint').style.display = "";
 			document.getElementById('charge_money').focus();
-		}else{ //총 펀딩 금액이 현재 잔여 포인트보다 같거나 적을 경우 --> 펀딩하기 버튼 활성화
-			
-			document.getElementById('lackPoint').style.display="none";
-			
+		} else { //총 펀딩 금액이 현재 잔여 포인트보다 같거나 적을 경우 --> 펀딩하기 버튼 활성화
+
+			document.getElementById('lackPoint').style.display = "none";
+
 			//추후 저장된 유저 세션값으로 변경할 것 
 			var amount = fT;
 			var type = 1; //0 충전, 1 사용
 			var wallet_id = 1;
 			var funding_id = 1;
-			
-			console.log("amount = " + amount);
-			$.ajax({					
-				url : "/fundingPay",
-				type : "POST",
-				dataType:"json",
-				data : {amount : amount, 
-						type : type,
-						wallet_id : wallet_id, 
-						funding_id : funding_id},
-				success: function(response) {
-			        var amount = response.amount;
-			        var date = response.date;			        
 
-			        console.log("Amount: " + amount);
-			       // console.log("Data: " + data);
-			       alert("되니?")
-			        
-			        /////////////현재 데이터 저장은 성공/////////////////
-			        /////////////페이지 이동만 되면 완료////////////////
-			        location.href='/fundingPayFin?amount='+amount+"&wallet_id="+wallet_id+"&date="+date;
-			    },
-			    error: function(jqXHR, textStatus, errorThrown) {
-			        // 에러 처리를 하는 부분입니다.
-			        console.error("Request failed: " + textStatus, errorThrown);
-			    }		
-			});//ajax End
+			console.log("amount = " + amount);
+			$
+					.ajax({
+						url : "/fundingPay",
+						type : "POST",
+						dataType : "json",
+						data : {
+							amount : amount,
+							type : type,
+							wallet_id : wallet_id,
+							funding_id : funding_id
+						},
+						success : function(response) {
+							var amount = response.amount;
+							var date = response.date;
+
+							console.log("Amount: " + amount);
+							// console.log("Data: " + data);
+							alert("되니?")
+
+							/////////////현재 데이터 저장은 성공/////////////////
+							/////////////페이지 이동만 되면 완료////////////////
+							location.href = '/fundingPayFin?amount=' + amount
+									+ "&wallet_id=" + wallet_id + "&date="
+									+ date;
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							// 에러 처리를 하는 부분입니다.
+							console.error("Request failed: " + textStatus,
+									errorThrown);
+						}
+					});//ajax End
 		}
 
-		
-		
 		//버튼 비활성화
 		//document.getElementById('fundingPayButton').disabled = true;	  	
-}
+	}
 </script>
 
 <!-- 아임포트 결제 처리  -->
 <script type="text/javascript">
-
 	var IMP = window.IMP;
 	var code = "imp78536886"; //가맹점 식별코드
 	IMP.init(code);
 
 	function requestPay() {
-		
+
 		var money = document.getElementById('charge_money').value;
-		if (money == null ||  money === "") {
+		if (money == null || money === "") {
 			alert("충전할 금액을 입력해주세요.");
 			document.getElementById('charge_money').focus();
 			return;
 		}
-		
+
 		/*pointHistory에 필요한 정보  */
 		/* type, amount, create_at, funding_id, wallet_id */
-		
+
 		/* 추후 session에 회원정보가 존재할 경우, 아래처럼 수정 예정 */
-        /* var user_id = [[${session.userid}]];
-        var user_email =  [[${session.email}]];
-        var user_name =  [[${session.name}]]; */        
-        
-        var user_id = 1;	//유저 아이디(pk)
-        var wallet_id = 1; 	//유저 월렛 id
-        var user_email =  'example@example.com';
-        var user_name =  '조아영';
-        var user_phone = '010-1234-5678';
-        var funding_id = '1';
-        var funding_name = '파도, 인진에서 "파력 에너지"로 다시 태어나다';    
-        var type = 0; //충전 0, 사용 1, 환전 2
-        var currentTime = new Date();
+		/* var user_id = [[${session.userid}]];
+		var user_email =  [[${session.email}]];
+		var user_name =  [[${session.name}]]; */
+
+		var user_id = 1; //유저 아이디(pk)
+		var wallet_id = 1; //유저 월렛 id
+		var user_email = 'example@example.com';
+		var user_name = '조아영';
+		var user_phone = '010-1234-5678';
+		var funding_id = '1';
+		var funding_name = '파도, 인진에서 "파력 에너지"로 다시 태어나다';
+		var type = 0; //충전 0, 사용 1, 환전 2
+		var currentTime = new Date();
 
 		IMP.request_pay({
 			pg : "html5_inicis", //pg사 구분코드 - 이니시스 웹표준
@@ -205,11 +224,11 @@ function fundingPay () {
 			buyer_name : user_name, //주문자명
 			buyer_tel : user_phone, //주문자연락처
 			buyer_email : user_email, //주문자 이메일
-			
-			//pc_redirect_url : '/mypage/pointCharge' //결제완료 후 이동 URL
+
+		//pc_redirect_url : '/mypage/pointCharge' //결제완료 후 이동 URL
 		}, function(rsp) {
 			console.log(rsp);
-			
+
 			if (rsp.success) { //결제 성공시
 				var msg = "[결제 완료]";
 				msg += " 결제 방법 = " + rsp.pay_method;
@@ -217,36 +236,38 @@ function fundingPay () {
 				msg += " 주문자명 = " + rsp.buyer_name;
 				console.log(msg);
 				alert("결제가 완료되었습니다.");
-				
-				
+
 				//데이터 전송
-				$.ajax({					
+				$.ajax({
 					url : "/mypage/pointCharge",
 					type : "POST",
-					dataType:"json",
-					data : {amount : rsp.paid_amount, 
+					dataType : "json",
+					data : {
+						amount : rsp.paid_amount,
 						type : type,
-						wallet_id : wallet_id},
-					success: function(response) {
-				        var amount = response.amount;
-				        var data = response.data;
-				        var date = response.date;
-				        
-				        $("date").text(date);
-				        //$("#nowPoint").text(amount);
-				        $("#status").text(amount);
+						wallet_id : wallet_id
+					},
+					success : function(response) {
+						var amount = response.amount;
+						var data = response.data;
+						var date = response.date;
 
-				        console.log("Amount: " + amount);
-				        console.log("Data: " + data);
-				        
-				        location.href = "/fundingPay";
-				       
-				    },
-				    error: function(jqXHR, textStatus, errorThrown) {
-				        // 에러 처리를 하는 부분입니다.
-				        console.error("Request failed: " + textStatus, errorThrown);
-				    }
-					
+						$("date").text(date);
+						//$("#nowPoint").text(amount);
+						$("#status").text(amount);
+
+						console.log("Amount: " + amount);
+						console.log("Data: " + data);
+
+						location.href = "/fundingPay";
+
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						// 에러 처리를 하는 부분입니다.
+						console.error("Request failed: " + textStatus,
+								errorThrown);
+					}
+
 				});
 				//window.location.href = rsp.next_redirect_pc_url; // 웹 페이지 이동
 
@@ -267,22 +288,6 @@ function fundingPay () {
 
 <title>CLOVER | 펀딩</title>
 <!--  펀딩 투자하기 - 펀딩하기 -->
-<style>
-#my_modal {
-	display: none;
-	width: 300px;
-	padding: 20px 60px;
-	background-color: #fefefe;
-	border: 1px solid #888;
-	border-radius: 3px;
-}
-
-#my_modal .modal_close_btn {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-}
-</style>
 </head>
 <body>
 	<div>
@@ -292,135 +297,236 @@ function fundingPay () {
 			<div class="section">
 				<div class="info-detail-container">
 					<div class="sequence-img-container">
-						<img class="sequence-img" src="/img/fundingAgree2.png" alt="">
+						<img class="sequence-img" src="/img/fundingPay1.png" alt="">
 					</div>
 					<div class="info-input-container">
+					
+						<!-- 기업정보  -->
 						<div class="funding-info1">
 							<div class="funding-info-title">기업정보</div>
 							<div class="funding-info-container1">
-								<div>
+								<div style="flex-grow: 1; text-align:center;">
 									<img class="funding-info-img" src="/img/granhand_sample_01.png"
 										alt="">
 								</div>
-								<div>
+								<div style="flex-grow: 2;">
 									<div class="funding-info-name">
 										<img class="funding-logo" src="/img/granhand_logo_01.png"
 											alt="Card image cap">
 										<h5 class="card-title">그랑핸드</h5>
 									</div>
-									<div>최초 플라스틱 분해 기업</div>
+									<div class="funding-info-content">최초 플라스틱 분해 기업</div>
 									<div class="card-title-keyword">
-										<div class="keword rounded bg-light text-primary">#러버추천</div>
-										<div class="keword rounded bg-light text-primary">#성공률50%</div>
+										<div class="keword rounded bg-light text-primary ">#러버추천</div>
+										<div class="keword rounded bg-light text-primary ">#성공률50%</div>
+										<!-- <div class="keword rounded bg-light text-primary ">#성공률50%</div> -->
 									</div>
 
 								</div>
 							</div>
 						</div>
+						
+						<!-- 펀딩 구매 희망주 입력 -->
 						<div class="funding-info2">
 							<div class="funding-info-title">펀딩 구매 희망주</div>
 							<div class="funding-info-container2">
-								<div>펀딩 최대금액 제한(해당 펀딩 최대금액의 25%)</div>
+								<div id="funding-warning1">
+									<svg xmlns="http://www.w3.org/2000/svg" style="color: #9A9A9A;"
+										width="0.8rem" height="0.8rem" fill="currentColor"
+										class="bi bi-question-circle" viewBox="0 0 16 16">
+								  <path
+											d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+								  <path
+											d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+								</svg>
+									펀딩 최대금액 제한 (해당 펀딩 최대금액의 25%)
+								</div>
 								<div>
-									<input type="text" id="fundHope" class="">주
+									<input type="text" id="fundHope" class="" placeholder="주 입력">주
 								</div>
 							</div>
-							<div style="text-align: right;">펀딩 구매 희망주 변경은 5/31까지 가능합니다.</div>
+							<div id="funding-warning2" style="text-align: right;">펀딩 구매
+								희망주 변경은 5/31까지 가능합니다.</div>
 						</div>
+						
+						<!-- 최종 펀딩정보 -->
 						<div class="funding-info3">
 							<div class="funding-info-title">최종 펀딩정보</div>
 							<div class="funding-info-container3">
 								<div class="funding-amount-title">
-									<div>총 펀딩 금액</div>
+									<div style="font-weight: 600; padding: 0 1rem;">총 펀딩 금액</div>
 									<div class="funding-amount">
-										<div>1주당금액*구매희망주</div>
-										<div id="fundTotal">0</div>
-										원
+										<div id="funding-warning1">
+											<svg xmlns="http://www.w3.org/2000/svg"
+												style="color: #9A9A9A;" width="0.8rem" height="0.8rem"
+												fill="currentColor" class="bi bi-question-circle"
+												viewBox="0 0 16 16">
+										  <path
+													d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+										  <path
+													d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+										</svg>
+											1주당금액*구매희망주
+										</div>
+										<div class="amount" id="fundTotal">0원</div>
 									</div>
 
 								</div>
-								<div>
+								<div class="funding-amount-detail2">
 									<div class="funding-amount">
-										<div>배당금 예상 금액</div>
-										<div id="alloTotal">0</div>
-										원
+										<div class="title">배당금 예상 금액((펀딩금액/1,000원)*배당률)</div>
+										<div class="amount" id="alloTotal">0원</div>
 									</div>
 									<div class="funding-amount">
-										<div>최종 예상 수익금액</div>
-										<div id="finalTotal">0</div>
-										원
+										<div class="title">최종 예상 수익금액</div>
+										<div class="amount" id="finalTotal">0원</div>
 									</div>
 									<div class="funding-amount">
-										<div>수익금 지급 예상일</div>
-										<div id="exchangeDate">0</div>
+										<div class="title">수익금 지급 예상일</div>
+										<div class="amount" id="exchangeDate">0원</div>
 									</div>
 								</div>
 							</div>
 						</div>
 
+						<!-- 포인트 충전  -->
 						<div class="funding-info4">
 							<div class="funding-info-title">포인트 충전</div>
 							<div class="funding-info-container4">
 								<div class="funding-pay-title">
 									<div style="display: flex; justify-content: space-between">
-										<input type="text" id="charge_money" class="form-control"
-											placeholder="충전할 금액을 입력해주세요.">
-										<button type="button" onclick="requestPay()"
-											class="btn btn-primary">충전</button>
 									</div>
 								</div>
 							</div>
 							<div id="lackNowPoint"></div>
+ 
+							<div class="border box shadow-sm bg-white rounded wallet-container">
+								<div class="wallet col-4 fs-5 fw-bold txt-blue">CLOVER WALLET</div>
+								<div class="charge row justify-content-end text-end">
+									<div class="col-md-5">
+										<input type="text" id="charge_money" class="form-control"
+											placeholder="충전할 금액을 입력해주세요.">
+									</div>
+									<div class="col-md-2">
+										<button type="button" onclick="requestPay()"
+											class="btn btn-primary">충전</button>
+									</div>
+								</div>
+								<div class="lowprice row justify-content-end text-end">
+									<div id="funding-warning1" class="col-md-5" style="color: grey">충전 최소 금액 : 100원
+									</div>
+								</div>
+								<div class="text-end funding-warning2" id="lackPoint">! 포인트 잔액이 부족합니다. WALLET을 충전해주세요.</div>
+							</div>
+
+
 						</div>
-						<!-- 포인트가 모자를 경우 모자른 금액 만큼 충전 후 결제될 수 있도록 여러 방안-->
+
+						<!-- 최종 포인트 사용 정보-->
 						<div class="funding-info4">
 							<div class="funding-info-title">최종 포인트 사용 정보</div>
 							<div class="funding-info-container4">
-								<div class="funding-pay-title">
-									<div>CLOVER WALLET</div>
-								</div>
-								<div>
+								<div class="funding-amount-detail2">
 									<div class="funding-amount">
-										<div>현재 포인트</div>
-										<div id=""
-											th:text="${#numbers.formatInteger(nowPoint,3,'COMMA')}">0</div>
-										point
+										<div class="title">
+											<svg xmlns="http://www.w3.org/2000/svg" width="0.8rem"
+												height="0.8rem" fill="currentColor"
+												class="bi bi-p-circle-fill" viewBox="0 0 16 16"
+												style="color: #0042A0;">
+						  						<path
+													d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM5.5 4.002V12h1.283V9.164h1.668C10.033 9.164 11 8.08 11 6.586c0-1.482-.955-2.584-2.538-2.584H5.5Zm2.77 4.072c.893 0 1.419-.545 1.419-1.488s-.526-1.482-1.42-1.482H6.778v2.97H8.27Z"></path>
+												</svg>
+											현재 포인트
+										</div>
+										<div class="amount" th:text="${#numbers.formatInteger(nowPoint,3,'COMMA')}">0</div>
+									</div>
+
+									<div class="funding-amount">
+										<div class="title">
+										<svg xmlns="http://www.w3.org/2000/svg" width="0.8rem"
+												height="0.8rem" fill="currentColor"
+												class="bi bi-p-circle-fill" viewBox="0 0 16 16"
+												style="color: #0042A0;">
+						  						<path
+													d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM5.5 4.002V12h1.283V9.164h1.668C10.033 9.164 11 8.08 11 6.586c0-1.482-.955-2.584-2.538-2.584H5.5Zm2.77 4.072c.893 0 1.419-.545 1.419-1.488s-.526-1.482-1.42-1.482H6.778v2.97H8.27Z"></path>
+												</svg>
+										사용 예정 포인트</div>
+										<div class="amount" id="expectPoint">0point</div>
 									</div>
 									<div class="funding-amount">
-										<div>사용 예정 포인트</div>
-										<div id="expectPoint">0</div>
-										point
 									</div>
 								</div>
-								<div id="lackPoint">! 포인트잔액이 부족합니다. WALLET을 충전해주세요</div>
-
-
+								
+							</div>
+						</div>
+						
+						<!-- 펀딩 이용약관 동의 -->
+						<div class="funding-info5">
+						<div class="funding-info-title-agree">
+							<span style="font-size:1.3rem;color:#0042A0;">펀딩</span> 전 반드시 확인하세요👀
+						</div>
+							<div class="funding-info-container4">
 								<!-- 약관동의 -->
-								<div class="funding-info5">
-									<div class="form-check">
-										<label class="form-check-label" for="flexCheckDefault">
-											해당기업이 설정한 펀딩금액의 최소 금액만큼 투자금 미달성시 <br> 해당펀딩은 취소되며, 투자자가
-											펀딩한 금액을 돌려받을 수있습니다.
-										</label> <input class="form-check-input" type="checkbox" value=""
-											id="flexCheckDefault">
-									</div>
-									<div class="form-check">
-										<label class="form-check-label" for="flexCheckDefault">
-											해당기업이 설정한 펀딩금액의 최소 금액만큼 투자금 미달성시<br> 해당펀딩은 취소되며, 투자자가
-											펀딩한 금액을 돌려받을 수있습니다.
-										</label> <input class="form-check-input" type="checkbox" value=""
-											id="flexCheckDefault">
-									</div>
-									<div class="form-check">
-										<label class="form-check-label" for="flexCheckDefault">
-											펀딩정보 및 주의사항을 모두 확인했으며, 결제 진행에 동의합니다. </label> <input
-											class="form-check-input" type="checkbox" value=""
-											id="flexCheckDefault">
-									</div>
+								<div class="funding-info5">									
+									<form name="agreeForm" method="post">
+										<div class="checkbox_group">
+											<div class="agree">
+												<div>
+													<label for="check_all" style="font-weight: 600;font-size:1.1rem;"> 전체 동의</label>
+												</div>
+												<div>
+													<input type="checkbox" id="check_all" class="normal">
+												</div>
+											</div>
+											<div class="agree">
+												<div>
+													<label for="check_1"><span class="agreeCertain">(필수)</span> 회원 약관 동의</label>
+												</div>
+												<div>
+													<input type="checkbox" id="check_1" class="normal">
+												</div>
+											</div>
+											<div class="agree">
+												<div>
+													<label for="check_2"><span class="agreeCertain">(필수)</span> 개인정보처리방침 동의</label>
+												</div>
+												<div>
+													<input type="checkbox" id="check_2" class="normal">
+												</div>
+											</div>
+											<div class="agree">
+												<div>
+													<label for="check_3"><span class="agreeCertain">(필수)</span> 서비스 이용약관 동의</label>
+												</div>
+												<div>
+													<input type="checkbox" id="check_3" class="normal">
+												</div>
+											</div>
+											<div class="agree">
+												<div>
+													<label for="check_4"><span class="agreeCertain">(필수)</span> 개인정보 위탁 방침 동의</label>
+												</div>
+												<div>
+													<input type="checkbox" id="check_4" class="normal">
+												</div>
+											</div>
+											<div class="agree">
+												<div>
+													<label for="check_5" style="font-weight: 600;">
+													<span class="agreeCertain">(필수)</span>
+													 펀딩정보 및 주의사항을 모두 확인했으며, 결제 진행에 동의합니다.</label>
+												</div>
+												<div>
+													<input type="checkbox" id="check_5" class="normal">
+												</div>
+											</div>
+
+										</div>
+									</form>									
 
 								</div>
 								<div>
-									<button type="button" onclick="fundingPay()"
+									<button type="button" id="fundingSubmit" onclick="fundingPay()"
 										class="btn btn-primary">펀딩하기</button>
 								</div>
 
@@ -434,5 +540,23 @@ function fundingPay () {
 			</div>
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+	// 체크박스 전체 선택
+	$(".checkbox_group").on("click", "#check_all", function () {
+	    $(this).parents(".checkbox_group").find('input').prop("checked", $(this).is(":checked"));
+	});
+
+	// 체크박스 개별 선택
+	$(".checkbox_group").on("click", ".normal", function() {
+	    var is_checked = true;
+
+	    $(".checkbox_group .normal").each(function(){
+	        is_checked = is_checked && $(this).is(":checked");
+	    });
+
+	    $("#check_all").prop("checked", is_checked);
+	});
+	</script>
 </body>
 </html>
