@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-
+import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Users;
-
+import loverduck.clover.repository.CompanyRepository;
 import loverduck.clover.repository.UsersRepository;
 
 @Service
@@ -19,6 +19,9 @@ public class UsersServiceImpl implements UsersService {
 	@Autowired
 	private UsersRepository usersRep;
 	
+	@Autowired
+	private CompanyRepository companyRep;
+	
 	
 	@Override
 	public int register(Users users) {
@@ -29,6 +32,25 @@ public class UsersServiceImpl implements UsersService {
 	}
 	
 
+
+
+	@Override
+	public int register2(Company company) {
+		
+		companyRep.save(company);
+		
+		return 1;
+	}
+
+
+
+
+	@Override
+	public Company findCompany(String email) {
+		Company company = companyRep.findByCEmail(email);
+		
+		return company;
+	}
 
 	
 	
@@ -80,7 +102,22 @@ public class UsersServiceImpl implements UsersService {
 
 
 
-	
+
+
+	//카톡 투자자 로그인시 추가 정보 업데이트
+	@Override
+	public Users updateAll(String name, String nickname, Integer type, String phone, String postalCode, String address,
+			String detailAddress, String email) {
+
+		usersRep.updateUserAll(name, nickname, type, phone, postalCode, address, detailAddress, email);
+		
+		Users dbUser = usersRep.findByEmail(email);
+		
+		return dbUser;
+	}
+
+
+
 
 
 

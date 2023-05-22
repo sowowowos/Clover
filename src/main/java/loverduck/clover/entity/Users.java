@@ -31,8 +31,6 @@ public class Users {
     @NotNull
     @NotEmpty
     private String email;
-    
-    @Column(unique = true)
     @NotNull
     @NotEmpty
     private String name;

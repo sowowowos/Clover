@@ -12,9 +12,15 @@
 <link href="/css/bootstrap.min.css" rel="stylesheet" />
 
 
-<title>Title</title>
+<title>Clover | 회원가입 </title>
 <!-- 	회원가입 - 투자자 -->
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
 .active {
 	border-color: #0042A0 !important;
 	background: #0042A0 !important;
@@ -31,7 +37,7 @@
 					<div class="w-100 mt-5 py-4 my-4">
 						<h2 class="text-center fw-bold">회원가입</h2>
 					</div>
-
+					<!-- 회원 선택 바 : 투자자 -->
 					<ul
 						class="nav-tabs row justify-content-start m-0 p-0 text-center fs-5 shadow">
 						<li class="nav-item col p-0"><a class="py-3 nav-link  active">
@@ -39,10 +45,13 @@
 						<li class="nav-item col p-0"><a class="py-3 nav-link"
 							href="/registerCorp"> 기업 회원 </a></li>
 					</ul>
+					<!-- 폼 -->
 					<form action="/registerInvestor" method="post"
 						 onsubmit="return register(event)"
 						class="p-5 m-auto align-items-start bg-light shadow border-top border-primary border-4 mb-5"
 						style="border-color: #0042A0 !important;"> <!-- -->
+						
+						<!-- 이메일 -->
 						<div class="mb-4">
 							<label for="exampleInputEmail1" class="form-label">이메일
 								<ruby>*
@@ -57,11 +66,10 @@
 								<button type="button" class="btn btn-primary col-3"
 									style="background: #0042A0" onclick="checkEmail()">인증
 									하기</button>
-								<!--  -->
 							</div>
 							<div id="emailHelp" class="form-text"></div>
-
 						</div>
+						<!-- 비밀번호 -->
 						<div class="mb-4">
 							<label for="exampleInputPassword1" class="form-label">비밀번호
 								<ruby>*
@@ -70,7 +78,6 @@
 								id="exampleInputPassword1" name="password" placeholder=""
 								required autofocus>
 							<div id="passwordHelp" class="form-text"></div>
-							<!-- 8~16 영문 대,소문자, 숫자, 특수문자를 포함해주세요. -->
 						</div>
 						<div class="mb-4">
 							<label for="exampleInputPassword2" class="form-label">비밀번호
@@ -154,7 +161,7 @@
 						<div class="mb-2 form-check">
 							<p id="checkboxError"></p>
 							<input type="checkbox" class="form-check-input"
-								id="exampleCheck1" required> <label
+								id="exampleCheck1" required autofocus="autofocus"> <label
 								class="form-check-label" for="exampleCheck1">약관 전체동의</label>
 							<div class="form-text">회원약관 동의(필수), 개인정보처리방침(필수), 개인정보위탁
 								방침(필수), 사이트이용약관(필수), 만14세이상(필수)</div>
@@ -325,15 +332,15 @@
 			var postalCode = document.getElementById("sample6_postcode").value;
 			var address = document.getElementById("sample6_address").value;
 
-			if (!checkbox.checked) {
-				errorText.innerText = "동의해야 회원가입 가능합니다.";
-				errorText.style.color = "red";
-				event.preventDefault(); // 폼 제출 막기
-				return false; // 폼 제출 막기
-			}else{
-				errorText.innerText = "";
-				check++;
-			}
+// 			if (!checkbox.checked) {
+// 				errorText.innerText = "동의해야 회원가입 가능합니다.";
+// 				errorText.style.color = "red";
+// 				event.preventDefault(); // 폼 제출 막기
+// 				return false; // 폼 제출 막기
+// 			}else{
+// 				errorText.innerText = "";
+// 				check++;
+// 			}
 			if (postalCode.trim() === "" || address.trim() === "") {
 				event.preventDefault(); // 폼 제출 막기
 				alert("주소를 입력해주세요.");
@@ -343,7 +350,7 @@
 			}
 			console.log(check + " 현재  ");
 			// return true;
-			if(check==5){
+			if(check==4){
 				// 회원가입 처리 로직
 				var registerForm = document.getElementById("registerForm");
 				registerForm.submit();

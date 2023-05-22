@@ -19,16 +19,21 @@ public class Company {
     @SequenceGenerator(name = "company_seq", sequenceName = "company_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "company_seq")
     private Long id;
-    private String no;
-    private String name;
-    private String address;
-    private String phone;
+    private String no;               //사업자 등록번호 *
+    private String name;             //회사명 *
+    private String address;          //주소
+    private String detailAddress;    //상세주소
+    private String phone;       
     private String email;
-    private String homepage;
-    private String description;
-    private String logo;
-    private Integer type;
-    private String sector;
+    private String homepage;       //기업 url 
+    private String description;    // 기업 상세?
+    private String logo;          //로고 이미지 
+    /**
+     * 기업승인 상태
+     *  0 : 대기 (가입만 한 상태)
+     */
+    private Integer type;         
+    private String sector;        //산업 선택 *
 
     @OneToMany(mappedBy = "company")
     private List<CompanyKeyword> companyKeywords;

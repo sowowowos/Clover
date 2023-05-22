@@ -11,9 +11,14 @@
 	th:href="@{/css/reset.css}">
 <link rel="stylesheet" href="../static/css/bootstrap.min.css"
 	th:href="@{/css/bootstrap.min.css}" />
-<title>Title</title>
+<title>Clover | 회원기업</title>
 <!-- 	회원가입 - 기업 -->
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+}
 .active {
 	border-color: #0042A0 !important;
 	background: #0042A0 !important;
@@ -31,6 +36,7 @@
 					<div class="w-100 mt-5 py-4 my-4">
 						<h2 class="text-center fw-bold">회원가입</h2>
 					</div>
+					<!-- 회원 선택 바 -->
 					<ul
 						class="nav-tabs row justify-content-start m-0 p-0 text-center fs-5 shadow">
 						<li class="nav-item col p-0"><a class="py-3 nav-link "
@@ -38,6 +44,7 @@
 						<li class="nav-item col p-0"><a class="py-3 nav-link active">
 								기업 회원 </a></li>
 					</ul>
+					<!-- 폼 -->
 					<form action="/registerCorp" method="post"
 						onsubmit="return register()"
 						class="p-5 m-auto align-items-start bg-light shadow border-top border-primary border-4 mb-5"
