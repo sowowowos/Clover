@@ -354,7 +354,7 @@ public class UserController {
 	        return "mypage/mypageInvestor";
 	    } else {
 	        // 세션에 사용자 정보가 없는 경우 로그인 창으로 
-	        return "redirect:/login";
+	        return "redirect:/loginForm";
 	    }
 	}
 	
