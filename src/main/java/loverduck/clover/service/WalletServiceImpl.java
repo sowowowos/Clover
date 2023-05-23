@@ -14,7 +14,7 @@ public class WalletServiceImpl implements WalletService {
 
 	private final WalletRepository walletRepository;
 	private final PointHistoryRepository pointHistoryRepository;
-
+  
 	/**
 	 * wallet id 검색
 	 */
