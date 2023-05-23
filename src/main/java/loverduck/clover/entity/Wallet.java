@@ -5,6 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -36,4 +37,8 @@ public class Wallet {
     @JsonIgnore
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Users user;
+    
+	/*
+	 * @OneToMany(fetch = FetchType.LAZY) private PointHistory pointHistory;
+	 */
 }

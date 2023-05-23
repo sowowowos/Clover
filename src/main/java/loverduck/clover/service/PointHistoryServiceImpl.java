@@ -1,5 +1,6 @@
 package loverduck.clover.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -14,9 +15,10 @@ import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
+import loverduck.clover.entity.Exchange;
+import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.PointHistory;
 import loverduck.clover.entity.QPointHistory;
-import loverduck.clover.entity.QWallet;
 import loverduck.clover.entity.Wallet;
 import loverduck.clover.repository.PointHistoryRepository;
 import loverduck.clover.repository.WalletRepository;
@@ -35,12 +37,29 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 	@Autowired
 	private final EntityManager entityManager;
 	
+    private final JPAQueryFactory queryFactory;
+
 	@Override
 	@Transactional
 	public void pointChargeInsert(PointHistory pointHistory) {
 		phRepository.save(pointHistory);
 	}
 
+	@Override
+	@Transactional
+	public void pointChargeInsert2(Long amount, LocalDateTime created_at, Integer type, Wallet wallet_id) {
+		
+		phRepository.insertPointHistoryByWalletId(amount, created_at, type, wallet_id);
+		
+		/*
+		 * QPointHistory pointHistory = QPointHistory.pointHistory; queryFactory
+		 * .insert(pointHistory) .set(pointHistory.id, id) .set(pointHistory.amount,
+		 * amount) .set(pointHistory.createdAt, created_at) .set(pointHistory.type,
+		 * type) .set(pointHistory.exchange, exchange_id) .set(pointHistory.funding,
+		 * funding_id) .set(pointHistory.wallet, wallet_id) .execute();
+		 */
+    }	
+	
 	/**
 	 * 포인트 상세내역 조회(오름차순으로 정렬)
 	 */
@@ -54,7 +73,7 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 	/**
 	 * 포인트 충전/사용 내역에 따른 wallet amount 값 변경
 	 */
-	public Integer updateWalletAmount(Long id) {
+	public Integer updateWalletAmount(Long walletId) {
 		
 		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);		
 	    QPointHistory qpointHistory = QPointHistory.pointHistory;
@@ -67,12 +86,12 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 	    Integer result = queryFactory
 	            .select(amountSum)
 	            .from(qpointHistory)
-	            .where(qpointHistory.wallet.id.eq(id))
+	            .where(qpointHistory.wallet.id.eq(walletId))
 	            .fetchOne();
 
 	    // null이 아닐 경우, Wallet의 amount 업데이트
 	    if (result != null) {
-	        Wallet wallet = entityManager.find(Wallet.class, id); // 해당 id에 해당하는 Wallet 조회
+	        Wallet wallet = entityManager.find(Wallet.class, walletId); // 해당 id에 해당하는 Wallet 조회
 	        if (wallet != null) {
 	            Long currentAmount = wallet.getAmount();
 	            Long newAmount = Long.valueOf(result); 
