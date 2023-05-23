@@ -13,6 +13,12 @@
 	rel="stylesheet"
 	integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
 	crossorigin="anonymous">
+<!-- 구글 폰트 -->
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap')
+	;
+</style>
 
 <title>CLOVER | 펀딩완료</title>
 </head>
@@ -24,13 +30,14 @@
 			<div class="section">
 				<div class="info-detail-container">
 					<div class="sequence-img-container">
-						<img class="sequence-img" src="/img/fundingAgree3.png" alt="">
+						<img class="sequence-img" src="/img/fundingPay2.png" alt="">
 					</div>
 					<div class="info-input-container">
 						<div class="funding-info1">
 							<div class="funding-fin">
 								<div class="funding-fin-title">펀딩 완료</div>
-								<div class="funding-fin-detail" >펀딩 상세내역 보기</div>
+								<!-- 추후 펀딩 상세내역 URL연결 -->
+								<div class="funding-fin-detail">펀딩 상세내역 보기</div>
 							</div>
 							<div class="funding-info-container1">
 								<!-- <div>
@@ -45,13 +52,15 @@
 										<div class="keword rounded bg-light text-primary">#성공률50%</div>
 									</div>
 								</div> -->
-								
+
 								<div>
-									<div>총 펀딩금액</div>
-									<div>[[${amount}]]원</div>
-									<div>수익금 지금 예상일</div>
-									<div>[[${date}]]</div>
-									
+									<div id="fundTotalTitle">총 펀딩금액</div>
+									<div id="fundTotal">[[${amount}]]원</div>
+								</div>
+								<div>
+									<div id="fundDateTitle">수익금 지금 예상일</div>
+									<div id="fundDate">[[${date}]]일</div>
+
 								</div>
 							</div>
 						</div>

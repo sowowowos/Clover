@@ -1,7 +1,10 @@
 @charset "EUC-KR";
-
+* {
+	font-family: 'Noto Sans KR', sans-serif;
+}
 .section {
 	box-sizing: content-box !important;
+	border: none!important;
 }
 
 .info-detail-container {
@@ -15,12 +18,13 @@
 }
 
 .sequence-img-container {
-	width: 100%;
+	width: 80%;
 	padding: 2rem 0;
+	margin: auto;
 }
 
 .sequence-img {
-	width: 60%;
+	width: 50%;
 	margin: auto;
 	display: block;
 }
@@ -43,9 +47,8 @@
 }
 
 .info-input-container {
-	height: 100%;
-	/*background-color: gray;*/
-	border-top: 2px solid #0042A0;
+    height: 100%;
+    border-top: 3px solid #0042A0;
 }
 
 /*펀딩 완료 정보*/
@@ -67,6 +70,22 @@
 	border: 1px solid gray;
 	border-radius: 5px;
 	height: 10rem;
+}
+#fundTotalTitle{
+	font-weight: bold;
+}
+#fundTotal {
+	font-weight:600;
+    font-size: 1.2rem;
+    color: #0042A0;
+}
+#fundDateTitle{
+	font-weight: bold;
+}
+#fundDate{
+	font-weight:600;
+    font-size: 1.2rem;
+    color: #0042A0;
 }
 
 .funding-fin {
