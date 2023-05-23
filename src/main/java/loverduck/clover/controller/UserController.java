@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Users;
+import loverduck.clover.entity.Wallet;
 import loverduck.clover.service.KakaoServiceImpl;
 import loverduck.clover.service.UsersService;
 
@@ -59,6 +60,7 @@ public class UserController {
 	@PostMapping("/registerInvestor")
 	public String register(String name, String nickname, String email, String userid, String password, String password2, String phone,String postalCode,String address, String detailAddress ) {
 
+				
 		Users dbUser = new Users(null, userid, password, email,name , nickname,  1, phone, postalCode, address, detailAddress, null, null);
 
 		int userCreateForm = usersService.register(dbUser);
@@ -85,6 +87,7 @@ public class UserController {
 			String phone,String postalCode,String address, String detailAddress,
 			String no, String sector, String homepage) {
 		
+//		Wallet wallet = new Wallet(null, (long) 0, null);
 		Users dbUser = new Users(null, userid, password, email , name , nickname, 0, phone, postalCode, address, detailAddress, null, null);
 		Company dbCompany = new Company(null, no, nickname, address, detailAddress, phone, email, homepage, null, null, 0, sector, null, null, null);
 				
@@ -167,6 +170,8 @@ public class UserController {
 			session.setAttribute("loginEmail", email);
 						
 			Users dbUser = new Users(email, access_Token, email, nickname, nickname);
+//			Wallet wallet = new Wallet(null, (long) 0, dbUser);
+//			dbUser.builder().wallet(wallet).build();
 			
 			session.setAttribute("user", dbUser);
 			
