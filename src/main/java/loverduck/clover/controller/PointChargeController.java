@@ -59,22 +59,27 @@ public class PointChargeController {
 							@RequestParam("wallet_id") Long wallet_id, 
 							HttpSession session, Model model) {
 
-		Long id = 1L;
+		//Long id = 1L;
 		Users u = (Users)session.getAttribute("user");
 		LocalDateTime currentTime = LocalDateTime.now();
 		
+		System.out.println("amount : " + amount);
+		System.out.println("wallet_id : " + wallet_id);
 	    Wallet wallet = walletService.findById(wallet_id);
 	    //model.addAttribute("wallet", wallet);
 	    
 	    //포인트 충전 내역 저장
-		PointHistory pointHistory = new PointHistory(id, amount, type, currentTime, wallet, null, null);
+		//PointHistory pointHistory = new PointHistory(id, amount, type, currentTime, wallet, null, null);
 		//PointHistory pointHistory = new PointHistory(u.getWallet().getId(), amount, type, currentTime, wallet, null, null);
-	    pointHistoryService.pointChargeInsert(pointHistory);
+	    //pointHistoryService.pointChargeInsert(pointHistory);
+	    
+		//pointHistoryService.pointChargeInsert2(id, amount, currentTime, type, wallet);
+		pointHistoryService.pointChargeInsert2(amount, currentTime, type, wallet);
 		
 		//결제 후 서버 통신 확인
 	    Map<String, Object> map = new HashMap<String, Object>();
 
-	    map.put("amount", 100);
+	    map.put("amount", amount);
 		map.put("data", "success");
 		map.put("date", currentTime);
 		//pointHistoryService.pointChargeInsert(new PointHistory(amount, null, currentTime));
