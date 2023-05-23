@@ -34,7 +34,10 @@ public interface UsersRepository extends JpaRepository<Users, Long>, QuerydslPre
     void updateUserAll(String name, String nickname, Integer type, String phone, String postalCode, String address,
 			String detailAddress, String email);
     
-    
+
+    String FIND_USER_BY_ID_QUERY = "select * from users where user_id = :id";
+   	@Query(nativeQuery = true, value = FIND_USER_BY_ID_QUERY)
+     Users findUserById(Long id);
 
 
 }

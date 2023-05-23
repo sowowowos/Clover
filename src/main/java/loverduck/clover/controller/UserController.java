@@ -1,6 +1,7 @@
 package loverduck.clover.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Company;
+import loverduck.clover.entity.Ordered;
 import loverduck.clover.entity.Users;
 import loverduck.clover.entity.Wallet;
 import loverduck.clover.service.KakaoServiceImpl;
@@ -343,10 +345,17 @@ public class UserController {
 	/**
 	 * 마이페이지 - 투자자 (내 펀딩)
 	 */
-	@RequestMapping("/mypageInvestor")
-	public String mypageInvestor() {
-		
-		return "mypage/mypageInvestor";
+	@RequestMapping("mypage/mypageInvestor/{id}")
+	public String mypageInvestor(@PathVariable Long id, Model model, HttpSession session) {
+	    Users user = (Users) session.getAttribute("user");
+	    if (user != null) {
+	        List<Ordered> myfunds = usersService.findOrderdByUser(user.getId());
+	        model.addAttribute("myfunds", myfunds);
+	        return "mypage/mypageInvestor";
+	    } else {
+	        // 세션에 사용자 정보가 없는 경우 로그인 창으로 
+	        return "redirect:/login";
+	    }
 	}
 	
 	/**

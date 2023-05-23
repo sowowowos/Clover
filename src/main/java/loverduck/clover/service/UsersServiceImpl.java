@@ -1,14 +1,18 @@
 package loverduck.clover.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Company;
+import loverduck.clover.entity.Ordered;
 import loverduck.clover.entity.Users;
 import loverduck.clover.entity.Wallet;
 import loverduck.clover.repository.CompanyRepository;
+import loverduck.clover.repository.OrderedRepository;
 import loverduck.clover.repository.UsersRepository;
 import loverduck.clover.repository.WalletRepository;
 
@@ -25,11 +29,13 @@ public class UsersServiceImpl implements UsersService {
 	private CompanyRepository companyRep;
 	
 	@Autowired
+	private OrderedRepository orderedRepository;
+  
+  @Autowired
 	private WalletRepository walletRep;
 	
 	
-	
-	
+		
 	@Override
 	public int register(Users users) {
 		
@@ -133,7 +139,14 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 
-
+	/**
+	 * 마이페이지 - 내가 투자한 펀딩 목록 출력 
+	 */
+	@Override
+	public List<Ordered> findOrderdByUser(Long id) {
+		List<Ordered> myFunds = orderedRepository.findFundingsByUserId(id);
+	    return myFunds;
+	}
 
 
 
