@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,13 @@ import loverduck.clover.repository.WalletRepository;
 @Transactional
 public class PointHistoryServiceImpl implements PointHistoryService {
 
+	@Autowired
 	private final PointHistoryRepository phRepository;
+	
+	@Autowired
 	private final WalletRepository walletRepository;
+	
+	@Autowired
 	private final EntityManager entityManager;
 	
 	@Override
