@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,10 @@ public class PointChargeController {
 	// 포인트 상세 내역
 
 	@GetMapping(value = "/pointCharge")
-	public String pointCharge(Model model) {
+	public String pointCharge(Model model, HttpServletRequest request) {
 		
 		//추후 세션 로그인 회원 정보에 따른 wallet_id로 코드 수정할 예정
-		Long wallet_id = 1L;
+		Long wallet_id = 1L;		
 		
 		//회원별 포인트 상세 내역 출력
 		List<PointHistory> phDetailList =  pointHistoryService.pointHistoryList(wallet_id);
@@ -64,9 +65,10 @@ public class PointChargeController {
 		
 	    Wallet wallet = walletService.findById(wallet_id);
 	    //model.addAttribute("wallet", wallet);
-
+	    
 	    //포인트 충전 내역 저장
 		PointHistory pointHistory = new PointHistory(id, amount, type, currentTime, wallet, null, null);
+		//PointHistory pointHistory = new PointHistory(u.getWallet().getId(), amount, type, currentTime, wallet, null, null);
 	    pointHistoryService.pointChargeInsert(pointHistory);
 		
 		//결제 후 서버 통신 확인
