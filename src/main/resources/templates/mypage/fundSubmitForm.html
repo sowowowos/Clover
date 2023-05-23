@@ -15,14 +15,17 @@
 	integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
 	crossorigin="anonymous">
 <title>CLOVER | 펀딩 신청</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+</style>
 </head>
 
 <!-- 펀딩신청 페이지 -->
 <body>
 	<div>
 		<!-- Navbar -->
-		<div class="nav"></div>
-
+		<div class="nav">네브바</div>
+		<div class="banner">배너</div>
 		<div class="container">
 			<!-- 메뉴 -->
 			<div class="col-2">
@@ -36,103 +39,141 @@
 			</div>
 
 			<!-- 펀딩신청폼 컨테이너-->
-			<div class="submit-container">
-				<div>펀딩신청</div>
+			<div class="submit-container col-8 m-auto" >
+				<div class="fw-bold fs-3 mt-4" style="color:#0042A0;">펀딩신청</div>
+				<hr>
 
 				<!-- 펀딩절차설명  -->
-				<div class="submit-seq-container">
-					<div>펀딩절차</div>
-					<div>
-						<div>1.펀딩신청</div>
+				<div class="submit-seq-container ">
+					<div class="fw-bold fs-5 ps-3 mb-2">펀딩절차</div>
+					
+					<div class="ps-4 mb-2">
+						<div class="mb-1">1.펀딩신청</div>
 						<div>기업은 펀딩을 받기 위해 펀딩에 대한 상세정보를 기입해 신청하세요.</div>
 					</div>
-					<div>
-						<div>2. 펀딩심사 및 관리자 승인</div>
+					<div class="ps-4 mb-2">
+						<div class="mb-1">2. 펀딩심사 및 관리자 승인</div>
 						<div>기업은 펀딩을 받기 위해 펀딩에 대한 상세정보를 기입해 신청하세요.</div>
 					</div>
-					<div>
-						<div>3. 펀딩 오픈</div>
+					<div class="ps-4 mb-2">
+						<div class="mb-1">3. 펀딩 오픈</div>
 						<div>기업은 펀딩을 받기 위해 펀딩에 대한 상세정보를 기입해 신청하세요.</div>
 					</div>
-					<div>
-						<div>4. 펀딩 완료</div>
+					<div class="ps-4 mb-2">
+						<div class="mb-1">4. 펀딩 완료</div>
 						<div>기업은 펀딩을 받기 위해 펀딩에 대한 상세정보를 기입해 신청하세요.</div>
 					</div>
+					
 				</div>
 
 				<!-- 펀딩 제목 및 소개 입력폼  -->
-				<div class="">
+				<div class="two mb-5 mt-5">
 					<div class="submit-container-title">
-						<div>펀딩 제목 *</div>
+						<div class="col-2">펀딩 제목 *</div>
 						<div class="input-group mb-2">
 							<input type="text" class="form-control">
 						</div>
 
 					</div>
 					<div class="submit-container-exp">
-						<div>펀딩 소개 *</div>
+						<div class="col-2">펀딩 소개 *</div>
 						<div class="input-group mb-2">
-							<input type="text" class="form-control">
+							<textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea>
 						</div>
 					</div>
 				</div>
-
+				  
 				<!-- 펀딩투자금액 입력 및 주의사항 -->
 				<div class="submit-detail-container">
-					<div class="submit-detail-input">
-						<div class="input-title">펀딩투자금액</div>
+					<div class="submit-detail-input col-6">
+						<div class="input-title fs-5 pb-2 ">펀딩투자금액</div>
 						<div>최저 달성 금액*</div>
 						<div>
-							<input type="number" placeholder="50만원 이상의 금액을 작성해주세요">원
+							<input type="number" placeholder="50만원 이상의 금액을 작성해주세요" style="width: 60%">원
 						</div>
-						<div>최고 달성 금액*</div>
-						<div>
-							<input type="number" placeholder="50만원 이상의 금액을 작성해주세요">원
+						<div class="mt-5 pb-5">
+							<div>최고 달성 금액*</div>
+							<div>
+								<input type="number" placeholder="50만원 이상의 금액을 작성해주세요"  style="width: 60%">원
+							</div>
 						</div>
+						
 					</div>
-					<div></div>
-					<div class="submit-detail-check">
-						<div>주의사항</div>
+					<div class="">
+						<div class="submit-detail-check">
+							<div class="sumbit-check">펀딩 성사를 위해 필요한 금액을 설정해주세요!</div>
+							<div class="submit-detail-check-bg">
+								<div>달성 금액 설정 시 주의사항</div>
+								<div>펀딩 기간 내 목표 금액을 달성하지 못하면 투자금액을 받을 수 없습니다.</div>
+								<div>종료 직전 투자 취소를 대비하여 10% 이상 초과 달성 목표 금액으로 설정해주세요.</div>
+							</div>
+						</div>
 					</div>
 				</div>
 
 				<!-- 펀딩 일정 입력 및 주의사항 -->
 				<div class="submit-detail-container">
-					<div class="submit-detail-input">
-						<div class="input-title">펀딩 일정</div>
-						<div>시작일*</div>
-						<div>
-							<input type="date">
+					<div class="submit-detail-input col-6">
+						<div class="input-title fs-5">펀딩 일정</div>
+						
+						<div class="submit-date">
+							<div>시작일*</div> 
+							<div>
+								<input type="date">
+							</div>
 						</div>
-						<div>종료일*</div>
-						<div>
-							<input type="date">
+						<div class="submit-date">
+							<div>종료일*</div>
+							<div >
+								<input type="date">
+							</div>
 						</div>
-						<div>투자금 정산</div>
-						<div>종료일 다음 날부터 3일 이내로 WALLET에 지급</div>
+						<div class="submit-date pt-2">
+							<div style="font-size: 1.2rem;">투자금 정산</div>
+							<div class="pb-5" style="font-size: 0.8rem;">종료일 다음 날부터 3일 이내로 WALLET에 지급</div>
+						</div>
 					</div>
-					<div></div>
+					
 					<div class="submit-detail-check">
-						<div>주의사항</div>
+						<div class="sumbit-check">펀딩을 진행하고 싶은 펀딩 기간을 설정해주세요!</div>
+						<div class="submit-detail-check-bg">
+							<div>펀딩 기간 설정 시 주의사항</div>
+							<div>설정한 일시가 되면 자동으로 펀딩이 실행됩니다.</div>
+							<div>펀딩 시작 전까지 관리자 승인을 통해 기간을 변경할 수 있습니다.</div>
+							<div>펀딩 기간은 최소 60일로 설정해주세요.</div>
+						</div>
 					</div>
 				</div>
 
 				<!-- 배당금 입력 및 주의사항 -->
 				<div class="submit-detail-container">
-					<div class="submit-detail-input">
-						<div class="input-title">배당</div>
-						<div>투자자에게 3개월 후 배당금 지급</div>
-
-						<div>배당금*</div>
-						<div>
-							<input type="number" >원
+					<div class="submit-detail-input col-6">
+						<div class="input-title fs-5">배당</div>
+						<div class="" style="font-size: 0.8rem;">투자자에게 3개월 후 배당금 지급</div>
+						<div class="mt-4">
+						
+							<div>배당금*</div>
+							<div>
+								<input type="number" >원
+							</div>
 						</div>
 					</div>
-					<div></div>
+					
 					<div class="submit-detail-check">
-						<div>주의사항</div>
+						<div class="sumbit-check">투자자들에게 지급할 배당금을 설정해주세요!</div>
+						<div class="submit-detail-check-bg">
+							<div>배당금 설정 시 주의사항</div>
+							<div>투자자에게 3개월 후 지급할 배당금 금액을 설정해주세요.</div>
+							<div>배당 퍼센트는 최소 1% 입니다.</div>
+							
+						</div>
 					</div>
 				</div>
+				
+				
+				
+				
+				
 				<div class="submit-button">
 					<button type="button" class="btn btn-primary btn-lg">신청 하기</button>
 					<button type="button" class="btn btn-secondary btn-lg">취소</button>
@@ -140,7 +181,7 @@
 
 
 
-			</div>
+			</div> <!-- 펀딩신청폼 컨테이너 end  -->
 		</div>
 	</div>
 

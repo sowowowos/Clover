@@ -1,4 +1,7 @@
 @charset "UTF-8";
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+}
 
 .container {
 	display: flex;
@@ -17,16 +20,26 @@
 	list-style: none;
 	font-size: 1rem;
 }
+/* 글씨 색 */
+.txt-blue{
+	color: #0042A0;	
+}
 /* 펀딩 절차 설명 */
 .submit-seq-container {
 	margin: 1rem 0;
-	border: 1px solid gray;
+	/*border: 1px solid gray;*/
+	border-left: 0.3rem solid #0042A0;
+/* 	border-left-color: #0042A0;	 */
 }
 
 /* 펀딩 제목 및 소개 입력폼 */
 .submit-container {
 	width: 100%;
 	margin: 1rem 1.5rem;
+	
+}
+.border-seq{
+	
 }
 
 .submit-container-title {
@@ -40,24 +53,53 @@
 .submit-detail-container {
 	width: 100%;
 	display: flex;
+	margin-top: 
 }
 
 .submit-detail-input {
 	border-right:1px solid gray;
 	/* background-color: red; */
-	width: 100%;
+	
 }
 
 .input-title{
 	font-weight: 700;
 }
-
+.sumbit-check{
+	width: 100%;
+/* 	padding-left: 2rem; */
+}
 .submit-detail-check {
-	background-color: #E5ECF5;
+	
 	width: 100%;
 	padding-left: 2rem;
+}
+.submit-detail-check-bg{
+	background-color: #E5ECF5;
+	padding: 1.5rem;
+	border-radius: 0.5rem;
+	font-size: 0.8rem;
 }
 .submit-button{
 	text-align: center;
 	margin:2rem 0;
 }
+
+
+
+/* 추가 */
+.container-all{
+	display: flex;
+}
+
+.col-leftside{
+	
+}
+
+.submit-date{
+	padding-left: 1rem;
+	margin-top : 1rem;
+}
+
+
+
