@@ -7,8 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Users;
+import loverduck.clover.entity.Wallet;
 import loverduck.clover.repository.CompanyRepository;
 import loverduck.clover.repository.UsersRepository;
+import loverduck.clover.repository.WalletRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -22,11 +24,25 @@ public class UsersServiceImpl implements UsersService {
 	@Autowired
 	private CompanyRepository companyRep;
 	
+	@Autowired
+	private WalletRepository walletRep;
+	
+	
+	
 	
 	@Override
 	public int register(Users users) {
 		
 		Users dbUser = usersRep.save(users);
+		
+		///////////wallet 체크해보자 null
+		Wallet wallet = Wallet.builder()
+				.user(users)
+				.amount(0L)
+				.build();
+		walletRep.save(wallet);
+		
+		usersRep.updateWallet(wallet, dbUser.getEmail());
 		
 		return 1;
 	}
