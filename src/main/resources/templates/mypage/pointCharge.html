@@ -161,26 +161,27 @@
 </head>
 <body>
 
-
 	<div>
 		<div class="nav"></div>
 		<div class="banner"></div>
 
 		<div class="category"></div>
 		<div class="container">
-			<div class="section">
+			<div class="col-2" style="background-color:gray;">
 
-				<!-- 충전까지 -->
+			</div>
+			<div class="col-8 m-auto">
+
+				<!-- 충전 -->
 				<div class="all">
-					<div class="fs-1 fw-bold point-txt">
-						포인트
+					<div class="fs-3 fw-bold point-txt">
+						포인트 
 						<hr class="hr-line">
 					</div>
-
+					
 					<!-- 네모 박스 -->
 					<div class="border box shadow-sm mb-5 bg-white rounded">
-						<div class="wallet col-6 fs-4 fw-bold txt-blue">CLOVER
-							WALLET</div>
+						<div class="wallet col-6 fs-4 fw-bold txt-blue">CLOVER WALLET</div>
 
 						<!-- 잔여포인트 -->
 						<div class="row justify-content-end text-end fs-5">
@@ -194,21 +195,22 @@
 								잔여포인트
 							</div>
 							<div class="col-md-3" id="nowPoint" th:text="${#numbers.formatInteger(nowPoint,3,'COMMA')}"></div>
-							
 							point
 						</div>
  
 						<!-- 최소 금액은  -->
 						<div class="lowprice row justify-content-end text-end">
-							<div class="col-md-5" style="color: grey">
-								<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"
-									fill="currentColor" class="bi bi-question-circle"
-									viewBox="0 0 16 16">
-							  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-							  <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
-							</svg>
-								충전 최소 금액 : 100원
-							</div>
+							<div id="funding-warning1">
+									<svg xmlns="http://www.w3.org/2000/svg" style="color: #9A9A9A;"
+										width="0.8rem" height="0.8rem" fill="currentColor"
+										class="bi bi-question-circle" viewBox="0 0 16 16">
+								  <path
+											d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+								  <path
+											d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+								</svg>
+									충전 최소 금액 : 100원
+								</div>
 						</div>
 
 						<!-- 충전 -->
@@ -223,22 +225,18 @@
 							</div>
 						</div>
 
-						<div
-							class="refund fw-bold row justify-content-end text-end txt-blue">포인트
-							환전 신청은 관리자에게 문의해주세요</div>
-
+						<div id="funding-warning2" class="refund" style="text-align: right;">포인트 환전 신청은 관리자에게 문의해주세요.</div>
 					</div>
 					<!-- 네모 박스 end -->
 
 					<!-- 아래부분 -->
-					<div class="under-all" style="margin: 2rem 2rem 0rem 2rem">
+					<div class="under-all">
 
 						<!-- 포인트 내역 -->
-						<div class="fs-3 fw-bold">
-							포인트 내역
-							<hr class="hr-line">
-						</div>
-
+						<div class="fs-4 fw-bold point-txt">
+						포인트 내역
+						<hr class="hr-line">
+					
 						<!--  버튼 -->
 						<div class="row">
 							<!-- style="padding-bottom: 1rem" -->
@@ -264,15 +262,12 @@
 								</div>
 
 							</div>
+							
+							
 						</div>
+					</div>
 						
 						<!-- 포인트 상세 내역 -->
-						<div class="list" style="margin: 1rem">
-							<div class="row" id="#pointHistoryTable"></div>
-							<div class="row">
-								<div class="col-md-8 offset-md-2"></div>
-							</div>
-						</div>
 						<div class="list" style="margin: 1rem" th:each="phDetail : ${phDetailList}">
 							<div class="row" >
 								<div class="col-2"

@@ -1,12 +1,15 @@
 @charset "UTF-8";
 
-
+.container{
+	display: flex;
+}/* 
+button{
+	border:1px solid #0042A0;
+} */
 
 .point-txt{
-    margin : 2rem; 
-  
-	color: #0042A0;
-	
+    margin-top : 2rem;   
+	color: #0042A0;	
 }
 .txt-blue{
 	color: #0042A0;	
@@ -32,7 +35,7 @@
 }
 
 .box {
-  margin : 2rem; 
+  /* margin : 2rem; */ 
   padding : 1.5rem;
   border : 1px solid grey;
   border-radius : 5px;
@@ -52,11 +55,11 @@
 	background-color: #0042A0;
 }
 
-.refund{
+/* .refund{
 	font-size: 0.1rem;
 	padding-top: 0.3rem;
 	padding-right: 0.8rem;
-}
+} */
 
 
 .btn.btn-outline-primary{
@@ -69,7 +72,20 @@
 	border-radius: 4rem;
 	background-color: #0042A0;
 }
+#funding-warning1 {
+	color: #9A9A9A;
+	font-size: 0.8rem;
+	align-self: center;
+	margin: 0.3rem 0;
+}
 
+#funding-warning2 {
+	color: #0042A0;
+	font-size: 0.8rem;
+	opacity: 0.6;
+	align-self: center;
+	margin: 0.3rem 0;
+}
 
 
 
