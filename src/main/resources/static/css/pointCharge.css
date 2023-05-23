@@ -1,77 +1,69 @@
 @charset "UTF-8";
 
-.container{
+.container {
 	display: flex;
-}/* 
-button{
-	border:1px solid #0042A0;
-} */
+}
 
-.point-txt{
-    margin-top : 2rem;   
-	color: #0042A0;	
+.point-txt {
+	margin-top: 2rem;
+	color: #0042A0;
 }
-.txt-blue{
-	color: #0042A0;	
+
+.txt-blue {
+	color: #0042A0;
 }
-.wallet{
+
+.wallet {
 	padding-bottom: 2rem;
 }
 
-
-.hr-line{
-	width : 100%;
-	height : 0.15rem;
-    background-color : black;
-    color: black;
+.hr-line {
+	width: 100%;
+	height: 0.15rem;
+	background-color: black;
+	color: black;
 }
-.hr-line2{
-	width : 100%;
-	height : 0.1rem;
-    background-color : black;
-    color: black;
-    margin: 0.7rem;
-    margin-bottom: 0.7rem;
+
+.hr-line2 {
+	width: 100%;
+	height: 0.1rem;
+	background-color: black;
+	color: black;
+	margin: 0.7rem;
+	margin-bottom: 0.7rem;
 }
 
 .box {
-  /* margin : 2rem; */ 
-  padding : 1.5rem;
-  border : 1px solid grey;
-  border-radius : 5px;
+	padding: 1.5rem;
+	border: 1px solid grey;
+	border-radius: 5px;
 }
 
-.lowprice{
+.lowprice {
 	font-size: 0.5rem;
 }
 
-.charge{
-	padding-top : 0.5rem;
+.charge {
+	padding-top: 0.5rem;
 }
 
 .btn.btn-primary {
-	
 	width: 100%;
 	background-color: #0042A0;
 }
 
-/* .refund{
-	font-size: 0.1rem;
-	padding-top: 0.3rem;
-	padding-right: 0.8rem;
-} */
-
-
-.btn.btn-outline-primary{
-	width: 4rem;
-	border-radius: 4rem;
-	color: #0042A0;
-}
-.filled.btn.btn-primary{
+.filled.btn.btn-primary {
 	width: 4rem;
 	border-radius: 4rem;
 	background-color: #0042A0;
+	border: none;
 }
+
+.btn.btn-outline-secondary {
+	width: 4rem;
+	border-radius: 4rem;
+}
+
 #funding-warning1 {
 	color: #9A9A9A;
 	font-size: 0.8rem;
@@ -87,9 +79,6 @@ button{
 	margin: 0.3rem 0;
 }
 
-
-
-
-
-
-
+#amount {
+	color: #0042A0;
+}
