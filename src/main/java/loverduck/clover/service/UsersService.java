@@ -1,7 +1,10 @@
 package loverduck.clover.service;
 
 
+import java.util.List;
+
 import loverduck.clover.entity.Company;
+import loverduck.clover.entity.Ordered;
 import loverduck.clover.entity.Users;
 
 public interface UsersService {
@@ -44,5 +47,9 @@ public interface UsersService {
 	 */
 	Users updateAll(String name, String nickname,Integer type, String phone,String postalCode,String address, String detailAddress, String email);
 
+	/**
+	 * 마이페이지 투자한 펀딩 목록 출력 
+	 */
+	List<Ordered> findOrderdByUser(Long id);
 	
 }
