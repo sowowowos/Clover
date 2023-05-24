@@ -34,14 +34,22 @@ public class PointChargeController{
 	@Autowired
 	WalletService walletService;
 	
+	@ModelAttribute("user")
+    public Users getUser(HttpSession session) {
+        return (Users) session.getAttribute("user");
+    }
+	
 	/**
 	 *  MYPAGE - 포인트 충전 
 	 */
 	@GetMapping(value = "/pointCharge")
-	public String pointCharge(Model model, HttpServletRequest request) {
+	public String pointCharge(Model model, @ModelAttribute("user") Users user) {
 		
-		//추후 세션 로그인 회원 정보에 따른 wallet_id로 코드 수정할 예정
-		Long wallet_id = 1L;		
+		//세션 담기
+		model.addAttribute("user", user);
+		
+		Long wallet_id = user.getWallet().getId();		
+		model.addAttribute("wallet_id", wallet_id);
 		
 		//회원별 포인트 상세 내역 출력
 		List<PointHistory> phDetailList =  pointHistoryService.pointHistoryList(wallet_id);
@@ -58,13 +66,13 @@ public class PointChargeController{
 	 */
 	@PostMapping("/pointCharge")
 	@ResponseBody
-	public Map<String,Object> pointHistoryInsert(@RequestParam("amount") Long amount, 
+	public Map<String,Object> pointHistoryInsert(@ModelAttribute("user") Users user,
+							@RequestParam("amount") Long amount, 
 							@RequestParam("type") Integer type,
 							@RequestParam("wallet_id") Long wallet_id, 
-							HttpSession session, Model model) {
+							Model model) {
 
-		//Long id = 1L;
-		Users u = (Users)session.getAttribute("user");
+		model.addAttribute("user", user);
 		LocalDateTime currentTime = LocalDateTime.now();
 				
 	    Wallet wallet = walletService.findById(wallet_id);	
