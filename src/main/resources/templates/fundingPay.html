@@ -174,7 +174,7 @@
 </script>
 
 <!-- 아임포트 결제 처리  -->
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
 	var IMP = window.IMP;
 	var code = "imp78536886"; //가맹점 식별코드
 	IMP.init(code);
@@ -189,10 +189,10 @@
 		}
 
 		var user_id = [[${user.id}]]; //유저 아이디(pk)
-		var wallet_id = [[$user.wallet.id]]; //유저 월렛 id
+		var wallet_id = [[${user.wallet.id}]]; //유저 월렛 id
 		var user_email = [[${user.email}]];
-		var user_name = [[${user.name}]];
-		var user_phone = [[${user.phone}]];
+        var user_name =  [[${user.name}]];
+        var user_phone = [[${user.phone}]];
 		var funding_id = 1; //추후 수정
 		var order_name = 'CLOVER 포인트 충전';
 		var type = 0; //충전 0, 사용 1, 환전 2
@@ -278,7 +278,6 @@
 						<img class="sequence-img" src="/img/fundingPay1.png" alt="">
 					</div>
 					<div class="info-input-container">
-						<span th:text="${user.name}"></span>
 						<!-- 기업정보  -->
 						<div class="funding-info1">
 							<div class="funding-info-title">기업정보</div>

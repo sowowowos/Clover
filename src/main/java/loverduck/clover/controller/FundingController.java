@@ -110,7 +110,9 @@ public class FundingController {
 		model.addAttribute("user", user);
 				
 		Long wallet_id = user.getWallet().getId();
+		model.addAttribute("wallet_id", wallet_id);
 		
+		//포인트 충전/사용 결과에 따른 잔여 포인트 값 변경 저장
 	    Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
 	    model.addAttribute("nowPoint", nowPoint);
 	    
@@ -120,6 +122,7 @@ public class FundingController {
 
 	/**
 	 * 펀딩 투자하기 - 펀딩 완료 
+	 * 추후 펀딩 아이디가 세션에 담겨야함
 	 */
 	@PostMapping("/fundingPay")
 	@ResponseBody
@@ -133,11 +136,11 @@ public class FundingController {
 		//세션 담기
 		model.addAttribute("user", user);
 		
-		LocalDateTime currentTime = LocalDateTime.now();
-		
-		Wallet wallet = walletService.findById(wallet_id);
+		LocalDateTime currentTime = LocalDateTime.now();		
 		Funding funding = fundingService.findById(funding_id);
+		Wallet wallet = walletService.findById(wallet_id);
 		
+		//funding_id 추후 저장된 값으로 변경하여 저장 --> company, funding table data 존재해야함
 		//포인트 사용 내역 저장 --> funding_id도 함께 저장
 		pointHistoryService.fundingPayInsert(amount, currentTime, type, funding, wallet);
 		
@@ -147,7 +150,6 @@ public class FundingController {
 		map.put("data", "success");
 		map.put("date", currentTime);
 		map.put("wallet", wallet);
-		map.put("funding", funding);
 		
 		return map;
 	}
