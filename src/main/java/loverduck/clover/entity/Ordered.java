@@ -2,8 +2,11 @@ package loverduck.clover.entity;
 
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -23,4 +26,9 @@ public class Ordered {
     private Funding funding;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Users user;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }
