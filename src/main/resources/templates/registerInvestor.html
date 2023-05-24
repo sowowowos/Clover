@@ -46,7 +46,7 @@
 							href="/registerCorp"> 기업 회원 </a></li>
 					</ul>
 					<!-- 폼 -->
-					<form action="/registerInvestor" method="post"
+					<form action="/registerInvestor" method="post" enctype="multipart/form-data"
 						 onsubmit="return register(event)"
 						class="p-5 m-auto align-items-start bg-light shadow border-top border-primary border-4 mb-5"
 						style="border-color: #0042A0 !important;"> <!-- -->
@@ -64,8 +64,7 @@
 										aria-describedby="emailHelp" placeholder="" required autofocus>
 								</div>
 								<button type="button" class="btn btn-primary col-3"
-									style="background: #0042A0" onclick="checkEmail()">인증
-									하기</button>
+									style="background: #0042A0" onclick="checkEmail()">중복 확인</button>
 							</div>
 							<div id="emailHelp" class="form-text"></div>
 						</div>
@@ -89,6 +88,18 @@
 								name="password2" placeholder="" required autofocus>
 							<div id="passwordHelp2" class="form-text"></div>
 						</div>
+						<!-- 이미지 선택 -->
+						<div class="mb-4 row">
+							<label for="logo" class="col-6"> 프로필 이미지
+								<ruby>*
+								</ruby>
+							</label>
+							<div class="col-6">
+								<input type="file" class="form-control mb-2" 
+									id="logo" name="logo" accept="image/*" required>
+							</div>
+						</div>
+						
 						<div class="mb-4">
 							<label for="exampleInputName" class="form-label">이름
 								<ruby>*

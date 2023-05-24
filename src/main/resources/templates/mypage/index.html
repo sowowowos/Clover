@@ -37,7 +37,7 @@
   
     </div>
     
-      <p th:if="${session.company !=null}">
+      <div th:if="${session.company !=null}">
   
         기업 회원 환영해요
         <br>
@@ -47,8 +47,11 @@
         <button class="w-100 btn btn-secondary btn-lg" type="button"
                     th:onclick="|location.href='@{/updateCorp}'|">
                 회원 정보 수정
-            </button>
-      </p>
+        </button>
+          <br>
+          기업 로고 이미지 <br>  
+         <img alt="logo image" src="/logo" style="height: 10rem; ">
+      </div>
        <p th:if="${session.company ==null && session.loginEmail != null}">
   
         투자자 회원 환영해요
@@ -60,6 +63,9 @@
                     th:onclick="|location.href='@{/updateInvestor}'|">
                 회원 정보 수정
             </button>
+        <br>
+          기업 로고 이미지 <br>  
+         <img alt="logo image" src="/logo" style="height: 10rem; ">
       </p>
 
     

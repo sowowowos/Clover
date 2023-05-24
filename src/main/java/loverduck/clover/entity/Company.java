@@ -27,7 +27,7 @@ public class Company {
     private String email;
     private String homepage;       //기업 url 
     private String description;    // 기업 상세?
-    private String logo;          //로고 이미지 
+    private String logo;          //로고 이미지 이름
     /**
      * 기업승인 상태
      *  0 : 대기 (가입만 한 상태)
@@ -46,4 +46,8 @@ public class Company {
     
     @OneToMany(mappedBy = "company")
     private List<Funding> funds;
+    
+    public void setLogoPath(String logo) {
+        this.logo = logo;
+    }
 }

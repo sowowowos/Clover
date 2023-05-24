@@ -44,6 +44,12 @@ public class Users {
     private String nickname;
     
     /**
+     * 투자자 : 프로필 사진
+     * 기업 : 로고 이미지
+     */
+    private String imgProfile;
+    
+    /**
      * 1 : 투자자
      * 0 : 기업
      */

@@ -21,7 +21,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long>, Queryds
 	 */
     @Transactional
     @Modifying
-    @Query("update Company c set c.address = :address, c.detailAddress = :detailAddress, c.phone = :phone, c.homepage = :homepage")
-    void updateCompany(String address,String detailAddress ,String phone, String homepage);
+    @Query("update Company c set c.address = :address, c.detailAddress = :detailAddress, c.phone = :phone, c.homepage = :homepage where c.email = :email")
+    void updateCompany(String address,String detailAddress ,String phone, String homepage, String email);
     
 }
