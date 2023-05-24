@@ -16,7 +16,7 @@ import java.util.*;
 @Transactional
 public class CrawlingServiceImpl implements CrawlingService {
     private final CrawlingRepository crawlingRepository;
-    private final String prefix = "src/test/resources/json/";
+    private final String prefix = "crawledData/";
 
     private Map<String, ? > getFile(String path) {
         File file = new File(path);
