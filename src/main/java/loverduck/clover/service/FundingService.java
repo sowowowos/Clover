@@ -2,6 +2,7 @@ package loverduck.clover.service;
 
 import java.util.List;
 
+import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.FundingReply;
 import loverduck.clover.entity.Wallet;
@@ -57,4 +58,15 @@ public interface FundingService {
 	 * 기업 이름 기준 검색 
 	 */
 	List<Funding> searchFundingByCompany(String keyword);
+	
+	/**
+	 * 현재 펀딩의 기업의 진행 중인 펀딩 목록 출력 
+	 */
+	List<Funding> findNowFundingsById(Long id);
+	
+	/**
+	 * 현재 펀딩의 기업의 완료된 펀딩 목록 출력 
+	 */
+	List<Funding> findDoneFundingsById(Long id);
+	
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +48,11 @@ public class FundingController {
 	@Autowired
 	WalletService walletService;
 	
+	@ModelAttribute("user")
+    public Users getUser(HttpSession session) {
+        return (Users) session.getAttribute("user");
+    }
+	
 	/**
 	 * 펀딩 전체 목록 페이지
 	 */
@@ -61,19 +67,25 @@ public class FundingController {
 	 * 펀딩 상세 페이지
 	 */
 	@RequestMapping("/fundingDetail/{id}")
-	public String fundingDetail(@PathVariable Long id, Model model) {
+	public String fundingDetail(@PathVariable Long id, Model model, @ModelAttribute("user") Users user) {
+		// 유저 정보 
+		model.addAttribute("user", user);
+		
 		// 펀딩 정보 출력 
 		Funding fund = fundingService.fundingDetail(id);
 		model.addAttribute("fund", fund);
 		
 		// 해당 펀딩의 기업의 진행 중인 펀딩들 출력 
-//		List<Funding> nowFunds = fundingService.findByCompanyName(fund.getCompany());
-		System.out.println(fund.getCompany().getFunds());
-		model.addAttribute("nowFunds", fund.getCompany().getFunds());
+	    List<Funding> nowFunds = fundingService.findNowFundingsById(fund.getCompany().getId());
+	    model.addAttribute("nowFunds", nowFunds);
+
+	    // 해당 펀딩의 기업의 완료된 펀딩들 출력 
+	    List<Funding> doneFunds = fundingService.findDoneFundingsById(fund.getCompany().getId());
+	    model.addAttribute("doneFunds", doneFunds);
 		
 		// 해당 펀딩의 댓글 출력 
 		List<FundingReply> commentList = fundingService.commentList(id);
-        System.out.println("commentList ->" + commentList);
+//        System.out.println("commentList ->" + commentList);
         if (commentList != null && !commentList.isEmpty()) {
             model.addAttribute("commentList", commentList);
         }
@@ -160,7 +172,7 @@ public class FundingController {
 	 */
 	@RequestMapping(value = "/fundingDetail/{id}/comment", method = RequestMethod.POST)
 	public String fundingComment(FundingReply fundingReply, HttpSession session) throws Exception {
-		System.out.println("reply -> " + fundingReply.toString());
+//		System.out.println("reply -> " + fundingReply.toString());
 		fundingReply.setUser((Users)session.getAttribute("user"));
 		
 		//fundingReply.setUser(usersRepository.findAll().get(0));

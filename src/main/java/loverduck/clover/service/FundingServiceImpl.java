@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.FundingReply;
 import loverduck.clover.repository.FundingReplyRepository;
@@ -78,5 +79,16 @@ public class FundingServiceImpl implements FundingService{
 	@Override
 	public List<Funding> searchFundingByCompany(String keyword){
 		return fundingRepository.findByCompanyName(keyword);
+	}
+
+	@Override
+	public List<Funding> findNowFundingsById(Long id) {
+		return fundingRepository.findNowFundingsById(id);
+	}
+	
+	@Override
+	public List<Funding> findDoneFundingsById(Long id) {
+		return fundingRepository.findDoneFundingsById(id);
+
 	}
 }
