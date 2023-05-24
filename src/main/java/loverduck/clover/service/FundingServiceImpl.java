@@ -29,7 +29,7 @@ public class FundingServiceImpl implements FundingService{
 
 	@Override
 	public void fundSubmit(Funding funding) {
-		// TODO Auto-generated method stub
+		fundingRepository.save(funding);
 		
 	}
 
@@ -79,4 +79,7 @@ public class FundingServiceImpl implements FundingService{
 	public List<Funding> searchFundingByCompany(String keyword){
 		return fundingRepository.findByCompanyName(keyword);
 	}
+
+
+	
 }

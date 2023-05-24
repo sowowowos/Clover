@@ -1,14 +1,26 @@
 package loverduck.clover.entity;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -31,17 +43,37 @@ public class Funding {
     private Long targetMaxAmount;
     @NotNull
     private Long currentAmount;
-    @NotNull
+   /* @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime startDate;
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime endDate;
+     * 
+     */
+    @NotNull
+    @CreationTimestamp
+    private Date endDate;
+    @NotNull
+    @CreationTimestamp
+    private Date startDate;
+    
     @NotNull
     private Double dividend;
+    //CreationTimeStamp
+    //Date사용
+    
+    /**
+     * 펀드 기업 승인 상태 
+     * 0 : 대기
+     * 1 : 승인
+     * 2 : 거절 
+     */
     @NotNull
     private Integer status;
 
-    @JsonIgnore
     @NotNull
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Company company;
 
