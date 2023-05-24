@@ -22,6 +22,12 @@ public interface UsersRepository extends JpaRepository<Users, Long>, QuerydslPre
     @Query("update Users u set u.wallet = :wallet where u.email = :email")
     void updateWallet(Wallet wallet, String email);
     
+  
+    @Transactional
+    @Modifying
+    @Query("update Users u set u.wallet = :wallet where u.email = :email")
+    void updateImg(Wallet wallet, String email);
+    
     
     @Transactional
     @Modifying
