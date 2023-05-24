@@ -28,29 +28,6 @@
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-<script type="text/javascript">
-	/* 추후 로그인된 유저 세션 정보 가져오기 */
-
-	/* function getUserDetails() {
-	 $.ajax({
-	 url: '/api/getUserDetails',  // 현재 로그인된 아이디와 회원 상세 정보를 가져오는 API 엔드포인트 URL
-	 method: 'GET',
-	 success: function(response) {
-	 // 성공적으로 데이터를 가져왔을 때의 처리
-	 // 가져온 데이터를 활용하여 결제 API 호출을 처리합니다
-	 console.log(response);
-	 // ... 결제 API를 호출하는 함수를 호출하고, 데이터를 전달합니다 ...
-	 makePayment(response);
-	 },
-	 error: function(xhr, status, error) {
-	 // AJAX 요청이 실패했을 때의 처리
-	 console.error(error);
-	 // ... 에러 처리 로직을 구현하세요 ...
-	 }
-	 });
-	 }
-	 */
-</script>
 
 <script type="text/javascript" th:inline="javascript">
 	$(document).ready(function() {
@@ -127,10 +104,8 @@
 	function fundingPay() {
 		var fundHope = document.getElementById('fundHope').value;
 		var fundTotal = 1000 * fundHope; //펀딩 구매 희망주
-		//var fT = fundTotal.toLocaleString();
 		var fT = parseFloat(fundTotal.toLocaleString().replace(/,/g, ''));
-		var nowPoint = [[${nowPoint}]];
-		
+		var nowPoint = [[${nowPoint}]];		
 		
 		console.log("fundingPay() fundTotal : " + fundTotal);
 		console.log("fundingPay() fT = " + fT);
@@ -152,19 +127,18 @@
 
 			//추후 저장된 유저 세션값으로 변경할 것 
 			var amount = fT;
-			var type = 1; //0 충전, 1 사용
+			var type = 1; //0 충전, 1 사용, 환전 2 //해당값 변경 금지
 			var wallet_id = 1;
-			var funding_id = 1;
+			var funding_id = 1; //추후 수정
+			
+			//var wallet_id = [[${user.wallet.id}]];
 			
 			var exchangeDateElement = document.getElementById('exchangeDate');
 			var exchangeDate = exchangeDateElement.innerText;
 
 			console.log("amount = " + amount);
-
-			// exchangeDate 요소에 표시
 			
 			alert("해당 기업에 펀딩하시겠어요?")
-
 			
 			$.ajax({
 					url : "/fundingPay",

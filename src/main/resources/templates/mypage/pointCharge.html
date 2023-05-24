@@ -40,22 +40,14 @@
 			return;
 		}
 		
-		/*pointHistory에 필요한 정보  */
-		/* type, amount, create_at, funding_id, wallet_id */
-		
-		/* 추후 session에 회원정보가 존재할 경우, 아래처럼 수정 예정 */
-        /* var user_id = [[${session.userid}]];
-        var user_email =  [[${session.email}]];
-        var user_name =  [[${session.name}]]; */        
-        
         var user_id = [[${user.id}]];	//유저 아이디(pk)
         var wallet_id = [[${user.wallet.id}]]; 	//유저 월렛 id
         var user_email =  [[${user.email}]];
         var user_name =  [[${user.name}]];
         var user_phone = [[${user.phone}]];
-        var funding_id = '1'; //추후 수정
+        var funding_id = 1; //추후 수정
         var funding_name = 'CLOVER 포인트 충전';    
-        var type = 0; //충전 0, 사용 1, 환전 2 //해당값 변경 금지!!!!!!!
+        var type = 0; //충전 0, 사용 1, 환전 2 //해당값 변경 금지
         var currentTime = new Date();
 
 		IMP.request_pay({
@@ -135,9 +127,7 @@
 				<!-- 충전 -->
 				<div class="all">
 					<div class="fs-3 fw-bold point-txt">
-						포인트 
-						<span th:text="${user.name}">님</span>
-						<span th:text="${user.wallet.id}">님</span>
+						포인트
 						<hr class="hr-line">
 					</div>
 					

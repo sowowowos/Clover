@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.querydsl.core.types.dsl.Expressions;
@@ -15,7 +14,6 @@ import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
-import loverduck.clover.entity.Exchange;
 import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.PointHistory;
 import loverduck.clover.entity.QPointHistory;

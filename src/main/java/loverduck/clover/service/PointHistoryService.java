@@ -3,7 +3,6 @@ package loverduck.clover.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import loverduck.clover.entity.Exchange;
 import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.PointHistory;
 import loverduck.clover.entity.Wallet;
