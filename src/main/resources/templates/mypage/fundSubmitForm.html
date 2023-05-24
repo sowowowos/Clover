@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
@@ -39,7 +39,9 @@
 			</div>
 
 			<!-- 펀딩신청폼 컨테이너-->
-			<div class="submit-container col-8 m-auto" >
+			
+			<form action="/fundSubmitForm" method="post" 
+			 	  class="submit-container col-8 m-auto" >
 				<div class="fw-bold fs-3 mt-4" style="color:#0042A0;">펀딩신청</div>
 				<hr>
 
@@ -71,14 +73,15 @@
 					<div class="submit-container-title">
 						<div class="col-2">펀딩 제목 *</div>
 						<div class="input-group mb-2">
-							<input type="text" class="form-control">
+							<input type="text" class="form-control" id="title" name="title">
 						</div>
 
 					</div>
 					<div class="submit-container-exp">
 						<div class="col-2">펀딩 소개 *</div>
 						<div class="input-group mb-2">
-							<textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea>
+							<textarea class="form-control" name="content"
+								id="content" rows="7"></textarea>
 						</div>
 					</div>
 				</div>
@@ -89,12 +92,14 @@
 						<div class="input-title fs-5 pb-2 ">펀딩투자금액</div>
 						<div>최저 달성 금액*</div>
 						<div>
-							<input type="number" placeholder="50만원 이상의 금액을 작성해주세요" style="width: 60%">원
+							<input type="number" placeholder="50만원 이상의 금액을 작성해주세요" style="width: 60%"
+							id="targetMinAmount" name="targetMinAmount">원
 						</div>
 						<div class="mt-5 pb-5">
 							<div>최고 달성 금액*</div>
 							<div>
-								<input type="number" placeholder="50만원 이상의 금액을 작성해주세요"  style="width: 60%">원
+								<input type="number" placeholder="50만원 이상의 금액을 작성해주세요"  style="width: 60%"
+								id="targetMaxAmount" name="targetMaxAmount">원
 							</div>
 						</div>
 						
@@ -119,13 +124,13 @@
 						<div class="submit-date">
 							<div>시작일*</div> 
 							<div>
-								<input type="date">
+								<input type="date" name="startDate" id="startDate">
 							</div>
 						</div>
 						<div class="submit-date">
 							<div>종료일*</div>
 							<div >
-								<input type="date">
+								<input type="date" name="endDate" id="endDate">
 							</div>
 						</div>
 						<div class="submit-date pt-2">
@@ -154,7 +159,7 @@
 						
 							<div>배당금*</div>
 							<div>
-								<input type="number" >원
+								<input type="number" id="dividend" name="dividend">  퍼센트 (%)
 							</div>
 						</div>
 					</div>
@@ -169,19 +174,17 @@
 						</div>
 					</div>
 				</div>
-				
-				
-				
-				
+		
 				
 				<div class="submit-button">
-					<button type="button" class="btn btn-primary btn-lg">신청 하기</button>
+					<button type="submit" class="btn btn-primary btn-lg" style="background: #0042A0">신청 하기</button>
 					<button type="button" class="btn btn-secondary btn-lg">취소</button>
 				</div>
 
 
 
-			</div> <!-- 펀딩신청폼 컨테이너 end  -->
+			 <!-- 펀딩신청폼 컨테이너 end  -->
+			</form>
 		</div>
 	</div>
 
