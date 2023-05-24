@@ -37,8 +37,9 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 	@Autowired
 	private final EntityManager entityManager;
 	
-    private final JPAQueryFactory queryFactory;
-
+    private final JPAQueryFactory qFactory;
+    
+    QPointHistory qpointHistory = QPointHistory.pointHistory;
 
     /**
      * 포인트 충전 내역 저장
@@ -60,9 +61,14 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 	 * 포인트 상세내역 조회(오름차순으로 정렬)
 	 */
 	@Override
-	public List<PointHistory> pointHistoryList(Long id) {
-		List<PointHistory> pointHistoryListById = phRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
-		return pointHistoryListById;
+	public List<PointHistory> pointHistoryList(Long walletId) {
+
+		List<PointHistory> pointHistoryList = qFactory.selectFrom(qpointHistory)
+			    .where(qpointHistory.wallet.id.eq(walletId))
+			    .orderBy(qpointHistory.createdAt.desc())
+			    .fetch();
+		
+		return pointHistoryList;
 	}
 
 	
@@ -70,16 +76,15 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 	 * 포인트 충전/사용 내역에 따른 wallet amount 값 변경
 	 */
 	public Integer updateWalletAmount(Long walletId) {
-		
-		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);		
-	    QPointHistory qpointHistory = QPointHistory.pointHistory;
+			
+
 
 	    //포인트 type이 1이면 충전이므로 +, 0이면 사용이므로 -
 	    NumberExpression<Integer> amountSum = Expressions.numberTemplate(Integer.class,
 	            "SUM(CASE WHEN {0} = 0 THEN {1} ELSE -{1} END)", qpointHistory.type, qpointHistory.amount);
 
 	    // 해당 id에 해당하는 포인트 연산 결과 저장
-	    Integer result = queryFactory
+	    Integer result = qFactory
 	            .select(amountSum)
 	            .from(qpointHistory)
 	            .where(qpointHistory.wallet.id.eq(walletId))
