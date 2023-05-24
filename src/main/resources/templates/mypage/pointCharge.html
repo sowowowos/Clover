@@ -196,7 +196,7 @@
 						포인트 내역
 						<hr class="hr-line">					
 						<!--  버튼 -->
-						<div class="row pb-2 border-bottom">
+						<div class="row pb-2 ms-2 me-2 border-bottom">
 							<!-- style="padding-bottom: 1rem" -->
 							<div class="btns4 col-md-6">
 								<button type="button" class="filled btn btn-primary">전체</button>
@@ -225,14 +225,14 @@
 							<div class="row pb-2">
 								<div class="col-2 fw-semibold"
 									th:text="${#temporals.format(phDetail.createdAt, 'M.dd')}"></div>
-								<div class="col-8" th:text="${phDetail.type == 0 ? '충전' : '사용'}"></div>
-								<div class="col-2" id="amount">
+								<div class="col-8 fw-semibold" th:text="${phDetail.type == 0 ? '충전' : '사용'}"></div>
+								<div class="col-2 fw-semibold" id="amount">
 						            <span th:if="${phDetail.type == 0}">+</span>
     								<span th:if="${phDetail.type == 1}">-</span>
 									<span th:text="${#numbers.formatInteger(phDetail.amount,3,'COMMA')}"></span>
 									</div>
 								<div class="col-2"></div>
-								<div class="col-8 text-muted">
+								<div class="col-8 text-body-tertiary">
 									<div 
 										th:text="${#temporals.format(phDetail.createdAt, 'HH:mm')}"></div>
 									<!-- <div th:text="${#temporals.format(phDetail.createdAt, 'HH:mm')}"></div> -->
