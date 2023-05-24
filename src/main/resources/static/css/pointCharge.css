@@ -50,6 +50,7 @@
 .btn.btn-primary {
 	width: 100%;
 	background-color: #0042A0;
+	border : none;
 }
 
 .filled.btn.btn-primary {
