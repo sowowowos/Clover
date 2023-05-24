@@ -99,25 +99,17 @@ public class FundingController {
         }
 		return "/fundingDetail";
 	}
-
-	
-	/**
-	 * 펀딩 투자하기 - 약관동의
-	 */
-	@RequestMapping("/fundingAgree")
-	public String fundingAgree() {
-		
-		return "/fundingAgree";
-	}
 	
 	/** 
 	 * 펀딩 투자하기 - 펀딩하기
-	 * ->KG이니시스 결제창으로 가야한다
 	 */
 	@RequestMapping("/fundingPay")
-	public String fundingPay(Model model) {
-		//추후 세션 로그인 회원 정보에 따른 wallet_id로 코드 수정할 예정
-		Long wallet_id = 1L;
+	public String fundingPay(Model model, @ModelAttribute("user") Users user) {
+		
+		//세션 담기
+		model.addAttribute("user", user);
+				
+		Long wallet_id = user.getWallet().getId();
 		
 	    Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
 	    model.addAttribute("nowPoint", nowPoint);
@@ -127,26 +119,26 @@ public class FundingController {
 	
 
 	/**
-	 * 펀딩 투자하기 
+	 * 펀딩 투자하기 - 펀딩 완료 
 	 */
 	@PostMapping("/fundingPay")
 	@ResponseBody
-	public Map<String,Object> fundingPayFin(@RequestParam("amount") Long amount, 
-			@RequestParam("type") Integer type,
-			@RequestParam("wallet_id") Long wallet_id, 
-			@RequestParam("funding_id") Long funding_id, 
-			HttpSession session, Model model) {
+	public Map<String,Object> fundingPayFin(@ModelAttribute("user") Users user,
+									@RequestParam("amount") Long amount, 
+									@RequestParam("type") Integer type,
+									@RequestParam("wallet_id") Long wallet_id, 
+									@RequestParam("funding_id") Long funding_id, 
+									HttpSession session, Model model) {
 		
-		//Long id = 1L;
-		//Users u = (Users)session.getAttribute("user");
+		//세션 담기
+		model.addAttribute("user", user);
+		
 		LocalDateTime currentTime = LocalDateTime.now();
 		
 		Wallet wallet = walletService.findById(wallet_id);
 		Funding funding = fundingService.findById(funding_id);
-
 		
-		//포인트 사용 내역 저장 --> funding_id도 넣어야함
-		//pointHistoryService.pointChargeInsert2(amount, currentTime, type, wallet);
+		//포인트 사용 내역 저장 --> funding_id도 함께 저장
 		pointHistoryService.fundingPayInsert(amount, currentTime, type, funding, wallet);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
