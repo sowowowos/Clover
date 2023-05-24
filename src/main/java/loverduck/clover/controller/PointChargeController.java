@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,15 +27,16 @@ import loverduck.clover.service.WalletService;
 
 @Controller
 @RequestMapping("/mypage")
-public class PointChargeController {
+public class PointChargeController{
 	@Autowired
 	PointHistoryService pointHistoryService;
 	
 	@Autowired
 	WalletService walletService;
-
-	// 포인트 상세 내역
-
+	
+	/**
+	 *  MYPAGE - 포인트 충전 
+	 */
 	@GetMapping(value = "/pointCharge")
 	public String pointCharge(Model model, HttpServletRequest request) {
 		
@@ -51,7 +53,9 @@ public class PointChargeController {
 		return "mypage/pointCharge";
 	}
 
-	
+	/**
+	 * 포인트 충전시 DB에 저장 
+	 */
 	@PostMapping("/pointCharge")
 	@ResponseBody
 	public Map<String,Object> pointHistoryInsert(@RequestParam("amount") Long amount, 
@@ -62,18 +66,10 @@ public class PointChargeController {
 		//Long id = 1L;
 		Users u = (Users)session.getAttribute("user");
 		LocalDateTime currentTime = LocalDateTime.now();
-		
-		System.out.println("amount : " + amount);
-		System.out.println("wallet_id : " + wallet_id);
-	    Wallet wallet = walletService.findById(wallet_id);
-	    //model.addAttribute("wallet", wallet);
+				
+	    Wallet wallet = walletService.findById(wallet_id);	
 	    
 	    //포인트 충전 내역 저장
-		//PointHistory pointHistory = new PointHistory(id, amount, type, currentTime, wallet, null, null);
-		//PointHistory pointHistory = new PointHistory(u.getWallet().getId(), amount, type, currentTime, wallet, null, null);
-	    //pointHistoryService.pointChargeInsert(pointHistory);
-	    
-		//pointHistoryService.pointChargeInsert2(id, amount, currentTime, type, wallet);
 		pointHistoryService.pointChargeInsert2(amount, currentTime, type, wallet);
 		
 		//결제 후 서버 통신 확인
@@ -82,7 +78,6 @@ public class PointChargeController {
 	    map.put("amount", amount);
 		map.put("data", "success");
 		map.put("date", currentTime);
-		//pointHistoryService.pointChargeInsert(new PointHistory(amount, null, currentTime));
 		
 		return map;
 	}

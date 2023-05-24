@@ -20,7 +20,7 @@
 	;
 </style>
 
-<title>CLOVER | 펀딩완료</title>
+<title>CLOVER | 펀딩 완료</title>
 </head>
 <body>
 	<div>
@@ -40,26 +40,14 @@
 								<div class="funding-fin-detail">펀딩 상세내역 보기</div>
 							</div>
 							<div class="funding-info-container1">
-								<!-- <div>
-									<div class="funding-info-name">
-										<img class="funding-logo" src="/img/granhand_logo_01.png"
-											alt="Card image cap">
-										<h5 class="card-title">그랑핸드</h5>
-									</div>
-									<div>최초 플라스틱 분해 기업</div>
-									<div class="card-title-keyword">
-										<div class="keword rounded bg-light text-primary">#러버추천</div>
-										<div class="keword rounded bg-light text-primary">#성공률50%</div>
-									</div>
-								</div> -->
-
 								<div>
 									<div id="fundTotalTitle">총 펀딩금액</div>
 									<div id="fundTotal">[[${amount}]]원</div>
 								</div>
 								<div>
 									<div id="fundDateTitle">수익금 지금 예상일</div>
-									<div id="fundDate">[[${date}]]일</div>
+									<!-- <div id="fundDate" th:text="${#dates.format(date, 'yyyy년 M월 d일')}">[[${date}]]일</div> -->
+									<div id="fundDate">[[${exchangeDate}]]</div>
 
 								</div>
 							</div>

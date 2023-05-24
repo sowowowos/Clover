@@ -12,19 +12,15 @@ public interface PointHistoryService {
 	
 	/**
 	 * 포인트 충전 내역 저장
-	 */
-	void pointChargeInsert(PointHistory pointHistory);
-	
-	/**
-	 * 포인트 충전 내역 저장2
-	 * funding_id, exchange_id 필요없음
-	 * @param id
-	 * @param amount
-	 * @param created_at
-	 * @param type
-	 * @param wallet_id
+	 * - funding_id, exchange_id 필요 X
 	 */	
 	void pointChargeInsert2(Long amount, LocalDateTime created_at, Integer type, Wallet wallet_id);
+	
+	/**
+	 * 포인트 사용 내역 저장
+	 */
+	void fundingPayInsert(Long amount, LocalDateTime created_at, Integer type, Funding funding_id, Wallet wallet_id);
+	
 	/**
 	 * wallet_id별 포인트 내역 상세 조회
 	 */
@@ -33,10 +29,8 @@ public interface PointHistoryService {
 
 	/**
 	 * 포인트 충전/사용 내역에 따른 wallet amount 값 변경
-	 */
-	
+	 */	
 	Integer updateWalletAmount(Long id);
 	
-	Integer minusWalletAmount(Long id);
 
 }

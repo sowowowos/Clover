@@ -1,7 +1,12 @@
 package loverduck.clover.controller;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.sql.Date;
+
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +32,6 @@ import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.FundingReply;
-import loverduck.clover.entity.PointHistory;
 import loverduck.clover.entity.Users;
 import loverduck.clover.entity.Wallet;
 import loverduck.clover.repository.UsersRepository;
@@ -116,26 +120,9 @@ public class FundingController {
 		return "/fundingPay";
 	}
 	
-	
-	@RequestMapping("/fundingPayFin")
-	public ModelAndView fundingPayFin(
-			 Long amount,
-			 Long wallet_id, 
-			 Long funding_id, String date) {
-		//추후 세션 로그인 회원 정보에 따른 wallet_id로 코드 수정할 예정
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("amount", amount);
-		mv.addObject("wallet_id", wallet_id);
-		mv.addObject("funding_id", funding_id);
-		mv.addObject("date", date);
-		
-		mv.setViewName("fundingPayFin");
-		
-		return mv;
-	}
-	
+
 	/**
-	 * 펀딩 투자하기 - 펀딩완료
+	 * 펀딩 투자하기 
 	 */
 	@PostMapping("/fundingPay")
 	@ResponseBody
@@ -145,15 +132,17 @@ public class FundingController {
 			@RequestParam("funding_id") Long funding_id, 
 			HttpSession session, Model model) {
 		
-		Long id = 1L;
-		Users u = (Users)session.getAttribute("user");
+		//Long id = 1L;
+		//Users u = (Users)session.getAttribute("user");
 		LocalDateTime currentTime = LocalDateTime.now();
 		
 		Wallet wallet = walletService.findById(wallet_id);
 		Funding funding = fundingService.findById(funding_id);
-				
-		PointHistory pointHistory = new PointHistory(id,amount,type,currentTime,wallet,null,funding);
-		pointHistoryService.pointChargeInsert(pointHistory);
+
+		
+		//포인트 사용 내역 저장 --> funding_id도 넣어야함
+		//pointHistoryService.pointChargeInsert2(amount, currentTime, type, wallet);
+		pointHistoryService.fundingPayInsert(amount, currentTime, type, funding, wallet);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -165,6 +154,31 @@ public class FundingController {
 		
 		return map;
 	}
+	
+	/**
+	 * 펀딩 투자하기 완료시
+	 */
+	
+	
+	@RequestMapping("/fundingPayFin")
+	public ModelAndView fundingPayFin(
+			 Long amount,
+			 Long wallet_id, 
+			 Long funding_id, String exchangeDate) {
+		//추후 세션 로그인 회원 정보에 따른 wallet_id로 코드 수정할 예정
+		
+		ModelAndView mv = new ModelAndView();	
+		
+        mv.addObject("amount", amount);
+		mv.addObject("walletId", wallet_id);
+		mv.addObject("exchangeDate", exchangeDate);
+		
+		mv.setViewName("fundingPayFin");
+		
+		return mv;
+	}
+	
+	
 	
 	/**
 	 * 펀딩 상세 페이지 댓글 작성 

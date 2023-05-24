@@ -39,26 +39,22 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 	
     private final JPAQueryFactory queryFactory;
 
-	@Override
-	@Transactional
-	public void pointChargeInsert(PointHistory pointHistory) {
-		phRepository.save(pointHistory);
-	}
 
+    /**
+     * 포인트 충전 내역 저장
+     */
 	@Override
 	@Transactional
 	public void pointChargeInsert2(Long amount, LocalDateTime created_at, Integer type, Wallet wallet_id) {
-		
 		phRepository.insertPointHistoryByWalletId(amount, created_at, type, wallet_id);
-		
-		/*
-		 * QPointHistory pointHistory = QPointHistory.pointHistory; queryFactory
-		 * .insert(pointHistory) .set(pointHistory.id, id) .set(pointHistory.amount,
-		 * amount) .set(pointHistory.createdAt, created_at) .set(pointHistory.type,
-		 * type) .set(pointHistory.exchange, exchange_id) .set(pointHistory.funding,
-		 * funding_id) .set(pointHistory.wallet, wallet_id) .execute();
-		 */
     }	
+	
+	/**
+	 * 포인트 사용 내역 저장
+	 */	
+	public void fundingPayInsert(Long amount, LocalDateTime created_at, Integer type, Funding funding_id, Wallet wallet_id) {
+		phRepository.insertUsePointHistoryByWalletId(amount, created_at, type, funding_id, wallet_id);
+	}
 	
 	/**
 	 * 포인트 상세내역 조회(오름차순으로 정렬)
@@ -102,13 +98,5 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 
 	    return result;
 	}
-
-	@Override
-	public Integer minusWalletAmount(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 
 }

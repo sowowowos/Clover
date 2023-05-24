@@ -97,7 +97,7 @@
 				        console.log("wallet_id: " + wallet_id);
 				        
 				        //추후 적용			        
-				        //locaiton.href="/mypage/pointChargeFin";
+				        location.href = "/mypage/pointCharge";
 				    },
 				    error: function(jqXHR, textStatus, errorThrown) {
 				        console.error("Request failed: " + textStatus, errorThrown);
@@ -154,7 +154,7 @@
 						</svg>
 								잔여포인트
 							</div>
-							<div class="col-md-3" id="nowPoint" th:text="${#numbers.formatInteger(nowPoint,3,'COMMA')}"></div>
+							<div class="col-md-3" id="nowPoint" th:text="${nowPoint != null ? #numbers.formatInteger(nowPoint, 3, 'COMMA') : '0'}"></div>
 							point
 						</div>
  
