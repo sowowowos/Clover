@@ -1,14 +1,23 @@
 package loverduck.clover.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.BufferedImageHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +26,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Ordered;
 import loverduck.clover.entity.Users;
 import loverduck.clover.entity.Wallet;
+import loverduck.clover.service.CompanyServiceImpl;
 import loverduck.clover.service.KakaoServiceImpl;
 import loverduck.clover.service.UsersService;
 
@@ -37,6 +48,9 @@ public class UserController {
 	
 	@Autowired
 	private KakaoServiceImpl kakaoService;
+	
+	@Autowired
+	private CompanyServiceImpl companyService;
 	
 	/**
 	 * 메인
@@ -60,12 +74,37 @@ public class UserController {
 	 * 회원가입 투자자
 	 */
 	@PostMapping("/registerInvestor")
-	public String register(String name, String nickname, String email, String userid, String password, String password2, String phone,String postalCode,String address, String detailAddress ) {
+	public String register(String name, String nickname, String email, String userid, String password, String password2, 
+			String phone,String postalCode,String address, String detailAddress  , @RequestParam("logo") MultipartFile logoFile) {
 
-				
-		Users dbUser = new Users(null, userid, password, email,name , nickname,  1, phone, postalCode, address, detailAddress, null, null);
+		
+		try {
+            String origFilename = logoFile.getOriginalFilename();
+            String filename = new MD5Generator(origFilename).toString();
+            /* 실행되는 위치의 'files' 폴더에 파일이 저장됩니다. */
+            String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\uploadLogo";
+            /* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
+            if (!new File(savePath).exists()) {
+                try{
+                    new File(savePath).mkdir();
+                }
+                catch(Exception e){
+                    e.getStackTrace();
+                }
+            }
+            String filePath = savePath + "\\" + filename;
+            logoFile.transferTo(new File(filePath));
+           
+//            dbCompany.setLogoPath(filename);
 
-		int userCreateForm = usersService.register(dbUser);
+            Users dbUser = new Users(null, userid, password, email,name , nickname,  filename, 1, phone, postalCode, address, detailAddress, null, null);
+
+    		int userCreateForm = usersService.register(dbUser);
+    		
+           
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 		
 		return "redirect:/";
 	}
@@ -87,16 +126,65 @@ public class UserController {
 	@PostMapping("/registerCorp")
 	public String register2(String name, String nickname, String email, String userid, String password, String password2, 
 			String phone,String postalCode,String address, String detailAddress,
-			String no, String sector, String homepage) {
+			String no, String sector, String homepage , @RequestParam("logo") MultipartFile logoFile) {
 		
-//		Wallet wallet = new Wallet(null, (long) 0, null);
-		Users dbUser = new Users(null, userid, password, email , name , nickname, 0, phone, postalCode, address, detailAddress, null, null);
 		Company dbCompany = new Company(null, no, nickname, address, detailAddress, phone, email, homepage, null, null, 0, sector, null, null, null);
-				
-		int userCreateForm = usersService.register(dbUser);
-		int companyCreate = usersService.register2(dbCompany);
-		
+
+		 try {
+	            String origFilename = logoFile.getOriginalFilename();
+	            String filename = new MD5Generator(origFilename).toString();
+	            /* 실행되는 위치의 'files' 폴더에 파일이 저장됩니다. */
+	            String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\uploadLogo";
+	            /* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
+	            if (!new File(savePath).exists()) {
+	                try{
+	                    new File(savePath).mkdir();
+	                }
+	                catch(Exception e){
+	                    e.getStackTrace();
+	                }
+	            }
+	            String filePath = savePath + "\\" + filename;
+	            logoFile.transferTo(new File(filePath));
+	           
+	            dbCompany.setLogoPath(filename);
+
+	    		Users dbUser = new Users(null, userid, password, email , name , nickname, filename , 0, phone, postalCode, address, detailAddress, null, null);
+	            dbCompany.builder().logo(filename).build();
+	            
+	            int userCreateForm = usersService.register(dbUser);
+	            int companyCreate = usersService.register2(dbCompany);   
+	            
+	        } catch(Exception e) {
+	            e.printStackTrace();
+	        }
+
 		return "redirect:/";
+	}
+	
+	/**
+	 * 로고이미지 불러오기
+	 */
+	@GetMapping("/logo")
+	public ResponseEntity<Resource> getLogo(HttpSession session) throws IOException {
+	    // 로고 파일의 이름을 가져온다.
+	    String email =  (String) session.getAttribute("loginEmail");
+	    Users dbUsers = (Users) session.getAttribute("user");
+	        
+	    String logoFileName = dbUsers.getImgProfile();
+	    
+	    // 로고 파일의 실제 경로를 설정한다.
+	    String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\uploadLogo";
+	    String logoFilePath = savePath+"\\" + logoFileName;
+
+	    // 로고 파일을 읽어서 Resource 객체로 생성한다.
+	    Resource resource = new UrlResource("file:" + logoFilePath);
+
+	    return ResponseEntity.ok()
+	            .contentType(MediaType.IMAGE_JPEG) // 이미지 타입에 따라 적절한 MediaType을 설정한다
+	            .body(resource);
+	    
+	
 	}
 	
 	/**
@@ -314,7 +402,7 @@ public class UserController {
 	 * 마이페이지 - 기업 (개인정보 수정폼)
 	 */
 	@PostMapping("/updateCorp")
-	public String updateCorp( String nickname, String password,String phone,String postalCode,String address, String detailAddress , HttpSession session)  {
+	public String updateCorp( String nickname, String password,String phone,String postalCode,String address, String detailAddress ,String homepage, HttpSession session)  {
 		Users dbUser = (Users) session.getAttribute("user");
 		
 		String email = dbUser.getEmail();
@@ -334,11 +422,12 @@ public class UserController {
 		if(detailAddress==null) {
 			detailAddress = dbUser.getDetailAddress();
 		}
-		
+		System.out.println(detailAddress + " 좌 주소 우 url "+homepage);
 		Users UpUser = usersService.update(password, nickname, phone, postalCode, address, detailAddress, email);
+		Company UpCom = companyService.updateCom(address, detailAddress, phone, homepage, email);
 		
 		session.setAttribute("user", UpUser);
-		
+		session.setAttribute("company", UpCom);
 		return "redirect:/";
 	}
 	

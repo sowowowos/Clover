@@ -45,7 +45,7 @@
 								기업 회원 </a></li>
 					</ul>
 					<!-- 폼 -->
-					<form action="/registerCorp" method="post"
+					<form action="/registerCorp" method="post" enctype="multipart/form-data"
 						onsubmit="return register()"
 						class="p-5 m-auto align-items-start bg-light shadow border-top border-primary border-4 mb-5"
 						style="border-color: #0042A0 !important;">
@@ -79,8 +79,8 @@
 									name="sector" placeholder="" required autofocus>
 							</div>
 							<div class="col-6">
-								<input type="file" class="form-control mb-2" id="logo"
-									placeholder="">
+								<input type="file" class="form-control mb-2" 
+									id="logo" name="logo" accept="image/*" required>
 							</div>
 						</div>
 						<!-- 주소 입력 -->
@@ -141,8 +141,7 @@
 										aria-describedby="emailHelp" placeholder="" required autofocus>
 								</div>
 								<button type="button" class="btn btn-primary col-3"
-									style="background: #0042A0" onclick="checkEmail()">인증
-									하기</button>
+									style="background: #0042A0" onclick="checkEmail()">중복 확인</button>
 							</div>
 							<div id="emailHelp" class="form-text"></div>
 

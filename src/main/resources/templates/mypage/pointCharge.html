@@ -25,39 +25,9 @@
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
 
-
-	//GET 방식의 AJAX 호출
-	/* $.ajax({
-	  url: "/pointCharge",
-	  type: "GET",
-	  success: function(data) {
-		  //현재 잔여 포인트 출력
-		  $("#nowPoint").text(data.walletAmount);
-		  
-		// 포인트 내역 상세 목록 출력
-		  var phDetailList = data.phDetailList;
-		  var html = "";
-		  for (var i = 0; i < phDetailList.length; i++) {
-		    var pointHistory = phDetailList[i];
-		    html += "<div class='row'>";
-		    html += "<div class='col-2' th:text='${#dates.format(" + pointHistory.date + ", \"M/d\")}'></div>";
-		    html += "<div class='col-8' th:text='${" + (pointHistory.type == 0 ? "'충전'" : "'사용'") + "}'></div>";
-		    html += "<div class='col-2' th:text='${" + pointHistory.amount + "}'></div>";
-		    html += "</div>";
-			
-		  }
-		  $("#pointHistoryList").html(html);
-	  },
-	  error: function() {
-	  }
-	}); */
-	
-	/////////////////////////////////////////////////////////////
 	/* 아임포트 결제 처리*/	
-
-
 	var IMP = window.IMP;
 	var code = "imp78536886"; //가맹점 식별코드
 	IMP.init(code);
@@ -78,14 +48,14 @@
         var user_email =  [[${session.email}]];
         var user_name =  [[${session.name}]]; */        
         
-        var user_id = 1;	//유저 아이디(pk)
-        var wallet_id = 1; 	//유저 월렛 id
-        var user_email =  'example@example.com';
-        var user_name =  '조아영';
-        var user_phone = '010-1234-5678';
-        var funding_id = '1';
-        var funding_name = '파도, 인진에서 "파력 에너지"로 다시 태어나다';    
-        var type = 0; //충전 0, 사용 1, 환전 2
+        var user_id = [[${user.id}]];	//유저 아이디(pk)
+        var wallet_id = [[${user.wallet.id}]]; 	//유저 월렛 id
+        var user_email =  [[${user.email}]];
+        var user_name =  [[${user.name}]];
+        var user_phone = [[${user.phone}]];
+        var funding_id = '1'; //추후 수정
+        var funding_name = 'CLOVER 포인트 충전';    
+        var type = 0; //충전 0, 사용 1, 환전 2 //해당값 변경 금지!!!!!!!
         var currentTime = new Date();
 
 		IMP.request_pay({
@@ -108,8 +78,7 @@
 				msg += " 결제 금액 = " + rsp.paid_amount;
 				msg += " 주문자명 = " + rsp.buyer_name;
 				console.log(msg);
-				alert("결제가 완료되었습니다.");
-				
+				alert("결제가 완료되었습니다.");				
 				
 				//데이터 전송
 				$.ajax({					
@@ -117,39 +86,30 @@
 					type : "POST",
 					dataType:"json",
 					data : {amount : rsp.paid_amount, 
-						type : type,
-						wallet_id : wallet_id},
+							type : type,
+							wallet_id : wallet_id},
 					success: function(response) {
 				        var amount = response.amount;
-				        var data = response.data;
+				        var wallet_id = response.wallet_id;
 				        var date = response.date;
-				        
-				        $("date").text(date);
-				        //$("#nowPoint").text(amount);
-				        $("#status").text(amount);
 
 				        console.log("Amount: " + amount);
-				        console.log("Data: " + data);
+				        console.log("wallet_id: " + wallet_id);
 				        
 				        //추후 적용			        
-				        //locaiton.href="/mypage/pointChargeFin";
+				        location.href = "/mypage/pointCharge";
 				    },
 				    error: function(jqXHR, textStatus, errorThrown) {
-				        // 에러 처리를 하는 부분입니다.
 				        console.error("Request failed: " + textStatus, errorThrown);
 				    }
 					
 				}); //ajaxEnd
-				//window.location.href = rsp.next_redirect_pc_url; // 웹 페이지 이동
+				//window.location.href = rsp.pc_redirect_url; // 웹 페이지 이동
 
 			} else { //결제 실패시
 				var msg = "[결제 실패 : " + rsp.error_code + "]";
 				msg += " 에러 내용 : " + rsp.error_msg;
 				console.log(msg);
-
-				//충전 금액 입력 null 일 경우 발생 에러 메세지
-				//[결제 실패 : F1001] 에러 내용 : 결제요청금액이 0원입니다. 빌링키발급을 위해 customer_uid가 지정될 때에만 0원이 허용됩니다. 요청 amount :
-
 				alert("결제를 실패하였습니다.");
 			}
 		});
@@ -176,6 +136,8 @@
 				<div class="all">
 					<div class="fs-3 fw-bold point-txt">
 						포인트 
+						<span th:text="${user.name}">님</span>
+						<span th:text="${user.wallet.id}">님</span>
 						<hr class="hr-line">
 					</div>
 					
@@ -194,7 +156,7 @@
 						</svg>
 								잔여포인트
 							</div>
-							<div class="col-md-3" id="nowPoint" th:text="${#numbers.formatInteger(nowPoint,3,'COMMA')}"></div>
+							<div class="col-md-3" id="nowPoint" th:text="${nowPoint != null ? #numbers.formatInteger(nowPoint, 3, 'COMMA') : '0'}"></div>
 							point
 						</div>
  
@@ -231,56 +193,56 @@
 
 					<!-- 아래부분 -->
 					<div class="under-all">
-
 						<!-- 포인트 내역 -->
 						<div class="fs-4 fw-bold point-txt">
 						포인트 내역
-						<hr class="hr-line">
-					
+						<hr class="hr-line">					
 						<!--  버튼 -->
-						<div class="row">
+						<div class="row pb-2 ms-2 me-2 border-bottom">
 							<!-- style="padding-bottom: 1rem" -->
 							<div class="btns4 col-md-6">
 								<button type="button" class="filled btn btn-primary">전체</button>
+								<button type="button" class="btn btn-outline-secondary chargeBtn">충전</button>
 
-								<button type="button" class="btn btn-outline-primary">충전</button>
-
-								<button type="button" class="btn btn-outline-primary">사용</button>
-								<button type="button" class="btn btn-outline-primary">환전</button>
+								<button type="button" class="btn btn-outline-secondary userBtn">사용</button>
+								<button type="button" class="btn btn-outline-secondary userBtn">환전</button>
 							</div>
-							<div class="col-md-3 offset-md-3 text-end">
-
+							<!-- <div class="col-md-3 offset-md-3 text-end">
 								<div class="dropdown">
 									<button class="btn  dropdown-toggle" type="button"
 										id="dropdownMenuButton1" data-bs-toggle="dropdown"
 										aria-expanded="false">전체기간</button>
 									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-										<li><a class="dropdown-item" href="#">1기간</a></li>
+										<li><a class="dropdown-item" href="#">기간</a></li>
 										<li><a class="dropdown-item" href="#">2기간</a></li>
 										<li><a class="dropdown-item" href="#">3기간</a></li>
 									</ul>
 								</div>
-
-							</div>
-							
-							
+							</div>	 -->									
 						</div>
 					</div>
 						
 						<!-- 포인트 상세 내역 -->
-						<div class="list" style="margin: 1rem" th:each="phDetail : ${phDetailList}">
-							<div class="row" >
-								<div class="col-2"
-									th:text="${#temporals.format(phDetail.createdAt, 'MM/dd')}"></div>
-								<div class="col-8" th:text="${phDetail.type == 0 ? '충전' : '사용'}"></div>
-								<div class="col-2" th:text="${#numbers.formatInteger(phDetail.amount,3,'COMMA')}"></div>
+						<div class="list border-bottom " style="margin: 1rem" th:each="phDetail : ${phDetailList}">
+							<div class="row pb-2">
+								<div class="col-2 fw-semibold"
+									th:text="${#temporals.format(phDetail.createdAt, 'M.dd')}"></div>
+								<div class="col-8 fw-semibold" th:text="${phDetail.type == 0 ? '충전' : '사용'}"></div>
+								<div class="col-2 fw-semibold" id="amount">
+						            <span th:if="${phDetail.type == 0}">+</span>
+    								<span th:if="${phDetail.type == 1}">-</span>
+									<span th:text="${#numbers.formatInteger(phDetail.amount,0,'COMMA')}"></span>									
+									</div>
+								<div class="col-2"></div>
+								<div class="col-8 text-body-tertiary">
+									<div 
+										th:text="${#temporals.format(phDetail.createdAt, 'HH:mm')}"></div>
+									<!-- <div th:text="${#temporals.format(phDetail.createdAt, 'HH:mm')}"></div> -->
+								</div>
 							</div>
-							<div class="row">
-								<div th:text="${#temporals.format(phDetail.createdAt, 'HH:mm')}"></div>
-								<!-- <div th:text="${#temporals.format(phDetail.createdAt, 'HH:mm')}"></div> -->
-							</div>
-						</div>						
-						
+
+						</div>
+
 						<!-- 내역시간 금액 end -->
 					</div>
 					<!-- 아래부분 end -->

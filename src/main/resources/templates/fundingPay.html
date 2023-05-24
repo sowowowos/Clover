@@ -54,11 +54,13 @@
 
 <script type="text/javascript" th:inline="javascript">
 	$(document).ready(function() {
+		var lackPoint = document.getElementById('lackPoint');
+		lackPoint.style.display = "none";
+		
 		/* 구매 희망주 입력 시 총 펀딩 금액 값 변경 - 1주당금액*희망주 / 해당값 */
 		$('#fundHope').on('input',function() {
-			var fundHope = parseFloat($('#fundHope')
-					.val().replace(/,/g, ''));
-			var fundTotal = 10000 * fundHope; //펀딩 구매 희망주
+			var fundHope = parseFloat($('#fundHope').val().replace(/,/g, ''));
+			var fundTotal = 1000 * fundHope; //펀딩 구매 희망주
 			var alloTotal = 2 * fundHope; //배당금 예상 금액
 			var finalTotal = fundTotal + alloTotal; // 최종 예상 금액
 
@@ -66,7 +68,7 @@
 				$('#fundTotal').text('0원');
 				$('#alloTotal').text('0원');
 				$('#finalTotal').text('0원');
-				$('#expectPoint').text('0point');
+				$('#expectPoint').text('0 point');
 			} else {
 				$('#fundTotal').text(
 						fundTotal.toLocaleString()
@@ -83,11 +85,18 @@
 			}
 
 			var fT = fundTotal;
-			var nowPoint = [[${nowPoint}]];
-			//var nowPoint = [[${nowPoint}]];
+			var nowPoint = [[${nowPoint}]];			
 
-			console.log("fT = " + fT);
-			console.log("nowPoint = " + nowPoint);
+			console.log("1) fT = " + fT);
+			console.log("1) nowPoint = " + nowPoint);
+			console.log(fT > nowPoint);			
+			
+			if (fT > nowPoint) { //총 펀딩 금액이 현재 잔여 포인트보다 많을 경우 --> 포인트 충전 필요
+				lackPoint.style.display = "";
+				//document.getElementById('charge_money').focus();
+			} else { //총 펀딩 금액이 현재 잔여 포인트보다 같거나 적을 경우 --> 펀딩하기 버튼 활성화
+				lackPoint.style.display = "none";
+			}
 		});
 
 		/* 수익금 지급 예상일 - 오늘 날짜 기준 3개월 후  */
@@ -112,14 +121,18 @@
 		document.getElementById('exchangeDate').textContent = getFutureDate();
 
 	});//ready End
-
-	//투자하기 버튼 클릭시
+/////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	/* 투자하기 버튼 클릭시 */
 	function fundingPay() {
 		var fundHope = document.getElementById('fundHope').value;
-		var fundTotal = $('#fundTotal').text();
-		var fT = fundTotal.replace(/,/g, "");
-		var nowPoint = "${nowPoint}";
-
+		var fundTotal = 1000 * fundHope; //펀딩 구매 희망주
+		//var fT = fundTotal.toLocaleString();
+		var fT = parseFloat(fundTotal.toLocaleString().replace(/,/g, ''));
+		var nowPoint = [[${nowPoint}]];
+		
+		
+		console.log("fundingPay() fundTotal : " + fundTotal);
 		console.log("fundingPay() fT = " + fT);
 		console.log("fundingPay() nowPoint = " + nowPoint);
 		console.log(fT > nowPoint);
@@ -131,50 +144,55 @@
 		}
 
 		if (fT > nowPoint) { //총 펀딩 금액이 현재 잔여 포인트보다 많을 경우 --> 포인트 충전 필요
-			document.getElementById('lackPoint').style.display = "";
+			lackPoint.style.display = "";
 			document.getElementById('charge_money').focus();
 		} else { //총 펀딩 금액이 현재 잔여 포인트보다 같거나 적을 경우 --> 펀딩하기 버튼 활성화
 
-			document.getElementById('lackPoint').style.display = "none";
+			lackPoint.style.display = "none";
 
 			//추후 저장된 유저 세션값으로 변경할 것 
 			var amount = fT;
 			var type = 1; //0 충전, 1 사용
 			var wallet_id = 1;
 			var funding_id = 1;
+			
+			var exchangeDateElement = document.getElementById('exchangeDate');
+			var exchangeDate = exchangeDateElement.innerText;
 
 			console.log("amount = " + amount);
-			$
-					.ajax({
-						url : "/fundingPay",
-						type : "POST",
-						dataType : "json",
-						data : {
-							amount : amount,
-							type : type,
-							wallet_id : wallet_id,
-							funding_id : funding_id
-						},
-						success : function(response) {
-							var amount = response.amount;
-							var date = response.date;
 
-							console.log("Amount: " + amount);
-							// console.log("Data: " + data);
-							alert("되니?")
+			// exchangeDate 요소에 표시
+			
+			alert("해당 기업에 펀딩하시겠어요?")
 
-							/////////////현재 데이터 저장은 성공/////////////////
-							/////////////페이지 이동만 되면 완료////////////////
-							location.href = '/fundingPayFin?amount=' + amount
-									+ "&wallet_id=" + wallet_id + "&date="
-									+ date;
-						},
-						error : function(jqXHR, textStatus, errorThrown) {
-							// 에러 처리를 하는 부분입니다.
-							console.error("Request failed: " + textStatus,
-									errorThrown);
-						}
-					});//ajax End
+			
+			$.ajax({
+					url : "/fundingPay",
+					type : "POST",
+					dataType : "json",
+					data : {
+						amount : amount,
+						type : type,
+						wallet_id : wallet_id,
+						funding_id : funding_id
+					},
+					success : function(response) {
+						var amount = response.amount;
+						var date = response.date;
+
+						console.log("Amount: " + amount);
+						console.log("Date type: " + typeof date);
+
+						location.href = '/fundingPayFin?amount=' + amount
+								+ "&exchangeDate=" + exchangeDate
+								+ "&wallet_id=" + wallet_id;
+						
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+
+						console.error("Request failed: " + textStatus);
+					}
+				});//ajax End
 		}
 
 		//버튼 비활성화
@@ -211,7 +229,7 @@
 		var user_name = '조아영';
 		var user_phone = '010-1234-5678';
 		var funding_id = '1';
-		var funding_name = '파도, 인진에서 "파력 에너지"로 다시 태어나다';
+		var funding_name = 'CLOVER 포인트 충전';
 		var type = 0; //충전 0, 사용 1, 환전 2
 		var currentTime = new Date();
 
@@ -239,7 +257,7 @@
 
 				//데이터 전송
 				$.ajax({
-					url : "/mypage/pointCharge",
+					url : "/fundingPay",
 					type : "POST",
 					dataType : "json",
 					data : {
@@ -437,7 +455,9 @@
 												</svg>
 											현재 포인트
 										</div>
-										<div class="amount" th:text="${#numbers.formatInteger(nowPoint,3,'COMMA')}">0</div>
+										<div class="amount" th:text="${nowPoint != null ? #numbers.formatInteger(nowPoint, 3, 'COMMA') + ' point' : '0 point'}">
+											
+										</div>
 									</div>
 
 									<div class="funding-amount">
@@ -450,7 +470,7 @@
 													d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM5.5 4.002V12h1.283V9.164h1.668C10.033 9.164 11 8.08 11 6.586c0-1.482-.955-2.584-2.538-2.584H5.5Zm2.77 4.072c.893 0 1.419-.545 1.419-1.488s-.526-1.482-1.42-1.482H6.778v2.97H8.27Z"></path>
 												</svg>
 										사용 예정 포인트</div>
-										<div class="amount" id="expectPoint">0point</div>
+										<div class="amount" id="expectPoint">0 point</div>
 									</div>
 									<div class="funding-amount">
 									</div>
@@ -540,6 +560,7 @@
 		</div>
 	</div>
 	
+	<!-- 체크박스 스크립트 -->
 	<script type="text/javascript">
 	// 체크박스 전체 선택
 	$(".checkbox_group").on("click", "#check_all", function () {
