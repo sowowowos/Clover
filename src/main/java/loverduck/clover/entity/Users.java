@@ -2,11 +2,12 @@ package loverduck.clover.entity;
 
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -34,7 +35,7 @@ public class Users {
     @NotNull
     @NotEmpty
     private String name;
-    
+
     /**
      * 투자자 : 닉네임
      * 기업 : 기업명
@@ -42,28 +43,33 @@ public class Users {
     @Column(unique = true)
     @NotNull
     private String nickname;
-    
+
     /**
      * 투자자 : 프로필 사진
      * 기업 : 로고 이미지
      */
     private String imgProfile;
-    
+
     /**
      * 1 : 투자자
      * 0 : 기업
      */
     private Integer type;
-    
-    
+
+
     private String phone;
     private String postalCode;
     private String address;
     private String detailAddress;
-    
-    
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Wallet wallet;
     @OneToOne(fetch = FetchType.LAZY)
     private Company company;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }
