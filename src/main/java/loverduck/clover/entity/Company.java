@@ -1,9 +1,6 @@
 package loverduck.clover.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,6 +24,7 @@ public class Company {
     private String email;
     private String homepage;       //기업 url 
     private String description;    // 기업 상세?
+    @Setter
     private String logo;          //로고 이미지 이름
     /**
      * 기업승인 상태
