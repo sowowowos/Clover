@@ -1,23 +1,13 @@
 package loverduck.clover.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -33,12 +23,17 @@ public class Wallet {
     @Setter
     @NotNull
     private Long amount;
-    
+
     @JsonIgnore
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Users user;
-    
-	/*
-	 * @OneToMany(fetch = FetchType.LAZY) private PointHistory pointHistory;
-	 */
+
+    /*
+     * @OneToMany(fetch = FetchType.LAZY) private PointHistory pointHistory;
+     */
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }
