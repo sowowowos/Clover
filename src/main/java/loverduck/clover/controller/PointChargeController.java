@@ -72,9 +72,10 @@ public class PointChargeController{
 							@RequestParam("wallet_id") Long wallet_id, 
 							Model model) {
 
+		//세션담기
 		model.addAttribute("user", user);
-		LocalDateTime currentTime = LocalDateTime.now();
-				
+		
+		LocalDateTime currentTime = LocalDateTime.now();				
 	    Wallet wallet = walletService.findById(wallet_id);	
 	    
 	    //포인트 충전 내역 저장
