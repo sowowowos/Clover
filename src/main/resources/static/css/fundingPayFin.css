@@ -10,11 +10,9 @@
 .info-detail-container {
 	width: 55%;
 	height: 80%;
-	/*background-color: gray;*/
 	margin: auto;
-	/*border: 1px solid blue;*/
-	/* justify-content: center;
-	align-items: center; */
+	padding-bottom : 30rem;
+	
 }
 
 .sequence-img-container {
