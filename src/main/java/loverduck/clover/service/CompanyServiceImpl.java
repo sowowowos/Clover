@@ -29,4 +29,13 @@ public class CompanyServiceImpl implements CompanyService {
 		return company;
 	}
 
+	@Override
+	public Company updateCompanyType(Long id, Integer status) {
+		Company company = companyRep.findById(id).orElse(null);
+		if (company == null) {
+			return null;
+		}
+		company.setType(status);
+		return company;
+	}
 }
