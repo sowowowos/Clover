@@ -48,9 +48,15 @@ public class Exchange {
     @NotEmpty
     private Long amount;	//환전 신청 금액
     
+    /**
+     * 환전 신청 대기 
+     * 0(default) : 대기,
+     * 1 : 환전 승인/완료
+     * 2 : 거절 
+     */
     @NotNull
     @NotEmpty
-    private Long status; //환전 신청 대기 0, 완료 1, 거절 2
+    private Long status; //환전 신청 대기 0(default), 완료 1, 거절 2
     
     /**
      * 1 : 투자자
