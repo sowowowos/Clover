@@ -1,15 +1,25 @@
 package loverduck.clover.entity;
 
+import java.time.LocalDateTime;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.sun.istack.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -23,8 +33,31 @@ public class Exchange {
     private Long id;
 
     @NotNull
-    private Long amount;
+    @NotEmpty
+    private String bank;
+    
     @NotNull
+    @NotEmpty
+    private String accountHolder;	//예금주
+    
+    @NotNull
+    @NotEmpty
+    private String account;	//계좌번호
+    
+    @NotNull
+    @NotEmpty
+    private Long amount;	//환전 신청 금액
+    
+    @NotNull
+    @NotEmpty
+    private Long status; //환전 신청 대기 0, 완료 1, 거절 2
+    
+    /**
+     * 1 : 투자자
+     * 0 : 기업
+     */
+    @NotNull
+    @NotEmpty
     private Integer type;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
