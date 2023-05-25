@@ -5,6 +5,8 @@ import java.util.List;
 import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.FundingReply;
+import loverduck.clover.entity.LikedFunding;
+import loverduck.clover.entity.Users;
 import loverduck.clover.entity.Wallet;
 
 public interface FundingService {
@@ -69,4 +71,15 @@ public interface FundingService {
 	 */
 	List<Funding> findDoneFundingsById(Long id);
 	
+	/**
+	 * 관심 펀드 추가 (펀딩 좋아요)
+	 */
+	boolean addLike(Long funding_id, Long user_id);
+	
+	/**
+	 * 관심 펀드 삭제 (펀딩 좋아요 취소)
+	 */
+	boolean removeLike(Funding funding, Users user);
+	
+
 }

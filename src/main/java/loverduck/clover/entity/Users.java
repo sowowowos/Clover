@@ -66,4 +66,8 @@ public class Users {
     private Wallet wallet;
     @OneToOne(fetch = FetchType.LAZY)
     private Company company;
+    
+    public Users(Long id) {
+    	this.id=id;
+    }
 }

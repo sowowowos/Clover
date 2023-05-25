@@ -33,4 +33,6 @@ public interface FundingRepository extends JpaRepository<Funding, Long>, Queryds
 	String FIND_DONEFUNDINGS_BY_ID_QUERY = "select * from funding where company_id = :id and to_char(sysdate, 'YYYY-MM-DD') > end_date";
 	@Query(nativeQuery = true, value = FIND_DONEFUNDINGS_BY_ID_QUERY)
 	List<Funding> findDoneFundingsById(Long id);
+	
+
 }	

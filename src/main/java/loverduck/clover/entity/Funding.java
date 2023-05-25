@@ -43,20 +43,21 @@ public class Funding {
     private Long targetMaxAmount;
     @NotNull
     private Long currentAmount;
-   /* @NotNull
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime startDate;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime endDate;
-     * 
-     */
+    
+    
+    /*
     @NotNull
     @CreationTimestamp
     private Date endDate;
     @NotNull
     @CreationTimestamp
-    private Date startDate;
+    private Date startDate; */
     
     @NotNull
     private Double dividend;
@@ -71,11 +72,18 @@ public class Funding {
      */
     @NotNull
     private Integer status;
-
+    
+    
     @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Company company;
+    
+    public Funding(Long id) {
+    	this.id=id;
+    	
+    }
+    
 
 }
 

@@ -80,13 +80,23 @@
 										</svg>
 				    				</a>
 				    			</div>
-				    			<div class="col-2">
-				    				<a href="">
-					    				<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16" style="color: #0042A0;">
-										  <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
-										</svg>
-				    				</a>
+	
+				    			<div class="col-2" >
+				    				<!-- 좋아요 -->
+				    				<a href="#" id="likeButton1" onclick="handleLike()" >
+				    					<input type="checkbox" id="like_check1" th:value="${like}" />
+									    <svg id="likeImg" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16" style="color: #0042A0;">
+									        <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/>
+									   </svg> 
+									</a>
+									<a href="#" id="likeButton2" onclick="handleLike()" >
+										<input type="checkbox" id="like_check2" th:value="${like}" />
+									    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16" style="color: #0042A0;">
+									        <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+									    </svg>
+									</a> 
 				    			</div>
+				    			
 				    			<!-- 공유하기 -->
 				    			<div class="d-flex mt-3 justify-content-end align-items-center">
 					    			<!-- Kakao -->
@@ -147,7 +157,15 @@
 						
 						<!-- 재무분석 -->
 						<div id="tab2" class="cont" >
-							<div>재무분석</div>
+							<!-- 기업이름 -->
+							<div class="finance-container">
+								<div th:text="${fund.company.name}" class="finance-title"></div>
+							</div>
+							
+							<!-- 재무제표 -->
+							<div class="">
+							</div>
+							
 						</div>
 						
 						<!-- 진행 중인 펀드 목록 -->
@@ -305,30 +323,132 @@
 
 <!-- Tab Menu -->
 <script type="text/javascript">
-const tabList = document.querySelectorAll('.tab_menu .tab-list');
-const contents = document.querySelectorAll('.cont_area .cont');
-let activeCont = '#tab1';  // 현재 활성화 된 컨텐츠
-
-for(var i = 0; i < tabList.length; i++){
-	  tabList[i].addEventListener('click', function(e){
-	    e.preventDefault();
-	    for(var j = 0; j < tabList.length; j++){
-	      // 나머지 버튼 클래스 제거
-	      tabList[j].parentNode.classList.remove('is_on');
-
-	      // 나머지 컨텐츠 display:none 처리
-	      contents[j].style.display = 'none';
-	    }
-
-	    // 버튼 관련 이벤트
-	    this.parentNode.classList.add('is_on');
-
-	    // 버튼 클릭시 컨텐츠 전환
-	    activeCont = this.getAttribute('href');
-	    document.querySelector(activeCont).style.display = 'block';
-	  });
-	}
+	const tabList = document.querySelectorAll('.tab_menu .tab-list');
+	const contents = document.querySelectorAll('.cont_area .cont');
+	let activeCont = '#tab1';  // 현재 활성화 된 컨텐츠
+	
+	for(var i = 0; i < tabList.length; i++){
+		  tabList[i].addEventListener('click', function(e){
+		    e.preventDefault();
+		    for(var j = 0; j < tabList.length; j++){
+		      // 나머지 버튼 클래스 제거
+		      tabList[j].parentNode.classList.remove('is_on');
+	
+		      // 나머지 컨텐츠 display:none 처리
+		      contents[j].style.display = 'none';
+		    }
+	
+		    // 버튼 관련 이벤트
+		    this.parentNode.classList.add('is_on');
+	
+		    // 버튼 클릭시 컨텐츠 전환
+		    activeCont = this.getAttribute('href');
+		    document.querySelector(activeCont).style.display = 'block';
+		  });
+		}
 
 </script>
+
+<!-- 좋아요 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+	const clickLikeUrl = "bi bi-suit-heart-fill";
+	const emptyLikeUrl = "bi bi-suit-heart";
+	
+	function updateLikeIcon() {
+		let likeVal = $('#like_check1').val();
+		
+/*         if (likeVal === 'true') {
+            $('#likeButton1').css('display', 'none');
+            $('#likeButton2').css('display', 'block');
+        } else if (likeVal === 'false') {
+        	$('#likeButton2').css('display', 'none');
+            $('#likeButton1').css('display', 'block');
+        } */
+
+        if (likeVal) {
+            $('#likeButton1').hide();
+            $('#likeButton2').show();
+
+          } else {
+            $('#likeButton2').hide();
+            $('#likeButton1').show();
+
+          }
+	}
+	
+	function handleLike() {		
+     		// 좋아요 버튼 클릭 시 Ajax 요청
+            event.preventDefault();
+         	// 좋아요 상태에 따라 Ajax 요청 처리
+            var basicURL = /*[[@{'/fundingDetail'}]]*/;
+         	let fid = /*[[${fund.id}]]*/
+           // let likeVal = $('#like_check1').val();
+         	let likeVal=$("input:checkbox[id='like_check1']").is("checked")
+      
+            var userId = /*[[${session.user.id}]]*/ ;
+
+            
+
+      		let url = basicURL + "/" +fid + (likeVal? '/removeLike' : '/addLike') ;  
+            
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data:{
+                  fundingId: fid,
+                  userId : userId,
+                },
+                
+                success: function(data) {
+                    // 좋아요 상태 변경 후 아이콘 업데이트
+                    /* likeVal = !likeVal; */
+                    /* if (likeVal) {
+                        likeCheckbox.prop('checked', true); // Check the checkbox
+                        $('#likeButton1').hide();
+                        $('#likeButton2').show();
+                      } else {
+                        likeCheckbox.prop('checked', false); // Uncheck the checkbox
+                        $('#likeButton2').hide();
+                        $('#likeButton1').show();
+                      } */
+                    
+                    if (data == "true"){
+                    	data = true;
+                    	
+                    }else{
+                    	data = false;
+                    }
+                      
+                    console.log(data);  
+                    console.log(typeof data);  
+                    $('#like_check1').val(data);
+
+                    updateLikeIcon();
+
+                 	// 좋아요 버튼을 누르면 likeVal 값을 false로 변경
+                    /* if (likeVal) {
+                        $('#like_check1').val('false'); 
+                    	likeVal.val('false');
+                    } else {
+                        $('#like_check1').val('true'); 
+                    	likeVal.val('true');
+                    } */
+                 	console.log(likeVal); 
+                },
+                error: function(xhr, status, error) {
+                    // 에러 처리
+                    console.log(error);
+                }
+            });
+        }
+        $(document).ready(function() {
+            // 페이지 로딩 시 좋아요 상태에 따라 하트 아이콘 초기화
+            updateLikeIcon();
+        });
+        
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 </html>
