@@ -1,26 +1,12 @@
 package loverduck.clover.entity;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-
 import com.sun.istack.NotNull;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -37,12 +23,6 @@ public class PointHistory {
     private Long amount;
     @NotNull
     private Integer type;
-//    @NotNull
-//    @CreatedDate
-//    private LocalDateTime createdDate; //추가
-    @NotNull
-    @CreationTimestamp
-    private LocalDateTime createdAt;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Wallet wallet;
@@ -51,4 +31,9 @@ public class PointHistory {
     private Exchange exchange;
     @ManyToOne(fetch = FetchType.LAZY)
     private Funding funding;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

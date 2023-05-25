@@ -28,29 +28,6 @@
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-<script type="text/javascript">
-	/* 추후 로그인된 유저 세션 정보 가져오기 */
-
-	/* function getUserDetails() {
-	 $.ajax({
-	 url: '/api/getUserDetails',  // 현재 로그인된 아이디와 회원 상세 정보를 가져오는 API 엔드포인트 URL
-	 method: 'GET',
-	 success: function(response) {
-	 // 성공적으로 데이터를 가져왔을 때의 처리
-	 // 가져온 데이터를 활용하여 결제 API 호출을 처리합니다
-	 console.log(response);
-	 // ... 결제 API를 호출하는 함수를 호출하고, 데이터를 전달합니다 ...
-	 makePayment(response);
-	 },
-	 error: function(xhr, status, error) {
-	 // AJAX 요청이 실패했을 때의 처리
-	 console.error(error);
-	 // ... 에러 처리 로직을 구현하세요 ...
-	 }
-	 });
-	 }
-	 */
-</script>
 
 <script type="text/javascript" th:inline="javascript">
 	$(document).ready(function() {
@@ -127,10 +104,8 @@
 	function fundingPay() {
 		var fundHope = document.getElementById('fundHope').value;
 		var fundTotal = 1000 * fundHope; //펀딩 구매 희망주
-		//var fT = fundTotal.toLocaleString();
 		var fT = parseFloat(fundTotal.toLocaleString().replace(/,/g, ''));
-		var nowPoint = [[${nowPoint}]];
-		
+		var nowPoint = [[${nowPoint}]];		
 		
 		console.log("fundingPay() fundTotal : " + fundTotal);
 		console.log("fundingPay() fT = " + fT);
@@ -152,19 +127,17 @@
 
 			//추후 저장된 유저 세션값으로 변경할 것 
 			var amount = fT;
-			var type = 1; //0 충전, 1 사용
-			var wallet_id = 1;
-			var funding_id = 1;
+			var type = 1; //0 충전, 1 사용, 환전 2 //해당값 변경 금지
+			var wallet_id = [[${user.wallet.id}]];
+			var user_id = [[${user.id}]];
+			var funding_id = 1; //추후 수정
 			
 			var exchangeDateElement = document.getElementById('exchangeDate');
 			var exchangeDate = exchangeDateElement.innerText;
 
 			console.log("amount = " + amount);
-
-			// exchangeDate 요소에 표시
 			
 			alert("해당 기업에 펀딩하시겠어요?")
-
 			
 			$.ajax({
 					url : "/fundingPay",
@@ -183,9 +156,9 @@
 						console.log("Amount: " + amount);
 						console.log("Date type: " + typeof date);
 
-						location.href = '/fundingPayFin?amount=' + amount
-								+ "&exchangeDate=" + exchangeDate
-								+ "&wallet_id=" + wallet_id;
+						location.href = '/fundingPayFin?wallet_id=' + wallet_id
+								+ "&amount=" + amount
+								+ "&exchangeDate=" + exchangeDate;
 						
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
@@ -201,7 +174,7 @@
 </script>
 
 <!-- 아임포트 결제 처리  -->
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
 	var IMP = window.IMP;
 	var code = "imp78536886"; //가맹점 식별코드
 	IMP.init(code);
@@ -215,21 +188,13 @@
 			return;
 		}
 
-		/*pointHistory에 필요한 정보  */
-		/* type, amount, create_at, funding_id, wallet_id */
-
-		/* 추후 session에 회원정보가 존재할 경우, 아래처럼 수정 예정 */
-		/* var user_id = [[${session.userid}]];
-		var user_email =  [[${session.email}]];
-		var user_name =  [[${session.name}]]; */
-
-		var user_id = 1; //유저 아이디(pk)
-		var wallet_id = 1; //유저 월렛 id
-		var user_email = 'example@example.com';
-		var user_name = '조아영';
-		var user_phone = '010-1234-5678';
-		var funding_id = '1';
-		var funding_name = 'CLOVER 포인트 충전';
+		var user_id = [[${user.id}]]; //유저 아이디(pk)
+		var wallet_id = [[${user.wallet.id}]]; //유저 월렛 id
+		var user_email = [[${user.email}]];
+        var user_name =  [[${user.name}]];
+        var user_phone = [[${user.phone}]];
+		var funding_id = 1; //추후 수정
+		var order_name = 'CLOVER 포인트 충전';
 		var type = 0; //충전 0, 사용 1, 환전 2
 		var currentTime = new Date();
 
@@ -237,7 +202,7 @@
 			pg : "html5_inicis", //pg사 구분코드 - 이니시스 웹표준
 			pay_method : 'card', //결제수단 구분코드 - 신용카드
 			merchant_uid : 'point_' + new Date().getTime(), //주문번호
-			name : funding_name, //결제대상 16byte이내
+			name : order_name, //결제대상 16byte이내
 			amount : money, //결제금액
 			buyer_name : user_name, //주문자명
 			buyer_tel : user_phone, //주문자연락처
@@ -271,7 +236,6 @@
 						var date = response.date;
 
 						$("date").text(date);
-						//$("#nowPoint").text(amount);
 						$("#status").text(amount);
 
 						console.log("Amount: " + amount);
@@ -281,7 +245,6 @@
 
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
-						// 에러 처리를 하는 부분입니다.
 						console.error("Request failed: " + textStatus,
 								errorThrown);
 					}
@@ -293,9 +256,6 @@
 				var msg = "[결제 실패 : " + rsp.error_code + "]";
 				msg += " 에러 내용 : " + rsp.error_msg;
 				console.log(msg);
-
-				//충전 금액 입력 null 일 경우 발생 에러 메세지
-				//[결제 실패 : F1001] 에러 내용 : 결제요청금액이 0원입니다. 빌링키발급을 위해 customer_uid가 지정될 때에만 0원이 허용됩니다. 요청 amount :
 
 				alert("결제를 실패하였습니다.");
 			}
@@ -318,7 +278,6 @@
 						<img class="sequence-img" src="/img/fundingPay1.png" alt="">
 					</div>
 					<div class="info-input-container">
-					
 						<!-- 기업정보  -->
 						<div class="funding-info1">
 							<div class="funding-info-title">기업정보</div>

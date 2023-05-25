@@ -2,7 +2,9 @@ package loverduck.clover.controller;
 
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -103,26 +106,20 @@ public class FundingController {
         
 		return "/fundingDetail";
 	}
-
-	
-	/**
-	 * 펀딩 투자하기 - 약관동의
-	 */
-	@RequestMapping("/fundingAgree")
-	public String fundingAgree() {
-		
-		return "/fundingAgree";
-	}
 	
 	/** 
 	 * 펀딩 투자하기 - 펀딩하기
-	 * ->KG이니시스 결제창으로 가야한다
 	 */
 	@RequestMapping("/fundingPay")
-	public String fundingPay(Model model) {
-		//추후 세션 로그인 회원 정보에 따른 wallet_id로 코드 수정할 예정
-		Long wallet_id = 1L;
+	public String fundingPay(Model model, @ModelAttribute("user") Users user) {
 		
+		//세션 담기
+		model.addAttribute("user", user);
+				
+		Long wallet_id = user.getWallet().getId();
+		model.addAttribute("wallet_id", wallet_id);
+		
+		//포인트 충전/사용 결과에 따른 잔여 포인트 값 변경 저장
 	    Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
 	    model.addAttribute("nowPoint", nowPoint);
 	    
@@ -131,26 +128,27 @@ public class FundingController {
 	
 
 	/**
-	 * 펀딩 투자하기 
+	 * 펀딩 투자하기 - 펀딩 완료 
+	 * 추후 펀딩 아이디가 세션에 담겨야함
 	 */
 	@PostMapping("/fundingPay")
 	@ResponseBody
-	public Map<String,Object> fundingPayFin(@RequestParam("amount") Long amount, 
-			@RequestParam("type") Integer type,
-			@RequestParam("wallet_id") Long wallet_id, 
-			@RequestParam("funding_id") Long funding_id, 
-			HttpSession session, Model model) {
+	public Map<String,Object> fundingPayFin(@ModelAttribute("user") Users user,
+									@RequestParam("amount") Long amount, 
+									@RequestParam("type") Integer type,
+									@RequestParam("wallet_id") Long wallet_id, 
+									@RequestParam("funding_id") Long funding_id, 
+									HttpSession session, Model model) {
 		
-		//Long id = 1L;
-		//Users u = (Users)session.getAttribute("user");
-		LocalDateTime currentTime = LocalDateTime.now();
+		//세션 담기
+		model.addAttribute("user", user);
 		
-		Wallet wallet = walletService.findById(wallet_id);
+		LocalDateTime currentTime = LocalDateTime.now();		
 		Funding funding = fundingService.findById(funding_id);
-
+		Wallet wallet = walletService.findById(wallet_id);
 		
-		//포인트 사용 내역 저장 --> funding_id도 넣어야함
-		//pointHistoryService.pointChargeInsert2(amount, currentTime, type, wallet);
+		//funding_id 추후 저장된 값으로 변경하여 저장 --> company, funding table data 존재해야함
+		//포인트 사용 내역 저장 --> funding_id도 함께 저장
 		pointHistoryService.fundingPayInsert(amount, currentTime, type, funding, wallet);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -159,7 +157,6 @@ public class FundingController {
 		map.put("data", "success");
 		map.put("date", currentTime);
 		map.put("wallet", wallet);
-		map.put("funding", funding);
 		
 		return map;
 	}
@@ -236,14 +233,30 @@ public class FundingController {
 	 */
 	@PostMapping(value="/fundSubmitForm")
 	public String fundSubmit(String title, String content,Long targetMinAmount,Long targetMaxAmount,     
-			Long currentAmount, Date startDate, Date endDate , Double dividend , HttpSession session) {
+			Long currentAmount, 
+			String startDate, 
+			String endDate , Double dividend , HttpSession session) {
 	
 		String email = (String) session.getAttribute("loginEmail");
 		Company company = usersService.findCompany(email);
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate dateStartDate = LocalDate.parse(startDate, formatter);
+		LocalDate dateEndDate = LocalDate.parse(endDate, formatter);
+
+		LocalDateTime dateTimeStartDate = dateStartDate.atStartOfDay();
+		LocalDateTime dateTimeEndDate = dateEndDate.atStartOfDay();
 		
-//		Funding funding = new Funding(null, title, content, targetMinAmount, targetMaxAmount, 0L, startDate, endDate, dividend, 0, company);
-//
-//		fundingService.fundSubmit(funding);
+		Funding funding = Funding.builder().title(title).content(content).targetMinAmount(targetMinAmount)
+				.targetMaxAmount(targetMaxAmount)
+				.currentAmount(0L)
+				.startDate(dateTimeStartDate)
+				.endDate(dateTimeEndDate)
+				.dividend(dividend)
+				.status(0)
+				.company(company).build();
+
+		fundingService.fundSubmit(funding);
 			
 		return "redirect:/";
 	}

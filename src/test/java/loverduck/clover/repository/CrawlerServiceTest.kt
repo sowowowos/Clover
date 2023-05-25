@@ -26,12 +26,12 @@ open class CrawlerServiceTest {
     fun crawl() {
         try {
 
-            val executor = Executors.newFixedThreadPool(16)
+            val executor = Executors.newFixedThreadPool(8)
             // GET 요청을 보낼 URL
             val urls = ArrayDeque<URL>()
             var line: String?
 //            /*
-            for (c in 'A'..'A') {
+            for (c in 'A'..'I') {
                 val str = "https://www.catch.co.kr/api/v1.0/comp/compMajor/getMainCompanyList?" +
                         "NowPage=1&PageSize=20&Sort=profit&IsInHiring=0&CName=&AreaSido=&" +
                         "JCode=$c&Size=&ThemeName=&Salary=0,0&IsNewList=1"
@@ -91,7 +91,7 @@ open class CrawlerServiceTest {
                                 log.info("$map ${map::class}")
                                 val now: HashMap<String, Any> = map as HashMap<String, Any>
                                 if (!now.containsKey("CompID")) continue
-                                val path = "src/test/resources/json/companylist/${now["CompID"]}.json"
+                                val path = "crawledData/companylist/${now["CompID"]}.json"
                                 file = File(path)
                                 if (file.exists()) continue
                                 Files.write(
@@ -116,20 +116,21 @@ open class CrawlerServiceTest {
 
     @Test
     fun crawlingCompInfo() {
+        val companyListDir = "crawledData/companylist/"
         val urlPrefix = "https://www.catch.co.kr/api/v1.0/comp/"
-        val pathPrefix = "src/test/resources/json/"
+        val pathPrefix = "crawledData/"
         val urlMap = mapOf(
             "financial" to urlPrefix + "compSummary/getFinancial/",
             "commonTop" to urlPrefix + "compSummary/commonTop/",
             "info" to urlPrefix + "compInfo/info/",
         )
 
-        val executor = Executors.newFixedThreadPool(urlMap.size)
+        val executor = Executors.newFixedThreadPool(9)
 
-        File(pathPrefix + "companylist/").walk().onEnter { _ -> true }.forEach {
+        File(companyListDir).walk().onEnter { _ -> true }.forEach {
 //            log.info(it.name)
             if (!it.isDirectory) {
-                val data = File(pathPrefix + "companylist/" + it.name).bufferedReader().readLine()
+                val data = File(companyListDir + it.name).bufferedReader().readLine()
                 val objectMapper = ObjectMapper()
                 val map = objectMapper.readValue(data, Map::class.java)
 //                log.info(map.toString())

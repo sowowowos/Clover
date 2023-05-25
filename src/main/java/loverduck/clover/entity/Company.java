@@ -1,11 +1,11 @@
 package loverduck.clover.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -23,16 +23,18 @@ public class Company {
     private String name;             //회사명 *
     private String address;          //주소
     private String detailAddress;    //상세주소
-    private String phone;       
+    private String phone;
     private String email;
     private String homepage;       //기업 url 
     private String description;    // 기업 상세?
+    @Setter
     private String logo;          //로고 이미지 이름
     /**
      * 기업승인 상태
-     *  0 : 대기 (가입만 한 상태)
+     * 0 : 대기 (가입만 한 상태)
      */
-    private Integer type;         
+    @Setter
+    private Integer type;
     private String sector;        //산업 선택 *
 
     @OneToMany(mappedBy = "company")
@@ -43,11 +45,16 @@ public class Company {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private CompanyMapData companyMapData;
-    
+
     @OneToMany(mappedBy = "company")
     private List<Funding> funds;
-    
+
     public void setLogoPath(String logo) {
         this.logo = logo;
     }
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

@@ -36,8 +36,8 @@ public interface UsersRepository extends JpaRepository<Users, Long>, QuerydslPre
     
     @Transactional
     @Modifying
-    @Query("update Users u set u.name = :name ,u.nickname = :nickname, u.type = :type, u.phone = :phone, u.postalCode = :postalCode, u.address = :address, u.detailAddress = :detailAddress where u.email = :email")
-    void updateUserAll(String name, String nickname, Integer type, String phone, String postalCode, String address,
+    @Query("update Users u set u.name = :name ,u.nickname = :nickname, u.imgProfile = :imgProfile, u.type = :type, u.phone = :phone, u.postalCode = :postalCode, u.address = :address, u.detailAddress = :detailAddress where u.email = :email")
+    void updateUserAll(String name, String nickname, String imgProfile, Integer type, String phone, String postalCode, String address,
 			String detailAddress, String email);
     
 
