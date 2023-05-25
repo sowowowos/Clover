@@ -48,7 +48,7 @@ public class ExchangeCotroller {
      * 환전 신청시 
      * 1) exchange 테이블에 해당 값 저장
      * 2)  pointHistroy에서 해당 exchangeId와 walletId 참조해서 환전 내역 저장 후 amount 값 변경
-     * 3) status default = 0(대기) --> 0(대기) 1(승인), 2(거절, 거절 이면 포인드 재충전)
+     * 3) status default = 0(대기) --> 0(대기) 1(승인), 2(거절, 거절 이면 포인트 재충전)
      * 4) 관리자가 승인 시 status 0으로 변경, 거절시 2로 변경
      */
 	
@@ -75,31 +75,30 @@ public class ExchangeCotroller {
     
     	model.addAttribute("user", user);
     	
-    	long status = 0; //
+    	long status = 0; //0 - 환전 신청 상태 대기(default)
+    	
     	long userId = user.getId();
     	String userName = user.getName();
     	Integer userType = user.getType();
     	long walletId = user.getWallet().getId();
+    	Integer pointType = 2;
     	
     	LocalDateTime currentTime = LocalDateTime.now();		
     	Wallet wallet = walletService.findById(walletId);
-    	
-    	//exchangeService.exchangeInsert();
-    	
+    	    	
     	exchangeService.exchangeInsert(bank, accountHolder, account, amount, status, userType, wallet, currentTime);
     	
-    	//포인트내역 저장
-    	//pointHistroyService.exchangeSubmitInsert()
+    	//포인트 환전 내역 저장
+		pointHistoryService.pointChargeInsert(amount, currentTime, pointType, wallet);
     	
-	    //Long type = userType; //pointHistory에 저장할 회원 타입
-	    
-	    //exchange에 저장
-	    //pointHistroy에 저장
+		//포인트 업데이트
+	    Integer nowPoint = pointHistoryService.updateWalletAmount(walletId);
+
+	    System.out.println(walletId + "의 잔여 포인트 : " + nowPoint);
 
 	    return "mypage/pointCharge";
     	
-    }
-    
+    }    
     
 
     /**

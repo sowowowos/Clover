@@ -79,7 +79,7 @@ public class PointChargeController{
 	    Wallet wallet = walletService.findById(wallet_id);	
 	    
 	    //포인트 충전 내역 저장
-		pointHistoryService.pointChargeInsert2(amount, currentTime, type, wallet);
+		pointHistoryService.pointChargeInsert(amount, currentTime, type, wallet);
 		
 		//결제 후 서버 통신 확인
 	    Map<String, Object> map = new HashMap<String, Object>();
