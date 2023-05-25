@@ -32,7 +32,7 @@
 						<b>개인정보 수정</b>
 					</h3>
 					<hr>
-					<form action="/updateInvestor" method="post"
+					<form th:action="@{/updateInvestor}" method="post"
 						onsubmit="return register(event)"
 						class="p-5 align-items-start mb-5 col-9"
 						style="border-color: #0042A0 !important;">
@@ -92,7 +92,7 @@
 							</label> <input type="tel" class="form-control" id="exampleInputPhone"
 								aria-describedby="emailHelp" placeholder="" name="phone"
 								 th:value="${session.user.phone}">
-							<div id="phoneHelp" class="form-text"></div>
+							<div id="phoneHelp" class="form-text">'-'없이 숫자만 입력해주세요.</div>
 						</div>
 						<!-- 주소 -->
 						<div class="mb-4 row">
@@ -106,7 +106,7 @@
 										id="sample6_postcode" name="postalCode" readonly="readonly"
 										  th:value="${session.user.postalCode}">
 								</div>
-								<input type="button" class="btn col-4 btn-secondary mb-2"
+								<input type="button" class="btn col-3 btn-secondary mb-2"
 									onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 							</div>
 
@@ -121,7 +121,7 @@
 							<label for="exampleInputDeailAdress"></label>
 							<div class="col-12">
 								<input type="text" class="form-control mb-2"
-									id="sample6_extraAddress"  disabled>
+									id="sample6_extraAddress"  readonly="readonly">
 							</div>
 							<div class="col-12">
 								<input type="text" class="form-control mb-2"
@@ -129,10 +129,11 @@
 									 th:value="${session.user.detailAddress}">
 							</div>
 						</div>
-
-						<button type="submit" class="btn btn-primary w-100" id="registerForm"
+						<div class="w-100 d-flex justify-content-center">
+						<button type="submit" class="btn btn-primary col-3 " id="registerForm"
 							style="background: #0042A0"
 							onclick="register(event)" >수정 완료</button>
+						</div>
 					</form>
 				</div>
 			</div>

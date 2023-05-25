@@ -2,7 +2,9 @@ package loverduck.clover.controller;
 
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -226,12 +229,28 @@ public class FundingController {
 	 */
 	@PostMapping(value="/fundSubmitForm")
 	public String fundSubmit(String title, String content,Long targetMinAmount,Long targetMaxAmount,     
-			Long currentAmount, Date startDate, Date endDate , Double dividend , HttpSession session) {
+			Long currentAmount, 
+			String startDate, 
+			String endDate , Double dividend , HttpSession session) {
 	
 		String email = (String) session.getAttribute("loginEmail");
 		Company company = usersService.findCompany(email);
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate dateStartDate = LocalDate.parse(startDate, formatter);
+		LocalDate dateEndDate = LocalDate.parse(endDate, formatter);
+
+		LocalDateTime dateTimeStartDate = dateStartDate.atStartOfDay();
+		LocalDateTime dateTimeEndDate = dateEndDate.atStartOfDay();
 		
-		Funding funding = new Funding(null, title, content, targetMinAmount, targetMaxAmount, 0L, startDate, endDate, dividend, 0, company);
+		Funding funding = Funding.builder().title(title).content(content).targetMinAmount(targetMinAmount)
+				.targetMaxAmount(targetMaxAmount)
+				.currentAmount(0L)
+				.startDate(dateTimeStartDate)
+				.endDate(dateTimeEndDate)
+				.dividend(dividend)
+				.status(0)
+				.company(company).build();
 
 		fundingService.fundSubmit(funding);
 			

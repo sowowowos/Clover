@@ -46,7 +46,7 @@
 							href="/registerCorp"> 기업 회원 </a></li>
 					</ul>
 					<!-- 폼 -->
-					<form action="/registerInvestor" method="post" enctype="multipart/form-data"
+					<form th:action="@{/registerInvestor}" method="post" enctype="multipart/form-data"
 						 onsubmit="return register(event)"
 						class="p-5 m-auto align-items-start bg-light shadow border-top border-primary border-4 mb-5"
 						style="border-color: #0042A0 !important;"> <!-- -->
@@ -64,7 +64,7 @@
 										aria-describedby="emailHelp" placeholder="" required autofocus>
 								</div>
 								<button type="button" class="btn btn-primary col-3"
-									style="background: #0042A0" onclick="checkEmail()">중복 확인</button>
+									style="background: #0042A0; border: 0" onclick="checkEmail()">중복 확인</button>
 							</div>
 							<div id="emailHelp" class="form-text"></div>
 						</div>
@@ -90,11 +90,11 @@
 						</div>
 						<!-- 이미지 선택 -->
 						<div class="mb-4 row">
-							<label for="logo" class="col-6"> 프로필 이미지
+							<label for="logo" class="col-12 mb-2"> 프로필 이미지
 								<ruby>*
 								</ruby>
 							</label>
-							<div class="col-6">
+							<div class="col-12">
 								<input type="file" class="form-control mb-2" 
 									id="logo" name="logo" accept="image/*" required>
 							</div>
@@ -128,9 +128,9 @@
 								<ruby>*
 								</ruby>
 							</label> <input type="text" class="form-control" id="exampleInputPhone"
-								name="phone" aria-describedby="emailHelp" placeholder=""
+								name="phone" aria-describedby="emailHelp" 
 								required autofocus>
-							<div id="phoneHelp" class="form-text"></div>
+							<div id="phoneHelp" class="form-text">'-'없이 숫자만 입력해주세요.</div>
 						</div>
 						<div class="mb-4 row">
 							<div class="row col-12">
@@ -178,7 +178,7 @@
 								방침(필수), 사이트이용약관(필수), 만14세이상(필수)</div>
 						</div>
 						<button type="submit" id="registerButton"
-							class="btn btn-primary my-3 w-100" style="background: #0042A0"
+							class="btn btn-primary my-3 w-100" style="background: #0042A0;  border: 0"
 							onclick="register(event)" >회원가입</button> <!--  -->
 					</form>
 				</article>

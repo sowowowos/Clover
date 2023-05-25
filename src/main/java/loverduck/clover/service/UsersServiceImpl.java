@@ -113,7 +113,6 @@ public class UsersServiceImpl implements UsersService {
         return dbUser;
     }
 
-
     /**
      * 마이페이지 - 내가 투자한 펀딩 목록 출력
      */

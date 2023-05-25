@@ -45,7 +45,7 @@ public interface UsersService {
 	/**
 	 * 수정하기 - 카톡 투자자 회원일때
 	 */
-	Users updateAll(String name, String nickname,Integer type, String phone,String postalCode,String address, String detailAddress, String email);
+	Users updateAll(String name, String nickname, String imgProfile, Integer type, String phone,String postalCode,String address, String detailAddress, String email);
 
 	/**
 	 * 마이페이지 투자한 펀딩 목록 출력 
