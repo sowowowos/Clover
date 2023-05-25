@@ -119,10 +119,8 @@
 		<div class="category"></div>
 		<div class="container">
 			<div class="col-2" style="background-color:gray;">
-
 			</div>
-			<div class="col-8 m-auto">
-
+			<div class="col-8 ms-auto me-auto">
 				<!-- 충전 -->
 				<div class="all">
 					<div class="fs-3 fw-bold point-txt">
@@ -130,7 +128,7 @@
 						<hr class="hr-line">
 					</div>
 					
-					<!-- 네모 박스 -->
+					<!-- WALLET Container -->
 					<div class="border box shadow-sm mb-5 bg-white rounded">
 						<div class="wallet col-6 fs-4 fw-bold txt-blue">CLOVER WALLET</div>
 
@@ -178,67 +176,55 @@
 
 						<div id="funding-warning2" class="refund" style="text-align: right;">포인트 환전 신청은 관리자에게 문의해주세요.</div>
 					</div>
-					<!-- 네모 박스 end -->
+					<!-- WALLET Container End  -->
 
-					<!-- 아래부분 -->
+					<!-- 포인트 내역 -->
 					<div class="under-all">
-						<!-- 포인트 내역 -->
 						<div class="fs-4 fw-bold point-txt">
 						포인트 내역
 						<hr class="hr-line">					
 						<!--  버튼 -->
 						<div class="row pb-2 ms-2 me-2 border-bottom">
 							<!-- style="padding-bottom: 1rem" -->
-							<div class="btns4 col-md-6">
+							<div class="btns4 col-md-7">
 								<button type="button" class="filled btn btn-primary">전체</button>
 								<button type="button" class="btn btn-outline-secondary chargeBtn">충전</button>
 
 								<button type="button" class="btn btn-outline-secondary userBtn">사용</button>
 								<button type="button" class="btn btn-outline-secondary userBtn">환전</button>
-							</div>
-							<!-- <div class="col-md-3 offset-md-3 text-end">
-								<div class="dropdown">
-									<button class="btn  dropdown-toggle" type="button"
-										id="dropdownMenuButton1" data-bs-toggle="dropdown"
-										aria-expanded="false">전체기간</button>
-									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-										<li><a class="dropdown-item" href="#">기간</a></li>
-										<li><a class="dropdown-item" href="#">2기간</a></li>
-										<li><a class="dropdown-item" href="#">3기간</a></li>
-									</ul>
-								</div>
-							</div>	 -->									
+								<button type="button" class="btn btn-outline-secondary userBtn">배당</button>
+							</div>								
 						</div>
-					</div>
+						</div>
+					
 						
 						<!-- 포인트 상세 내역 -->
 						<div class="list border-bottom " style="margin: 1rem" th:each="phDetail : ${phDetailList}">
 							<div class="row pb-2">
 								<div class="col-2 fw-semibold"
 									th:text="${#temporals.format(phDetail.createdAt, 'M.dd')}"></div>
-								<div class="col-8 fw-semibold" th:text="${phDetail.type == 0 ? '충전' : '사용'}"></div>
+								<div class="col-8 fw-semibold" th:text="${phDetail.type == 0 ? '충전' : (phDetail.type == 1 ? '사용' : (phDetail.type == 2 ? '환전' : '배당'))}"></div>
 								<div class="col-2 fw-semibold" id="amount">
 						            <span th:if="${phDetail.type == 0}">+</span>
-    								<span th:if="${phDetail.type == 1}">-</span>
+	   								<span th:if="${phDetail.type == 1}">-</span>
+	   								<span th:if="${phDetail.type == 2}">-</span>
+	   								<span th:if="${phDetail.type == 3}">-</span>
 									<span th:text="${#numbers.formatInteger(phDetail.amount,0,'COMMA')}"></span>									
 									</div>
 								<div class="col-2"></div>
 								<div class="col-8 text-body-tertiary">
 									<div 
 										th:text="${#temporals.format(phDetail.createdAt, 'HH:mm')}"></div>
-									<!-- <div th:text="${#temporals.format(phDetail.createdAt, 'HH:mm')}"></div> -->
 								</div>
 							</div>
+						</div> <!-- 포인트 상세 내역 End-->
 
-						</div>
-
-						<!-- 내역시간 금액 end -->
-					</div>
-					<!-- 아래부분 end -->
-				</div>
+					</div> <!-- 포인트 내역 End-->
+					
+				</div> <!-- 충전 End -->				
 
 			</div>
-			<!-- section End -->
+
 		</div>
 
 		<div class="footer"></div>
