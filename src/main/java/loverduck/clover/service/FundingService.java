@@ -70,6 +70,12 @@ public interface FundingService {
 	 * 현재 펀딩의 기업의 완료된 펀딩 목록 출력 
 	 */
 	List<Funding> findDoneFundingsById(Long id);
+
+	
+	/**
+	 * 기업이 펀드 신청한 목록 보기
+	 */
+	List<Funding> fundingSubmitList(Long company_id);
 	
 	/**
 	 * 관심 펀드 추가 (펀딩 좋아요)
