@@ -43,26 +43,23 @@ public class Funding {
     private Long targetMaxAmount;
     @NotNull
     private Long currentAmount;
-   /* @NotNull
+    //@NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime startDate;
-    @NotNull
+    //@NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime endDate;
-     * 
-     */
+    /*     
     @NotNull
     @CreationTimestamp
     private Date endDate;
     @NotNull
     @CreationTimestamp
     private Date startDate;
-    
+    */
     @NotNull
     private Double dividend;
-    //CreationTimeStamp
-    //Date사용
-    
+
     /**
      * 펀드 기업 승인 상태 
      * 0 : 대기
