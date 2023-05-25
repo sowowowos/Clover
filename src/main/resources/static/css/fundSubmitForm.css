@@ -87,20 +87,25 @@
 }
 
 
-
 /* 추가 */
 .container-all{
 	display: flex;
-}
-
-.col-leftside{
-	
 }
 
 .submit-date{
 	padding-left: 1rem;
 	margin-top : 1rem;
 }
+
+.warning-word{
+	display: flex;
+	color: #0042A0 !important; 
+	align-items : center !important; 
+}
+
+
+
+
 
 
 
