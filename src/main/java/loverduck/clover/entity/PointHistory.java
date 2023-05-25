@@ -21,6 +21,13 @@ public class PointHistory {
     private Long id;
     @NotNull
     private Long amount;
+    
+    /**
+     * 0 - 충전 (포인트 충전)
+     * 1 - 사용 (기업에 펀딩 완료시)
+     * 2 - 환전 (포인트 환전)
+     * 3 - 배당 (펀딩 종료후 배당금 지급시)
+     */
     @NotNull
     private Integer type;
 
