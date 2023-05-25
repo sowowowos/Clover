@@ -1,0 +1,29 @@
+@charset "UTF-8";
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.txt-blue{
+	color: #0042A0;	
+}
+
+.table{
+	width: 100;
+}
+
+.btn.btn-primary{
+	background: #0042A0;
+	border: 0;
+	margin-bottom: 0.7rem;
+	margin-top: 5rem;
+	
+}
+/* 호버 없애고 싶어서 근데 작동 안됨 */
+.btn.btn-primary.active{
+	pointer-events: none;
+}
+
+.text{
+	text-align: center;
+	
+}
