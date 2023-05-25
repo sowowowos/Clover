@@ -3,6 +3,9 @@ package loverduck.clover.service;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import loverduck.clover.entity.Company;
+import loverduck.clover.entity.Funding;
+import loverduck.clover.entity.QCompany;
+import loverduck.clover.repository.FundingRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.annotation.Rollback;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 
 
 @Slf4j
@@ -24,6 +28,8 @@ class AdminServiceTest {
 
     @SpyBean
     private UsersServiceImpl usersService;
+    @SpyBean
+    private FundingRepository fundingRepository;
 
     @Autowired
     private TestEntityManager testEntityManager;
@@ -62,5 +68,27 @@ class AdminServiceTest {
                 .description("설명")
                 .build();
         usersService.register2(c);
+    }
+
+    @Test
+    @Rollback(false)
+    void addFunding() {
+        Company c = qFactory.selectFrom(QCompany.company)
+                .where(QCompany.company.id.eq(3L))
+                .fetchOne();
+
+        Funding f = Funding.builder()
+                .company(c)
+                .startDate(LocalDateTime.now())
+                .endDate(LocalDateTime.now().plusMonths(6))
+                .status(0)
+                .targetMinAmount(1000000L)
+                .targetMaxAmount(1000000L)
+                .currentAmount(0L)
+                .title("테스트 title")
+                .content("테스트 content")
+                .dividend(0.1324)
+                .build();
+        fundingRepository.save(f);
     }
 }

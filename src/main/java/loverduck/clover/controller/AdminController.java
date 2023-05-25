@@ -34,4 +34,20 @@ public class AdminController {
         }
         return "success";
     }
+
+    @GetMapping("/admin/funding")
+    public String funding(Model model) {
+        model.addAttribute("fundingList", adminService.getFundingList());
+        return "admin/manageFund";
+    }
+
+    @PostMapping("/admin/funding/{id}/{status}")
+    @ResponseBody
+    public String updateFundingStatus(@PathVariable Long id, @PathVariable Integer status) {
+        log.info("id: {}, status: {}", id, status);
+        if (id == null || status == null || adminService.updateFundingStatus(id, status) == null) {
+            return "fail";
+        }
+        return "success";
+    }
 }
