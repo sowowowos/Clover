@@ -33,6 +33,7 @@ public class Company {
      * 기업승인 상태
      * 0 : 대기 (가입만 한 상태)
      */
+    @Setter
     private Integer type;
     private String sector;        //산업 선택 *
 

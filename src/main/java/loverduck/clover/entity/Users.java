@@ -72,4 +72,8 @@ public class Users {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+    
+    public Users(Long id) {
+        this.id=id;
+      }
 }

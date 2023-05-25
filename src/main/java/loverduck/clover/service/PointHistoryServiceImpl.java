@@ -71,10 +71,9 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 
 	
 	/**
-	 * 포인트 충전/사용 내역에 따른 wallet amount 값 변경
+	 * 포인트 충전/사용/환전/배당 내역에 따른 wallet amount 값 변경
 	 */
-	public Integer updateWalletAmount(Long walletId) {
-			
+	public Integer updateWalletAmount(Long walletId) {		
 
 
 	    //포인트 type이 1이면 충전이므로 +, 0이면 사용이므로 -

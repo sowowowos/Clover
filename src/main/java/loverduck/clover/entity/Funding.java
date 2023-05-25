@@ -44,6 +44,7 @@ public class Funding {
     private Long targetMaxAmount;
     @NotNull
     private Long currentAmount;
+
     //@NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime startDate;
@@ -62,7 +63,8 @@ public class Funding {
      */
     @NotNull
     private Integer status;
-
+    
+    
     @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -72,6 +74,12 @@ public class Funding {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public Funding(Long id) {
+    	this.id=id;
+    	
+    }
+    
 
 }
 

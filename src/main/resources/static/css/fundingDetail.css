@@ -150,3 +150,13 @@
 	padding: 1rem;
 	margin: 0 0 0 21rem;
 }
+
+.finance-container{
+	margin: 0 10rem auto;
+}
+
+.finance-title{
+	font-size: 2rem;
+	font-weight: 600;
+	color: #0042A0;
+}

@@ -16,8 +16,12 @@ import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.FundingReply;
 import loverduck.clover.entity.QFunding;
+import loverduck.clover.entity.LikedFunding;
+import loverduck.clover.entity.Users;
 import loverduck.clover.repository.FundingReplyRepository;
 import loverduck.clover.repository.FundingRepository;
+import loverduck.clover.repository.LikedFundingRepository;
+import loverduck.clover.repository.UsersRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -33,23 +37,23 @@ public class FundingServiceImpl implements FundingService{
 	private final JPAQueryFactory qFactory;
 	
 	QFunding qfunding = QFunding.funding;
+    private final LikedFundingRepository likedFundingRepository;
+    private final UsersRepository usersRepository;
 
 	@Override
 	public List<Funding> historyCorp() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void fundSubmit(Funding funding) {
 		fundingRepository.save(funding);
-		
 	}
 
 	@Override
 	public List<Funding> fundingList() {
 		List<Funding> funds = fundingRepository.findAll();
-		System.out.println("size ! -> " + funds.size());
+//		System.out.println("size ! -> " + funds.size());
 		return funds;
 	}
 
@@ -101,7 +105,31 @@ public class FundingServiceImpl implements FundingService{
 	@Override
 	public List<Funding> findDoneFundingsById(Long id) {
 		return fundingRepository.findDoneFundingsById(id);
+	}
 
+	@Override
+	public boolean addLike(Long funding_id, Long user_id) {
+		if(likedFundingRepository.findByFundingAndUser(funding_id, user_id) == null) {
+			
+			LikedFunding fund = LikedFunding.builder()
+			.user(usersRepository.findByUserid(user_id.toString()))
+			.funding(fundingRepository.findById(funding_id).orElseThrow(RuntimeException::new))
+			.build();
+			likedFundingRepository.save(fund);
+			return true;
+		}
+		return false;
+		
+//		likedFundingRepository.save(LikedFunding.builder().funding(funding).user(user).build());
+	}
+
+	@Override
+	public boolean removeLike(Funding funding, Users user) {
+		if(likedFundingRepository.findByFundingAndUser(funding.getId(), user.getId()) != null) {
+			likedFundingRepository.delete(LikedFunding.builder().funding(funding).user(user).build());
+			return true;
+		}
+		return false;
 	}
 
 	@Override
