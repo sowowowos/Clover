@@ -83,7 +83,6 @@ public class UserController {
 
 //            dbCompany.setLogoPath(filename);
 
-//            Users dbUser = new Users(null, userid, password, email,name , nickname,  filename, 1, phone, postalCode, address, detailAddress, null, null);
             Users dbUser = Users.builder()
                     .userid(userid)
                     .password(password)
@@ -330,20 +329,42 @@ public class UserController {
     }
 
     /**
-     * 카톡 로그인 후 투자자 회원으로 시작하기
-     */
-    @PostMapping("/updateInvestorKakao")
-    public String kakaoInvestorUpdate(String name, String nickname, String password, String phone, String postalCode, String address, String detailAddress, HttpSession session) {
-        Users dbUser = (Users) session.getAttribute("user");
-
-        String email = dbUser.getEmail();
-
-        Users UpUser = usersService.updateAll(name, nickname, 1, phone, postalCode, address, detailAddress, email);
-
-        session.setAttribute("user", UpUser);
-
-        return "redirect:/";
-    }
+	 * 카톡 로그인 후 투자자 회원으로 시작하기
+	 */
+	@PostMapping("/updateInvestorKakao")
+	public String kakaoInvestorUpdate(String name, String nickname, String password,String phone,String postalCode,String address, String detailAddress ,
+			 @RequestParam("logo") MultipartFile logoFile, HttpSession session)  {
+		
+		Users dbUser = (Users) session.getAttribute("user");
+		String email = dbUser.getEmail();
+		
+		try {
+           String origFilename = logoFile.getOriginalFilename();
+           String filename = new MD5Generator(origFilename).toString();
+           /* 실행되는 위치의 'files' 폴더에 파일이 저장됩니다. */
+           String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\uploadLogo";
+           /* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
+           if (!new File(savePath).exists()) {
+               try{
+                   new File(savePath).mkdir();
+               }
+               catch(Exception e){
+                   e.getStackTrace();
+               }
+           }
+           String filePath = savePath + "\\" + filename;
+           logoFile.transferTo(new File(filePath));
+           
+           Users UpUser = usersService.updateAll(name, nickname, filename, 1, phone, postalCode, address, detailAddress, email);
+           session.setAttribute("user", UpUser);
+         
+       } catch(Exception e) {
+           e.printStackTrace();
+       }
+		
+		
+		return "redirect:/";
+	}
 
     /**
      * 카톡 로그인 후 기업 회원으로 시작하기 폼
@@ -355,38 +376,58 @@ public class UserController {
         return "mypage/updateCorpKakao";
     }
 
-    /**
-     * 카톡 로그인 후 기업 회원으로 시작하기
-     */
-    @PostMapping("/updateCorpKakao")
-    public String kakaoCorpUpdate(String name, String nickname, String phone, String postalCode, String address,
-                                  String detailAddress, String no, String sector, String homepage, HttpSession session) {
-        Users dbUser = (Users) session.getAttribute("user");
-
-        String email = dbUser.getEmail();
-
-        Users UpUser = usersService.updateAll(name, nickname, 0, phone, postalCode, address, detailAddress, email);
-
-        session.setAttribute("user", UpUser);
-
-        Company dbCompany = Company.builder()
-				.no(no)
-				.name(nickname)
-				.address(address)
-				.detailAddress(detailAddress)
-				.phone(phone)
-				.email(email)
-				.homepage(homepage)
-				.type(0)
-				.sector(sector)
-				.build();
-		//new Company(null, no, nickname, address, detailAddress, phone, email, homepage, null, null, 0, sector, null, null, null);
-        int companyCreate = usersService.register2(dbCompany);
-
-        session.setAttribute("company", dbCompany);
-
-        return "redirect:/";
-    }
+	/**
+	 * 카톡 로그인 후 기업 회원으로 시작하기
+	 */
+	@PostMapping("/updateCorpKakao")
+	public String kakaoCorpUpdate(String name, String nickname,String phone,String postalCode,String address,
+			String detailAddress , String no, String sector, String homepage, @RequestParam("logo") MultipartFile logoFile, HttpSession session)  {
+		Users dbUser = (Users) session.getAttribute("user");
+		String email = dbUser.getEmail();
+		
+		
+		try {
+           String origFilename = logoFile.getOriginalFilename();
+           String filename = new MD5Generator(origFilename).toString();
+           /* 실행되는 위치의 'files' 폴더에 파일이 저장됩니다. */
+           String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\uploadLogo";
+           /* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
+           if (!new File(savePath).exists()) {
+               try{
+                   new File(savePath).mkdir();
+               }
+               catch(Exception e){
+                   e.getStackTrace();
+               }
+           }
+           String filePath = savePath + "\\" + filename;
+           logoFile.transferTo(new File(filePath));  
+           
+           Users UpUser = usersService.updateAll(name, nickname,filename, 0, phone, postalCode, address, detailAddress, email);
+   		session.setAttribute("user", UpUser);
+   		
+   		Company dbCompany = Company.builder().no(no).name(nickname)
+   				.address(address)
+   				.detailAddress(detailAddress)
+   				.phone(phone)
+   				.email(email)
+   				.homepage(homepage)
+   				.logo(filename)
+   				.type(0)
+   				.sector(sector)
+   				.build();
+   				
+//    		Company dbCompany = new Company(null, no, nickname, address, detailAddress, phone, email, homepage, null, null, 0, sector, null, null, null);
+   		int companyCreate = usersService.register2(dbCompany);
+   		session.setAttribute("company", dbCompany);
+           
+       } catch(Exception e) {
+           e.printStackTrace();
+       }
+		
+		return "redirect:/";
+	}
+	
 
     /**
      * 마이페이지 - 투자자 (개인정보 수정폼)
@@ -461,7 +502,6 @@ public class UserController {
         if (detailAddress == null) {
             detailAddress = dbUser.getDetailAddress();
         }
-        System.out.println(detailAddress + " 좌 주소 우 url " + homepage);
         Users UpUser = usersService.update(password, nickname, phone, postalCode, address, detailAddress, email);
         Company UpCom = companyService.updateCom(address, detailAddress, phone, homepage, email);
 

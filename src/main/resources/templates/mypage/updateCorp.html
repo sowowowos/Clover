@@ -30,7 +30,7 @@
 						<b>개인정보 수정</b>
 					</h3>
 					<hr>
-					<form action="/updateCorp" method="post"
+					<form th:action="@{/updateCorp}" method="post"
 						onsubmit="return register(event)"
 						class="p-5 align-items-start mb-5 col-9 "
 						style="border-color: #0042A0 !important;"> <!-- p-5 -->
@@ -65,7 +65,7 @@
 									th:value="${session.company.sector}" placeholder="" disabled>
 							</div>
 							<div class="col-6">
-								<input type="file" class="form-control mb-2" id="logo"
+								<input type="file" class="form-control mb-2" id="logo" name="logo"
 									placeholder="" disabled="disabled">
 							</div>
 						</div>	
@@ -81,7 +81,7 @@
 										id="sample6_postcode" name="postalCode" readonly="readonly"
 										  th:value="${session.user.postalCode}">
 								</div>
-								<input type="button" class="btn col-4 btn-secondary mb-2"
+								<input type="button" class="btn col-3 btn-secondary mb-2"
 									onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 						
 
@@ -115,7 +115,7 @@
 										</ruby>
 									</label> <input type="tel" class="form-control" id="exampleInputPhone" name="phone"
 										aria-describedby="emailHelp" placeholder="" th:value="${session.user.phone}">
-									<div id="phoneHelp" class="form-text"></div>
+									<div id="phoneHelp" class="form-text">'-'없이 숫자만 입력해주세요.</div>
 								</div>
 								<div class="mb-4">
 									<label for="exampleInputEmail1" class="form-label">이메일
@@ -173,9 +173,11 @@
 									<div id="passwordHelp2" class="form-text"></div>
 								</div>
 							</div>
-							<button type="submit" class="btn btn-primary my-3 w-100"
+						<div class="w-100 d-flex justify-content-center">
+							<button type="submit" class="btn btn-primary my-3 col-3"
 								style="background: #0042A0"
 								onclick="register(event)">수정완료</button>
+						</div>
 					</form>
 				</div> <!-- col-9 -->
 			</div>

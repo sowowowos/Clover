@@ -29,10 +29,10 @@
 					this is sidebar</div>
 				<div class="article col-9 p-5">
 					<h3 class="m-2" style="color: #0042A0">
-						<b>개인정보 추가 입력</b>
+						<b>개인정보 입력</b>
 					</h3>
 					<hr>
-					<form action="/updateInvestorKakao" method="post"
+					<form th:action="@{/updateInvestorKakao}" method="post" enctype="multipart/form-data"
 						onsubmit="return register(event)"
 						class="p-5 align-items-start mb-5 col-9"
 						style="border-color: #0042A0 !important;">
@@ -56,6 +56,17 @@
 								aria-describedby="emailHelp" placeholder="" name="name"
 								 th:value="${session.user.name}" required autofocus>
 						</div>
+						<!-- 이미지 선택 -->
+						<div class="mb-4 row">
+							<label for="logo" class="col-12 mb-2"> 프로필 이미지
+								<ruby>*
+								</ruby>
+							</label>
+							<div class="col-12">
+								<input type="file" class="form-control mb-2" 
+									id="logo" name="logo" accept="image/*" required>
+							</div>
+						</div>
 						<div class="mb-4">
 							<label for="exampleInputNickname" class="form-label">닉네임
 								<ruby>*
@@ -72,7 +83,7 @@
 							</label> <input type="tel" class="form-control" id="exampleInputPhone"
 								aria-describedby="emailHelp" placeholder="" name="phone"
 								 th:value="${session.user.phone}" required autofocus>
-							<div id="phoneHelp" class="form-text"></div>
+							<div id="phoneHelp" class="form-text">'-'없이 숫자만 입력해주세요.</div>
 						</div>
 						<!-- 주소 -->
 						<div class="mb-4 row">
@@ -109,10 +120,11 @@
 								  required autofocus>
 							</div>
 						</div>
-
-						<button type="submit" class="btn btn-primary w-100" id="registerForm"
-							style="background: #0042A0"
-							onclick="register(event)" >추가입력완료</button>
+						<div class="w-100 d-flex justify-content-center">
+							<button type="submit" class="btn btn-primary col-3" id="registerForm"
+								style="background: #0042A0"
+								onclick="register(event)" >입력완료</button>
+						</div>
 					</form>
 				</div>
 			</div>
