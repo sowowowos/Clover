@@ -29,7 +29,6 @@ public class UsersServiceImpl implements UsersService {
 
         Users dbUser = usersRep.save(users);
 
-        ///////////wallet 체크해보자 null
         Wallet wallet = Wallet.builder()
                 .user(users)
                 .amount(0L)
@@ -103,10 +102,10 @@ public class UsersServiceImpl implements UsersService {
 
     //카톡 투자자 로그인시 추가 정보 업데이트
     @Override
-    public Users updateAll(String name, String nickname, Integer type, String phone, String postalCode, String address,
+    public Users updateAll(String name, String nickname, String imgProfile, Integer type, String phone, String postalCode, String address,
                            String detailAddress, String email) {
 
-        usersRep.updateUserAll(name, nickname, type, phone, postalCode, address, detailAddress, email);
+        usersRep.updateUserAll(name, nickname, imgProfile, type, phone, postalCode, address, detailAddress, email);
 
         Users dbUser = usersRep.findByEmail(email);
 
