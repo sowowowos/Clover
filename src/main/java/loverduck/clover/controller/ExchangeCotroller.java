@@ -62,6 +62,13 @@ public class ExchangeCotroller {
 
     	model.addAttribute("user", user);
     	
+    	Long wallet_id = user.getWallet().getId();
+		model.addAttribute("wallet_id", wallet_id);
+		
+		//현재 포인트 
+	    Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
+	    model.addAttribute("nowPoint", nowPoint);		
+		
         return "mypage/exchangeSubmit";
     }
 
@@ -73,7 +80,7 @@ public class ExchangeCotroller {
 						    		String account, long amount,
 						    		Model model, @ModelAttribute("user") Users user){
     
-    	model.addAttribute("user", user);
+    	model.addAttribute("user", user);	    
     	
     	long status = 0; //0 - 환전 신청 상태 대기(default)
     	
@@ -96,29 +103,12 @@ public class ExchangeCotroller {
 
 	    System.out.println(walletId + "의 잔여 포인트 : " + nowPoint);
 
-	    return "mypage/pointCharge";
-    	
+	    return "redirect:/mypage/pointCharge"; 	
     }    
     
 
     /**
      * 마이페이지 - 환전신청내역
      */
-	/*
-	 * @RequestParam("userName") Long userName,
-	 * 
-	 * @RequestParam("userType") Long userType,
-	 * 
-	 * @RequestParam("walletId") Long walletId,
-	 * 
-	 * @RequestParam("bank") Long bank,
-	 * 
-	 * @RequestParam("accountHolder") Long accountHolder,
-	 * 
-	 * @RequestParam("account") Long account,
-	 * 
-	 * @RequestParam("amount") Long amount,
-	 * 
-	 * @RequestParam("status") Long status,
-	 */
+	
 }
