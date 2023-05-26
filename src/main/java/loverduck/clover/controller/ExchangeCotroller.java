@@ -2,6 +2,7 @@ package loverduck.clover.controller;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
+import loverduck.clover.entity.Exchange;
 import loverduck.clover.entity.Users;
 import loverduck.clover.entity.Wallet;
 import loverduck.clover.service.ExchangeService;
@@ -110,5 +112,16 @@ public class ExchangeCotroller {
     /**
      * 마이페이지 - 환전신청내역
      */
+    @GetMapping("/exchangeSubmitHistory")
+    public String exSubmitHistory(Model model, HttpSession session , @ModelAttribute("user") Users user) {
+    	
+    	Long company_id = user.getCompany().getId();
+    	
+    	List<Exchange> exList = exchangeService.exchageSubmitList(company_id);
+    	model.addAttribute("exList",exList);
+    	
+    	return "mypage/exchangeSubmitHistory";
+    }
 	
+    
 }
