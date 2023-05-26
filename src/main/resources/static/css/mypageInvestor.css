@@ -4,9 +4,8 @@
 	color: #0042A0;
 }
 
-.text-navy-style {
-	color: #0042A0;
-	font-weight: 600;
+.text-color-black {
+	color: #151515;
 }
 
 .crop-info {
@@ -24,11 +23,21 @@
 	font-size: 0.7rem;
 }
 
+.yellow-keyword {
+	background-color: #fef2cf;
+	color: #0042A0;
+	padding: 0.3rem 0.8rem;
+	border-radius: 1rem;
+	margin: 0 0 0 0.5rem;
+	font-size: 0.7rem;
+}
+
 .menu{
 	border: 1px solid #DEDEDE;	
 	border-radius: 1rem;
 	padding: 1rem 0;
 	text-align: center;
+	margin: 3rem 0 0 0;
 }
 
 .menu li {
@@ -38,11 +47,11 @@
 
 .menu li a{
 	text-decoration: none;
-	color: #151515;
 }
 
+
 .menu-main {
-	font-size: 1.2rem;
+	font-size: 1.3rem;
 	font-weight: 600;
 	color: #0042A0;
 }
@@ -57,14 +66,32 @@
 	border-radius: 3rem;
 }
 
-.main-section {
-	margin: 0 0 0 3rem;
+.section-title {
+	font-size: 2.2rem;
+	font-weight: 620;
+	color: #0042A0;
+	margin: 3rem 0 1rem 0;
 }
 
-.section-title {
-	font-size: 2.6rem;
-	font-weight: 600;
-	color: #0042A0;
+.main-section {
+	margin: 0 0 0 6.5rem;
+	width: 31rem;
+}
+
+.card-company-name{
+	margin: 0 0 0.3rem 0.3rem;
+	font-weight: 630;
+}
+
+.card-title {
+	font-size: 1.2rem;
+	margin: 0.4rem;
+	font-weight: 500;
+}
+
+.card-img {
+	width: 20rem;
+	height: 15rem;
 }
 
 .card-dday {

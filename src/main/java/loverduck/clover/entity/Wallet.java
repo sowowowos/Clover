@@ -26,6 +26,7 @@ public class Wallet {
 
     @JsonIgnore
     @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private Users user;
 
     /*

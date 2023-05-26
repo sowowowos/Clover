@@ -1,10 +1,10 @@
 @charset "UTF-8";
 
-/* .navbar{
+.navbar{
 	display: flex;
-	backgound-color: #FFFFFF;
-} */
-
+	background-color: #0042A0
+	opacity: 0.5;
+}
 .logo {
 	width: 10rem;
 	height: 2.8rem;
