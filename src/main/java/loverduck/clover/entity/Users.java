@@ -63,7 +63,7 @@ public class Users {
     private String detailAddress;
 
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Wallet wallet;
     @OneToOne(fetch = FetchType.LAZY)
     private Company company;
