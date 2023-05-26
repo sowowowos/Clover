@@ -1,105 +1,99 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<!-- 서버 돌릴 시 '../static/ 빼기! -->
-	<link rel="stylesheet" href="../../static/css/common.css">
-	<link rel="stylesheet" href="../../static/css/reset.css">
-	<link rel="stylesheet" href="../../static/css/admin.css">
-   	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-	<title>CLOVER</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 서버 돌릴 시 '../static/ 빼기! -->
+    <link rel="stylesheet" href="/css/navbar.css" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" href="../../static/css/common.css" th:href="@{../css/common.css}">
+    <link rel="stylesheet" href="../../static/css/reset.css" th:href="@{../css/reset.css}">
+    <link rel="stylesheet" href="../../static/css/admin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <title>CLOVER</title>
 </head>
 <!-- 관리자 - 사용자(투자자) 관리 -->
 <body>
-	<div>
-		<!-- Navbar -->
-		<div class="nav"></div>
-		
-		<!-- 배너 -->
-		<div class="banner"></div>
-		
-		<div class="container">
-			<div class="row">
-				<!-- 메뉴 -->
-				<div class="col-2 mt-4">
-					<div class="menu">
-						<li>대시보드</li>
-						<li>사용자 관리</li>
-						<li>공지사항 관리</li>
-						<li>문의사항 관리</li>
-						<li>펀딩 관리</li>
-					</div>
-				</div>
-				
-				<!-- 본문 -->
-				<div class="col-10 p-5">
-					<!-- 본문 제목 -->
-					<div class="section-title">사용자 관리 - 투자자</div>
-					<hr class="gray-line">
-					
-					<!-- 내용 및 리스트 -->
-					<table class="table mt-5">
-					  <thead>
-					    <tr>
-					      <th scope="col">이름</th>
-					      <th scope="col">가입일</th>
-					      <th scope="col">타입</th>
-					      <th scope="col">상태</th>
-					      <th scope="col">문의글</th>
-					      <th scope="col"></th>
-					    </tr>
-					  </thead>
-					  <tbody>
-					    <tr>
-					      <th scope="row">박창현</th>
-					      <td>23.05.05</td>
-					      <td>일반</td>
-					      <td>정지</td>
-					      <td>0</td>
-					      <td>
-					      	<a class="manage-link" href="">관리하기</a>
-					      </td>
-					    </tr>
-					    <tr>
-					      <th scope="row">박창현</th>
-					      <td>23.05.05</td>
-					      <td>일반</td>
-					      <td>정지</td>
-					      <td>0</td>
-					      <td>
-					      	<a class="manage-link" href="">관리하기</a>
-					      </td>
-					    </tr>
-					    <tr>
-					      <th scope="row">박창현</th>
-					      <td>23.05.05</td>
-					      <td>일반</td>
-					      <td>정지</td>
-					      <td>0</td>
-					      <td>
-					      	<a class="manage-link" href="">관리하기</a>
-					      </td>
-					    </tr>
-					    <tr>
-					      <th scope="row">박창현</th>
-					      <td>23.05.05</td>
-					      <td>일반</td>
-					      <td>정지</td>
-					      <td>0</td>
-					      <td>
-					      	<a class="manage-link" href="">관리하기</a>
-					      </td>
-					    </tr>
-					  </tbody>
-					</table>
-				</div>
-			</div>
-			
-		</div>
+<div>
+    <!-- Navbar -->
+    <div th:insert="navbar :: navbar"></div>
 
-	</div>
+    <!-- 배너 -->
+    <div class="banner"></div>
+
+    <div class="container">
+        <div class="row">
+            <!-- 메뉴 -->
+            <div th:replace="/admin/sidebar.html :: sidebar"></div>
+
+            <!-- 본문 -->
+            <div class="col-10 p-5">
+                <!-- 본문 제목 -->
+                <div class="section-title">사용자 관리 - 투자자</div>
+                <hr class="gray-line">
+
+                <!-- 내용 및 리스트 -->
+                <table class="table mt-5">
+                    <thead>
+                    <tr>
+                        <th scope="col">이름</th>
+                        <th scope="col">가입일</th>
+                        <th scope="col">타입</th>
+                        <th scope="col">상태</th>
+                        <th scope="col">문의글</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">박창현</th>
+                        <td>23.05.05</td>
+                        <td>일반</td>
+                        <td>정지</td>
+                        <td>0</td>
+                        <td>
+                            <a class="manage-link" href="">관리하기</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">박창현</th>
+                        <td>23.05.05</td>
+                        <td>일반</td>
+                        <td>정지</td>
+                        <td>0</td>
+                        <td>
+                            <a class="manage-link" href="">관리하기</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">박창현</th>
+                        <td>23.05.05</td>
+                        <td>일반</td>
+                        <td>정지</td>
+                        <td>0</td>
+                        <td>
+                            <a class="manage-link" href="">관리하기</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">박창현</th>
+                        <td>23.05.05</td>
+                        <td>일반</td>
+                        <td>정지</td>
+                        <td>0</td>
+                        <td>
+                            <a class="manage-link" href="">관리하기</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 </body>
 </html>
