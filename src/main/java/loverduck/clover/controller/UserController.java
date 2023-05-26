@@ -1,15 +1,5 @@
 package loverduck.clover.controller;
 
-import lombok.RequiredArgsConstructor;
-import loverduck.clover.entity.Company;
-import loverduck.clover.entity.Funding;
-import loverduck.clover.entity.Ordered;
-import loverduck.clover.entity.PointHistory;
-import loverduck.clover.entity.Users;
-import loverduck.clover.service.CompanyServiceImpl;
-import loverduck.clover.service.FundingService;
-import loverduck.clover.service.KakaoServiceImpl;
-import loverduck.clover.service.UsersService;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Funding;
-import loverduck.clover.entity.Ordered;
+import loverduck.clover.entity.PointHistory;
 import loverduck.clover.entity.Users;
 import loverduck.clover.service.CompanyServiceImpl;
 import loverduck.clover.service.FundingService;
@@ -69,11 +60,8 @@ public class UserController {
     @ModelAttribute("company")
     public Company getCompany(HttpSession session) {
         return (Company) session.getAttribute("compnay");
-    }
+    } 
   
-    @Autowired
-    private FundingService fundingService;
-
     /**
      * 메인
      */
@@ -194,7 +182,7 @@ public class UserController {
             dbCompany.setLogoPath(filename);
 
             Users dbUser = Users.builder()
-                    .userid(userid)
+            		.userid(userid)
                     .password(password)
                     .email(email)
                     .name(name)
@@ -212,6 +200,7 @@ public class UserController {
 
             int userCreateForm = usersService.register(dbUser);
             int companyCreate = usersService.register2(dbCompany);
+            
 
         } catch (Exception e) {
             e.printStackTrace();
