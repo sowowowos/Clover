@@ -10,6 +10,14 @@ import loverduck.clover.service.CompanyServiceImpl;
 import loverduck.clover.service.FundingService;
 import loverduck.clover.service.KakaoServiceImpl;
 import loverduck.clover.service.UsersService;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -17,15 +25,23 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import lombok.RequiredArgsConstructor;
+import loverduck.clover.entity.Company;
+import loverduck.clover.entity.Funding;
+import loverduck.clover.entity.Ordered;
+import loverduck.clover.entity.Users;
+import loverduck.clover.service.CompanyServiceImpl;
+import loverduck.clover.service.FundingService;
+import loverduck.clover.service.KakaoServiceImpl;
+import loverduck.clover.service.UsersService;
 
 /**
  * 회원가입 , 로그인 , 마이페이지
@@ -54,6 +70,9 @@ public class UserController {
     public Company getCompany(HttpSession session) {
         return (Company) session.getAttribute("compnay");
     }
+  
+    @Autowired
+    private FundingService fundingService;
 
     /**
      * 메인
@@ -629,23 +648,20 @@ public class UserController {
     }
 
     /**
-     * 마이페이지 - 기업 펀드 신청 (등록하기)
-     * insert 펀드를 등록시킨다. ->등록되면 내역으로 보내기
-     */
-    @RequestMapping("/fundSubmit")
-    public String fundSubmit() {
-
-        return "mypage/historyCorp";
-    }
-
-    /**
      * 마이페이지 - 기업 (펀딩 신청) - 펀딩 신청 내역
-     * 펀드 신청 조회
+     * 펀드 신청한 것 승인 상태 조회
      */
-    @RequestMapping("/historyCorp")
-    public String historyCorp() {
-
-        return "mypage/historyCorp";
+    @GetMapping("/fundSubmitHistory")
+    public String historyCorp(Model model, HttpSession session) {
+    	
+    	Company company = (Company) session.getAttribute("company");
+    	Long company_id = company.getId();
+    	List<Funding> fundingList = fundingService.fundingSubmitList(company_id);
+    	
+    	model.addAttribute("fundingList", fundingList);
+    	
+    	
+        return "mypage/fundSubmitHistory";
     }
 
     /**

@@ -14,7 +14,7 @@
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>CLOVER</title>
 </head>
-<!-- 관리자 - 펀드 관리 -->
+<!-- 관리자 - 환전 신청 관리 -->
 <body>
 <div>
     <!-- Navbar -->
@@ -28,73 +28,63 @@
             <!-- 메뉴 -->
             <div th:replace="/admin/sidebar.html :: sidebar"></div>
 
-            <div class="accordion accordion-flush p-5 col-10" id="accordionFlushExample">
-                <div class="section-title">펀딩 관리</div>
+
+            <div class="accordion accordion-flush p-5 col" id="accordionFlushExample">
+                <div class="section-title">환전 신청 관리</div>
                 <hr class="gray-line">
                 <div class="row px-2 text-center fs-6 fw-bold">
-                    <div class="col">펀딩명</div>
-                    <div class="col">펀딩 시작일</div>
-                    <div class="col">회사명</div>
-                    <div class="col">펀딩 목표<br>최소 금액</div>
                     <div class="col">상태</div>
+                    <div class="col">신청 금액</div>
+                    <div class="col">분류</div>
+                    <div class="col">작성자</div>
+                    <div class="col">신청일</div>
                     <div class="col"></div>
                     <!--                    펀딩 진행-->
                 </div>
                 <hr class="m-1 p-1">
                 <div class="accordion-item accordion-header row text-center fs-6 p-2 mb-2"
-                     th:each="funding:${fundingList}">
+                     th:each="exchange:${exchangeList}">
+                    <div class="col" th:switch="${exchange.type}">
+                        <span th:case="1" class="badge text-bg-success">승인</span>
+                        <span th:case="-1" class="badge text-bg-danger">거절</span>
+                        <span th:case="*" class="badge text-bg-warning">대기</span>
+                    </div>
                     <!--                    <h2 class="accordion-header row text-center fs-6">-->
                     <!--                    </h2>-->
-                    <div class="col" th:text="${funding.title}">
-                        카카오
+                    <div class="col" th:text="${exchange.amount}">
+                        100000000
                     </div>
-                    <div class="col" th:text="${funding.endDate+''}">
-                        23.05.05.
-                    </div>
-                    <div class="col" th:text="${funding.company.name}">
-                        전자ICT
+                    <div class="col" th:switch="${exchange.wallet.user.company}">
+                        <p th:case="null">투자자</p>
+                        <p th:case="*">기업</p>
                     </div>
                     <!--                    <div class="col-2" th:text="${company.funds.size()}">-->
                     <!--                        10-->
                     <!--                    </div>-->
-                    <div class="col" th:text="${funding.targetMinAmount}">100000</div>
-                    <div class="col" th:switch="${funding.status}">
-                        <span th:case="1" class="badge text-bg-success">승인</span>
-                        <span th:case="-1" class="badge text-bg-danger">거절</span>
-                        <span th:case="*" class="badge text-bg-warning">대기</span>
+                    <div class="col" th:text="${exchange.wallet.user.name}">100000</div>
+                    <div class="col" th:text="${exchange.createdAt+''}">
+                        23.05.05.
                     </div>
                     <div class="col">
                         <button class="accordion-button collapsed bg-body" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapseOne" aria-expanded="false"
                                 aria-controls="flush-collapseOne"
-                                th:attr="aria-controls=${'flush-collapse'+funding.id},
-                                data-bs-target=${'#flush-collapse'+funding.id},
+                                th:attr="aria-controls=${'flush-collapse'+exchange.id},
+                                data-bs-target=${'#flush-collapse'+exchange.id},
                                 data-bs-toggle=${'collapse'},
                                 aria-expanded='false'">
                         </button>
                     </div>
                     <div id="flush-collapseOne" class="accordion-collapse collapse"
-                         th:id="${'flush-collapse'+funding.id}"
+                         th:id="${'flush-collapse'+exchange.id}"
                          data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body text-start row">
-                            <p class="col-12" th:utext="${''+
-                            funding.content + '<br>' +
-                            funding.targetMinAmount + ' - ' +
-                            funding.targetMaxAmount + '<br>' +
-                            funding.startDate + ' ~ ' +
-                            funding.endDate+'<br>'+
-                            funding.dividend
-                            }">
-                                Placeholder content for this accordion, which is intended to
-                                demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion
-                                body.
-                            </p>
+                        <div class="accordion-body text-end row">
                             <div class="col-12 align-self-end">
                                 <button type="button" class="btn btn-success typeUpdateButton"
-                                        th:attr="data-funding-id=${funding.id} , data-funding-type=1">승인
+                                        th:attr="data-funding-id=${exchange.id} , data-funding-type=1">승인
                                 </button>
                                 <button type="button" class="btn btn-outline-danger typeUpdateButton"
-                                        th:attr="data-funding-id=${funding.id} , data-funding-type=-1">거절
+                                        th:attr="data-funding-id=${exchange.id} , data-funding-type=-1">거절
                                 </button>
                             </div>
                         </div>
@@ -111,8 +101,8 @@
 <script>
 
     function setStatus(id, status) {
-        console.log('/admin/funding/' + id + '/' + status)
-        fetch('/admin/funding/' + id + '/' + status, {
+        console.log('/admin/exchange/' + id + '/' + status)
+        fetch('/admin/exchange/' + id + '/' + status, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

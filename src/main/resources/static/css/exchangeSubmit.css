@@ -1,0 +1,103 @@
+@charset "UTF-8";
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.container {
+	display: flex;
+	min-height: 100vh;
+}
+
+/* 사이드바 */
+.menu {
+	border: 1px solid #DEDEDE;
+	border-radius: 1rem;
+	padding: 3rem;
+	text-align: center;
+}
+
+.menu li {
+	margin: 1rem 0;
+	list-style: none;
+	font-size: 1rem;
+}
+/* 글씨 색 */
+.txt-blue{
+	color: #0042A0;	
+}
+/*필수 표시 색상*/
+#essential{
+	color: #0042A0;	
+	font-weight: 600;
+	
+}
+/*환전 신청입력폼 */
+.submit-container {
+	width: 100%;
+	margin: 1rem 1.5rem;
+	
+}
+.input-title{
+
+}
+
+.border-seq{
+	
+}
+
+.askDetail{
+	width:100%;
+}
+#warning{
+	color: #9A9A9A;
+    font-size: 0.8rem;
+    align-self: center;
+    margin: 0.3rem 0;
+}
+.privacy-info{
+	font-size : 0.8rem;
+	
+}
+
+/* 버튼 */
+button.btn-primary:hover{
+	background-color : #0042A0!important;
+    border-color : #0042A0!important;
+}
+button.btn-primary:active{
+	background-color : #0042A0;
+    border-color : #0042A0;
+}
+button.btn-primary:focus{
+	background-color : #0042A0;
+    border-color : #0042A0;
+}
+
+.btn.btn-primary {
+	border : none;
+    margin-top: 5rem;
+    background-color: #0042A0;
+   
+}
+.btn.btn-outline-dark {
+    margin-top: 5rem;
+    color: #000000;
+}
+
+/* 체크박스 */
+/* 체크박스 디자인 */
+.agree input.normal {
+	width: 1.25em; /* 너비 설정 */
+	height: 1.25em; /* 높이 설정 */
+	vertical-align: middle;
+}
+
+.agree input.normal:before {
+	background-color: #0042A0;
+}
+
+.agree input.normal:after {
+	background-color: #0042A0;
+}
+
+

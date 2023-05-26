@@ -20,6 +20,7 @@ import loverduck.clover.entity.Wallet;
 @Repository
 public interface PointHistoryRepository extends JpaRepository<PointHistory, Long>, QuerydslPredicateExecutor<PointHistory> {
 	
+	/* 포인트 충전 내역 저장 */
 	 String INSERT_POINTHISTORY_BY_WALLET_ID =
 	 "insert into point_history (id, amount, created_at, type, wallet_id) values (point_history_seq.nextval, :amount, :created_at, :type, :wallet_id)";
 	 
@@ -29,6 +30,7 @@ public interface PointHistoryRepository extends JpaRepository<PointHistory, Long
 	 void insertPointHistoryByWalletId(long amount,
 	 LocalDateTime created_at, Integer type, Wallet wallet_id);
 	 
+	 /* 포인트 사용 내역 저장 */
 	 //기업에 펀딩할 시 funding_id도 insert, type=1(사용)	
 	 String INSERT_USE_POINTHISTORY_BY_WALLET_ID =
 	 "insert into point_history (id, amount, created_at, type, funding_id, wallet_id) values (point_history_seq.nextval, :amount, :created_at, :type, :funding_id, :wallet_id)";
@@ -46,4 +48,14 @@ public interface PointHistoryRepository extends JpaRepository<PointHistory, Long
 	 String FIND_ALLOCATIONS_BY_USER_ID = "select * from point_history where user_id = :user_id and type = 3";
 	 @Query(nativeQuery = true, value = FIND_ALLOCATIONS_BY_USER_ID)
 	 List<PointHistory> findAllocationsByUserId (Long user_id);
+
+  /* 포인트 환전 내역 저장 */
+	 String INSERT_EXCHANGE_POINTHISTORY_BY_WALLET_ID =
+			 "insert into point_history (id, amount, created_at, type, wallet_id) values (point_history_seq.nextval, :amount, :created_at, :type, :wallet_id)";
+
+	 	 @Query (nativeQuery = true, value = INSERT_EXCHANGE_POINTHISTORY_BY_WALLET_ID)
+	 @Transactional	 
+	 @Modifying 
+	 void insertExchangeByWalletId(long amount, LocalDateTime created_at, Integer type, Wallet wallet_id);
+
 }

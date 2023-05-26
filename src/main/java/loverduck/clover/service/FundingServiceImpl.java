@@ -3,15 +3,19 @@ package loverduck.clover.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
 import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.FundingReply;
+import loverduck.clover.entity.QFunding;
 import loverduck.clover.entity.LikedFunding;
 import loverduck.clover.entity.Users;
 import loverduck.clover.repository.FundingReplyRepository;
@@ -26,6 +30,13 @@ public class FundingServiceImpl implements FundingService{
 
 	private final FundingRepository fundingRepository;
 	private final FundingReplyRepository fundingReplyRepository;
+	
+	@Autowired
+	private final EntityManager entityManager;
+	
+	private final JPAQueryFactory qFactory;
+	
+	QFunding qfunding = QFunding.funding;
     private final LikedFundingRepository likedFundingRepository;
     private final UsersRepository usersRepository;
 
@@ -119,6 +130,17 @@ public class FundingServiceImpl implements FundingService{
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<Funding> fundingSubmitList(Long company_id) {
+		
+		List<Funding> fundingList = qFactory.selectFrom(qfunding)
+				.where(qfunding.company.id.eq(company_id))
+				.orderBy(qfunding.createdAt.desc())
+				.fetch();
+		
+		return fundingList;
 	}
 
 }

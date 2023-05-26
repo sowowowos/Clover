@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -51,14 +52,6 @@ public class Funding {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime endDate;
 
-    /*     
-    @NotNull
-    @CreationTimestamp
-    private Date endDate;
-    @NotNull
-    @CreationTimestamp
-    private Date startDate;
-    */
     @NotNull
     private Double dividend;
 
@@ -77,6 +70,11 @@ public class Funding {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Company company;
     
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
     public Funding(Long id) {
     	this.id=id;
     	
