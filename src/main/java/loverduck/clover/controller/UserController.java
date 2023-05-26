@@ -1,5 +1,15 @@
 package loverduck.clover.controller;
 
+import lombok.RequiredArgsConstructor;
+import loverduck.clover.entity.Company;
+import loverduck.clover.entity.Funding;
+import loverduck.clover.entity.Ordered;
+import loverduck.clover.entity.PointHistory;
+import loverduck.clover.entity.Users;
+import loverduck.clover.service.CompanyServiceImpl;
+import loverduck.clover.service.FundingService;
+import loverduck.clover.service.KakaoServiceImpl;
+import loverduck.clover.service.UsersService;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -41,6 +51,8 @@ import loverduck.clover.service.UsersService;
 public class UserController {
 
     private final UsersService usersService;
+    
+    private final FundingService fundingService;
 
     @Autowired
     private KakaoServiceImpl kakaoService;
@@ -48,6 +60,17 @@ public class UserController {
     @Autowired
     private CompanyServiceImpl companyService;
     
+    
+    @ModelAttribute("user")
+    public Users getUser(HttpSession session) {
+        return (Users) session.getAttribute("user");
+    }
+    
+    @ModelAttribute("company")
+    public Company getCompany(HttpSession session) {
+        return (Company) session.getAttribute("compnay");
+    }
+  
     @Autowired
     private FundingService fundingService;
 
@@ -56,7 +79,7 @@ public class UserController {
      */
     @GetMapping("/")
     public String mainPage() {
-
+    	
         return "mypage/index";
     }
 
@@ -523,45 +546,59 @@ public class UserController {
     }
 
     /**
-     * 마이페이지 - 투자자 (내 펀딩)
+     * 마이페이지 - 투자자 (내 펀딩 (기본))
      */
-    @RequestMapping("mypage/mypageInvestor/{id}")
-    public String mypageInvestor(@PathVariable Long id, Model model, HttpSession session) {
-        Users user = (Users) session.getAttribute("user");
+    @RequestMapping("mypage/investor/{id}")
+    public String mypageInvestor(@PathVariable Long id, Model model, @ModelAttribute("user") Users user) {
         if (user != null) {
-            List<Ordered> myfunds = usersService.findOrderdByUser(user.getId());
-            model.addAttribute("myfunds", myfunds);
+        	// 유저가 투자한 펀딩 목록 
+            List<Funding> myFunds = usersService.findMyFundingsByUserId(user);
+            
+            model.addAttribute("myFunds", myFunds);
+            
             return "mypage/mypageInvestor";
-        } else {
-            // 세션에 사용자 정보가 없는 경우 로그인 창으로
-            return "redirect:/loginForm";
-        }
+            
+        } 
+        return "redirect:/loginForm";
+        
     }
 
     /**
-     * 마이페이지 - 기업 (내 펀딩) //펀딩 현황?
+     * 마이페이지 - 기업 (펀딩 현황 - 현 진행 중인 펀딩 목록)
      */
-    @RequestMapping("/mypageCorp")
-    public String mypageCorp() {
-
-        return "mypage/mypageCorp";
+    @RequestMapping("/mypage/company/{id}")
+    public String mypageCorp(@PathVariable Long id, Model model, @ModelAttribute("company") Company company) {
+//    	if (company != null) {
+    		// 기업이 진행 중인 펀딩 목록 
+    	    List<Funding> nowFunds = fundingService.findNowFundingsById(company.getId());
+    	    model.addAttribute("nowFunds", nowFunds);
+    	    
+    	    // 기업의 완료된 펀딩 목록 
+    	    List<Funding> doneFunds = fundingService.findDoneFundingsById(company.getId());
+    	    model.addAttribute("doneFunds", doneFunds);
+    	    
+    	    return "/mypage/company";
+//    	} 
+//    	return "redirect:/loginForm";
     }
 
     ///////////////////////////////////////////////////////////////
 
     /**
-     * 마이페이지 - 투자자 (거래 내역)
+     * 마이페이지 - 투자자 (배당 내역 (정산))
      */
-    @RequestMapping("/historyInvestor")
-    public String historyInvestor() {
-
-        return "mypage/historyInvestor";
+    @RequestMapping("mypage/investor/{id}/allocationHistoryInvestor")
+    public String allocationHistoryInvestor(@PathVariable Long id, Model model, @ModelAttribute("user") Users user) {
+    	if (user != null) {
+    		List<PointHistory> allocations = usersService.allocationHistoryInvestor(user.getId());
+    		model.addAttribute("allocations", allocations);
+    		
+    		return "mypage/investor/" + id + "/allocationHistoryInvestor";
+    	}
+    	
+        return "redirect:/loginForm";
     }
 
-
-    /**
-     * 마이페이지 - 투자자 (정산) - 페이지 레이아웃 미완료
-     */
 
     /**
      * 마이페이지 - 투자자 (포인트 충전)
@@ -639,6 +676,7 @@ public class UserController {
 
         return "mypage/pointCharge";
     }
+    
 
 
 }
