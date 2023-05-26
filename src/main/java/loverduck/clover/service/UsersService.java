@@ -4,9 +4,7 @@ package loverduck.clover.service;
 import java.util.List;
 
 import loverduck.clover.entity.Company;
-import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.Ordered;
-import loverduck.clover.entity.PointHistory;
 import loverduck.clover.entity.Users;
 
 public interface UsersService {
@@ -52,13 +50,6 @@ public interface UsersService {
 	/**
 	 * 마이페이지 투자한 펀딩 목록 출력 
 	 */
-	//List<Funding> findMyFundingsByUserId(Long user_id);
-	
-	/**
-	 * 마이페이지 배당 내역 출력 (정산) 
-	 */
-	List<PointHistory> allocationHistoryInvestor(Long user_id);
-	
-	List<Funding> findMyFundingsByUserId(Users user);
+	List<Ordered> findOrderdByUser(Long id);
 	
 }

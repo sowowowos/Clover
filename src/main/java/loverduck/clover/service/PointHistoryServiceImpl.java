@@ -15,11 +15,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Funding;
-import loverduck.clover.entity.Ordered;
 import loverduck.clover.entity.PointHistory;
 import loverduck.clover.entity.QPointHistory;
 import loverduck.clover.entity.Wallet;
-import loverduck.clover.repository.OrderedRepository;
 import loverduck.clover.repository.PointHistoryRepository;
 import loverduck.clover.repository.WalletRepository;
 
@@ -31,7 +29,8 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 	@Autowired
 	private final PointHistoryRepository phRepository;
 	
-	private final OrderedRepository orderedRepository;
+	@Autowired
+	private final WalletRepository walletRepository;
 	
 	@Autowired
 	private final EntityManager entityManager;
@@ -56,7 +55,6 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 	 */	
 	public void fundingPayInsert(Long amount, LocalDateTime created_at, Integer type, Funding funding_id, Wallet wallet_id) {
 		phRepository.insertUsePointHistoryByWalletId(amount, created_at, type, funding_id, wallet_id);
-		orderedRepository.save(Ordered.builder().user(wallet_id.getUser()).funding(funding_id).build());
 	}
 	
 	/**
