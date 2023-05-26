@@ -59,9 +59,9 @@
                     <!--                    </div>-->
                     <div class="col-2"></div>
                     <div class="col-2" th:switch="${company.type}">
-                        <span th:case="1" class="badge text-bg-success">승인</span>
+                        <span th:case="1" class="badge text-bg-primary">승인</span>
                         <span th:case="-1" class="badge text-bg-danger">거절</span>
-                        <span th:case="*" class="badge text-bg-warning">대기</span>
+                        <span th:case="*" class="badge text-bg-secondary">대기</span>
                     </div>
                     <div class="col-2">
                         <button class="accordion-button collapsed bg-body" type="button" data-bs-toggle="collapse"

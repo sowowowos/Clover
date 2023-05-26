@@ -52,12 +52,12 @@
 						      <td class="text" th:text="${fdList.title}">
 <!-- 						      	<div ></div> -->
 						      </td>
-						      <td class="text" th:text="${#temporals.format(fdList.createdAt, 'YY.MM.dd')}"></td>
-						      <td>
+						      <td class="text" th:text="${#temporals.format(fdList.createdAt, 'YY.MM.dd HH:mm')}"></td>
+						      <td class="text">
 						      	
-							      	<div class="text" th:if="${fdList.status == 0}" style="color: gray;">대기</div>
-							      	<div class="text" th:if="${fdList.status == 1}" style="color: blue;">승인</div>
-							      	<div class="text" th:if="${fdList.status == 2}" style="color: red;">거절</div>
+							      	<div class="badge text-bg-secondary" th:if="${fdList.status == 0}" >대기</div>
+							      	<div class="badge text-bg-primary" th:if="${fdList.status == 1}">승인</div>
+							      	<div class="badge text-bg-danger" th:if="${fdList.status == -1}" >거절</div>
 						      
 						      </td>
 						    </tr>

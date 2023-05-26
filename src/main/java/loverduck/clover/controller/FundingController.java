@@ -258,7 +258,7 @@ public class FundingController {
 
 		fundingService.fundSubmit(funding);
 			
-		return "redirect:/";
+		return "redirect:/fundSubmitHistory";
 	}
 	
 	/**
