@@ -81,5 +81,4 @@ public interface FundingService {
 	 */
 	boolean removeLike(Funding funding, Users user);
 	
-
 }
