@@ -2,13 +2,11 @@ package loverduck.clover.service;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import loverduck.clover.entity.Company;
-import loverduck.clover.entity.Funding;
-import loverduck.clover.entity.QCompany;
-import loverduck.clover.entity.QFunding;
+import loverduck.clover.entity.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,6 +33,21 @@ public class AdminService {
                 .where(QFunding.funding.id.eq(id))
                 .execute() == 1 ? qFactory.selectFrom(QFunding.funding)
                 .where(QFunding.funding.id.eq(id))
+                .fetchOne() : null;
+    }
+
+    public List<Exchange> getExchangeList() {
+        return qFactory.selectFrom(QExchange.exchange)
+                .orderBy(QExchange.exchange.createdAt.desc())
+                .fetch();
+    }
+
+    public Exchange updateExchangeType(Long id, Integer status) {
+        return qFactory.update(QExchange.exchange)
+                .set(QExchange.exchange.type, status)
+                .where(QExchange.exchange.id.eq(id))
+                .execute() == 1 ? qFactory.selectFrom(QExchange.exchange)
+                .where(QExchange.exchange.id.eq(id))
                 .fetchOne() : null;
     }
 }

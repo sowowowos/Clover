@@ -50,4 +50,20 @@ public class AdminController {
         }
         return "success";
     }
+
+    @GetMapping("/admin/exchange")
+    public String exchange(Model model) {
+        model.addAttribute("exchangeList", adminService.getExchangeList());
+        return "admin/manageExchange";
+    }
+
+    @PostMapping("/admin/exchange/{id}/{status}")
+    @ResponseBody
+    public String updateExchangeStatus(@PathVariable Long id, @PathVariable Integer status) {
+        log.info("id: {}, status: {}", id, status);
+        if (id == null || status == null || adminService.updateExchangeType(id, status) == null) {
+            return "fail";
+        }
+        return "success";
+    }
 }
