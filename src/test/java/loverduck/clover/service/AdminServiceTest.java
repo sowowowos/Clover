@@ -2,9 +2,7 @@ package loverduck.clover.service;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
-import loverduck.clover.entity.Company;
-import loverduck.clover.entity.Funding;
-import loverduck.clover.entity.QCompany;
+import loverduck.clover.entity.*;
 import loverduck.clover.repository.FundingRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -91,4 +89,27 @@ class AdminServiceTest {
                 .build();
         fundingRepository.save(f);
     }
+
+    @Test
+    @Rollback(false)
+    void addExchange() {
+        Company c = qFactory.selectFrom(QCompany.company)
+                .where(QCompany.company.id.eq(3L))
+                .fetchOne();
+
+        Funding f = qFactory.selectFrom(QFunding.funding)
+                .where(QFunding.funding.id.eq(1L))
+                .fetchOne();
+
+        Wallet w = qFactory.selectFrom(QWallet.wallet)
+                .where(QWallet.wallet.id.eq(1L))
+                .fetchOne();
+        Exchange e = Exchange.builder()
+                .wallet(w)
+                .type(0)
+                .amount(1000000L)
+                .build();
+        testEntityManager.persist(e);
+    }
+
 }
