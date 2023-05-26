@@ -2,27 +2,16 @@ package loverduck.clover.service;
 
 import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Company;
-import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.Ordered;
-import loverduck.clover.entity.PointHistory;
-import loverduck.clover.entity.QOrdered;
-import loverduck.clover.entity.QPointHistory;
 import loverduck.clover.entity.Users;
 import loverduck.clover.entity.Wallet;
 import loverduck.clover.repository.CompanyRepository;
-import loverduck.clover.repository.FundingReplyRepository;
-import loverduck.clover.repository.FundingRepository;
 import loverduck.clover.repository.OrderedRepository;
-import loverduck.clover.repository.PointHistoryRepository;
 import loverduck.clover.repository.UsersRepository;
 import loverduck.clover.repository.WalletRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,11 +20,9 @@ import java.util.List;
 public class UsersServiceImpl implements UsersService {
     private final UsersRepository usersRep;
     private final CompanyRepository companyRep;
+    private final OrderedRepository orderedRepository;
     private final WalletRepository walletRep;
-    private final FundingRepository fundingRepository;  
-    private final PointHistoryRepository pointHistoryRepository;
-    
-    private final JPAQueryFactory jpaQueryFactory;
+
 
     @Override
     public int register(Users users) {
@@ -128,34 +115,11 @@ public class UsersServiceImpl implements UsersService {
     /**
      * 마이페이지 - 내가 투자한 펀딩 목록 출력
      */
-//    @Override
-//    public List<Funding> findMyFundingsByUserId(Long user_id) {
-//        List<Funding> myFundings = fundingRepository.findMyFundingsByUserId(user_id);
-//        return myFundings;
-//    }
-    
-    /**
-     * 마이페이지 - 내가 투자한 현재 진행 중인 펀딩 목록 출력 
-     */
-    
     @Override
-    public List<Funding> findMyFundingsByUserId(Users user) {
-    	LocalDateTime now = LocalDateTime.now();
-        return jpaQueryFactory.selectFrom(QOrdered.ordered)
-        		.select(QOrdered.ordered.funding)
-//        		.where(QOrdered.ordered.funding.startDate.after(now))
-//        		.where(QOrdered.ordered.funding.endDate.before(now))
-        		.where(QOrdered.ordered.user.eq(user))
-        		.fetch();
+    public List<Ordered> findOrderdByUser(Long id) {
+        List<Ordered> myFunds = orderedRepository.findFundingsByUserId(id);
+        return myFunds;
     }
-    
-	/**
-	 * 마이페이지 - 배당 내역 출력 (정산) 
-	 */
-	public List<PointHistory> allocationHistoryInvestor(Long user_id){
-		List<PointHistory> allocations = pointHistoryRepository.findAllocationsByUserId(user_id);
-		return allocations;
-	}
-	
-	
+
+
 }

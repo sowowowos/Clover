@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport"
 	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<!-- 서버 돌릴 시 '../static/ 빼기! -->
-	<link rel="stylesheet" href="/css/common.css">
-	<link rel="stylesheet" href="/css/navbar.css">
-	<link rel="stylesheet" href="/css/reset.css">
-	<link rel="stylesheet" href="/css/mypageCorp.css">
+	<link rel="stylesheet" href="../../static/css/common.css">
+	<link rel="stylesheet" href="../../static/css/reset.css">
+	<link rel="stylesheet" href="../../static/css/mypageCorp.css">
    	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 	<title>CLOVER</title>
 </head>
@@ -18,16 +17,16 @@
 <body>
 	<div>
 		<!-- Navbar -->
-		<div th:insert="navbar :: navbar"> </div> 
+		<div class="nav">
+		</div>
 		
-		<!-- 기업 정보 -->
 		<div class="container">
 			<div class="row mt-3">
 				<div class="crop-info">
 					<div class="row align-items-center">
 						<!-- 프로필사진 및 아이디 -->
 						<div class="col-6 text-end">
-							<img src="https://dummyimage.com/100x100/000/fff" class="profile-img"/>
+							<img src="https://dummyimage.com/100x100/000/fff" />
 						</div>
 						<div class="col-6">아이디</div>
 			    		
@@ -63,60 +62,16 @@
 				</div>
 			</div>
 			
-			
-			<div class="row" style="margin: 3rem 0 0 0;">
-				<!-- 메뉴 -->
-				<div class="col-3" style="padding: 1.7rem">
-					<div class="menu mt-4">
-						<li class="menu-main"><a href="">내 펀딩</a></li>
-						<hr>
-						<li><a href="">현재 진행 중인 펀딩</a></li>
-						<li><a href="">마감한 펀딩</a></li>
-						<hr>
-						<li class="menu-main"><a href="">정산</a></li>
-						<hr>
-						<li class="menu-main"><a href="">포인트</a></li>
-						<hr>
-						<li><a href="">포인트 환전 신청 하기</a></li>
-						<li><a href="">포인트 환전 신청 내역</a></li>
-						<li><a th:href="@{/mypage/pointCharge}">포인트 충전 및 내역</a></li>
-					</div>
-				</div>
-				
-				<!-- Section -->
-				<div class="col-8 main-section">
-					<p class="section-title">펀딩 현황</p>
-					<p style="margin: 0 0 0 1rem;">현재 진행 중인 펀딩</p>
-					
-					<!-- 목록 -->
-					<div th:each="myFund : ${myFunds}" class="card mb-5" style="width: 30rem; margin: 3rem 4rem auto;">
-				        <img width="478" height="209" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sitta.jpeg?raw=true">
-				        <div class="card-body">    
-				            <div class="d-flex justify-content-between">
-				                <h5 class="card-title" th:text="${myFund.title}">사람과 사람이 만드는 금융, 8퍼센트</h5>
-				                <div class="card-dday">D-60</div>
-				            </div>                  
-				            <div class="d-flex justify-content-end mt-1">
-				                <div class="text-color-navy" th:text="${#temporals.format(myFund.startDate, 'yy.MM.dd')}">23-05-05</div>
-				                <div class="text-color-navy mx-1"> - </div>
-				                <div class="text-color-navy" th:text="${#temporals.format(myFund.endDate, 'yy.MM.dd')}">23-06-05</div>
-				            </div>
-				            <div class="row mt-1">
-				            	<p><span class="text-color-navy">47</span>명 참여 </p>
-				            </div>
-				            <div class="text-end mt-4 mb-2" style="color: #D9D9D9;">
-				                <div th:text="${myFund}">5760900원</div>
-				            </div>
-				            <div class="">
-				                <div class="percentage-bar"></div>
-				            </div>
-				        </div>
+			<!-- 메뉴 -->
+			<div class="col-2">
+				<div class="menu mt-4">
+					<li>펀딩 현황</li>
+					<li>투자자 문의내역</li>
+					<li>펀딩 신청</li>
+					<li>정산</li>
+					<li>포인트</li>
 				</div>
 			</div>
-			
-			
-			
-			
 		</div>
 	</div>
 	

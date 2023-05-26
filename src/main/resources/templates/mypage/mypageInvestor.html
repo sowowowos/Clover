@@ -6,10 +6,10 @@
 	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<!-- 서버 돌릴 시 '../static/ 빼기! -->
-	<link rel="stylesheet" href="/css/common.css">
-	<link rel="stylesheet" href="/css/reset.css">
-	<link rel="stylesheet" href="/css/navbar.css">
-	<link rel="stylesheet" href="/css/mypageInvestor.css">
+	<link rel="stylesheet" href="../../static/css/common.css">
+	<link rel="stylesheet" href="../../static/css/reset.css">
+	<!-- 기업 마이페이지 CSS 적용 (추후 변경 예정) -->
+	<link rel="stylesheet" href="../../static/css/mypageCorp.css">
    	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 	<title>CLOVER</title>
 </head>
@@ -19,30 +19,30 @@
 		<!-- Navbar -->
 		<div th:insert="navbar :: navbar"> </div> 
 		
-		<div class="container section">
+		<div class="container">
 			<div class="row mt-3">
 				<div class="crop-info">
 					<div class="row align-items-center">
 						<!-- 프로필사진 및 아이디 -->
 						<div class="col-6 text-end">
-							<img src="/logo" class="profile-img"/>
+							<img src="https://dummyimage.com/100x100/000/fff" />
 						</div>
-						<div class="col-6" th:text="${user.nickname}"></div>
+						<div class="col-6">아이디</div>
 			    		
 					</div>
 					<!-- 키워드 -->
 					<div class="row mt-3">
 			    		<div class="d-flex justify-content-center mb-3">
-			    			<div class="keyword">#펀딩성공률 53%</div>
-			    			<div class="keyword">#러버추천</div>
-			    			<div class="keyword">#비건 뷰티</div>
+			    			<div class="keyword text-color-navy">#펀딩성공률 53%</div>
+			    			<div class="keyword text-color-navy">#러버추천</div>
+			    			<div class="keyword text-color-navy">#비건 뷰티</div>
 			    		</div>
 		    		</div>
 		    		
 		    		<!-- 관심기업 -->
 		    		<div class="row mt-3">
 			    		<div class="d-flex justify-content-center mb-3">
-			    			<div class="yellow-keyword">#비건 뷰티</div>
+			    			<div class="keyword text-color-navy">#비건 뷰티</div>
 			    		</div>
 		    		</div>
 		    		
@@ -54,7 +54,7 @@
 							</svg>
 		    			</div>
 		    			<div class="col-6">
-		    				<div th:text="${user.wallet.amount}"></div>
+		    				<div>13,500</div>
 		    			</div>
 		    		</div>
 					
@@ -62,55 +62,37 @@
 			</div>
 			
 			<!-- 메뉴 -->
-			<div class="row">
-				<div class="col-3" style="padding: 1rem">
-					<div class="menu">
-						<li class="menu-main text-color-navy"><a href="" class="text-color-navy">내 펀딩</a></li>
-						<hr>
-						<li><a href="" class="text-color-black">현재 진행 중인 펀딩</a></li>
-						<li><a href="" class="text-color-black">마감한 펀딩</a></li>
-						<hr>
-						<li class="menu-main text-color-navy" ><a href="" class="text-color-navy">정산</a></li>
-						<hr>
-						<li class="menu-main text-color-navy"><a href="" class="text-color-navy">포인트</a></li>
-						<hr>
-						<li><a href="" class="text-color-black">포인트 환전 신청 하기</a></li>
-						<li><a href="" class="text-color-black">포인트 환전 신청 내역</a></li>
-						<li><a th:href="@{/mypage/pointCharge}" class="text-color-black">포인트 충전 및 내역</a></li>
+			<div class="col-2">
+				<div class="menu mt-4">
+					<li>펀딩 현황</li>
+					<li>투자자 문의내역</li>
+					<li>펀딩 신청</li>
+					<li>정산</li>
+					<li>포인트</li>
+				</div>
+			</div>
+
+			<!-- 투자한 펀딩 목록 -->
+			<!-- 카드 -->
+			<div class="col-6 justify-content-center">
+				<div th:each="fund : ${myFunds}" class="card mb-5" style="width: 40rem;">
+
+					<img src="https://dummyimage.com/400x200/000/a6a6a6">
+
+					<div class="card-body">						
+					    <h5 class="card-title" th:text="${fund.title}"></h5>
+					    <p class="card-text" th:text="${fund.content}"></p>
+					    <div class="d-flex justify-content-end">
+									<div class="text-color-navy" th:text="${#temporals.format(fund.startDate, 'yy.MM.dd')}"></div>
+		    				<div class="text-color-navy mx-1"> - </div>
+		    				<div class="text-color-navy" th:text="${#temporals.format(fund.endDate, 'yy.MM.dd')}"></div>
+		    			</div>
+		    			<div class="progress">
+		                    <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+		                </div>
 					</div>
 				</div>
-	
-				<!-- 투자한 펀딩 목록 -->
-				<div class="col-8 main-section">
-				   	<p class="section-title">내 펀딩</p>
-				    <p style="margin: 0 0 3rem 1rem; font-size:1.3rem; font-weight: 530;">현재 진행 중인 펀딩</p>
-				    
-				    	<!-- 카드 -->
-				    	<div th:each="myFund : ${myFunds}" class="card mb-5 main-section">
-					        <img  src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sitta.jpeg?raw=true">
-					        <div class="card-body">    
-					       	  <h3 th:text="${myFund.company.name}" class="card-company-name"></h3>
-					            <div class="d-flex justify-content-between">
-					                <p class="card-title" th:text="${myFund.title}"></p>
-					                <div class="card-dday">D-60</div>
-					            </div>                  
-					            <div class="d-flex justify-content-end">
-					                <div class="text-color-navy" th:text="${#temporals.format(myFund.startDate, 'yy.MM.dd')}"></div>
-					                <div class="text-color-navy mx-1"> - </div>
-					                <div class="text-color-navy" th:text="${#temporals.format(myFund.endDate, 'yy.MM.dd')}"></div>
-					            </div>
-					            <div class="text-end mt-2 mb-2" style="color: #D9D9D9;">
-					                <div th:text="${myFund.targetMaxAmount}"></div>
-					            </div>
-					            <div class="">
-					                <div class="percentage-bar"></div>
-					            </div>
-				        </div> 
-				    </div>
-				</div>
-				
 			</div>
-			
 
 		</div>
 	</div>	

@@ -37,7 +37,7 @@
 					    		<div class="d-flex mb-3 justify-content-end" style="padding-right: 0;">
 					    			<div class="keyword text-color-navy">#펀딩성공률 53%</div>
 					    			<div class="keyword text-color-navy">#러버추천</div>
-					    			<div class="yellow-keyword text-color-navy">#비건 뷰티</div>
+					    			<div class="keyword text-color-navy">#비건 뷰티</div>
 					    		</div>
 				    		</div>
 				    		
@@ -170,9 +170,6 @@
 						
 						<!-- 진행 중인 펀드 목록 -->
 						<div id="tab3" class="col-6 justify-content-center cont">
-						<div th:each="myFund : ${myFunds}" class="card mb-5">
-						    <p th:text="${myFund}"></p>
-						</div>
 							<div th:each="nowFund : ${nowFunds}" class="card mb-5" style="width: 40rem; margin: 0 0 0 25rem;">
 								
 								<img width="638" height="319" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sitta.jpeg?raw=true">

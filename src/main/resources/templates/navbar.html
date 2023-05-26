@@ -17,15 +17,15 @@
 <title>CLOVER</title>
 </head>
 <body>
-	<nav th:fragment="navbar" class="navbar fixed-top bg-body-light">
+	<nav th:fragment="navbar" class="navbar">
 	  <div class="container-fluid">
 	  	<!-- Logo -->
-	    <a class="navbar-brand" th:href="@{/}">
+	    <a class="navbar-brand" th:href="@{/fundingList}">
 	    	<img class="logo" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/logo.png?raw=true"/>
 	    </a>
 
 	    <!-- 왼쪽 기능들 -->
-	    <div class="left-nav row" th:if="${session.user.id != null}">
+	    <div class="left-nav row"> 
 		    <!--  검색창 -->
 	        <form class="col-5 d-flex" method="get" th:action="@{/search}" th:method="get">
 		  	  <input type="text" class="search-bar" name="keyword" placeholder="검색어를 입력해주세요" aria-label="Username" aria-describedby="basic-addon1">									  
@@ -34,15 +34,12 @@
 		  	  </svg>
 	       </form>
 	       <!-- 계정 아이콘 -->
-	       <div th:if="${session.user?.id}">
-		       	<a th:href="@{/mypage/investor/{id}(id=${session.user.id})}" style="margin: 0.3rem 1rem;" class="col-2">
-			   		<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person-circle mx-4" viewBox="0 0 16 16" style="color: #D2D1D1;">
-						<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-						<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-					</svg>  
-		       </a>
-	       </div>
-	       
+	       <a th:href="@{/mypage/mypageInvestor/{id}(id=${session.user.id})}" style="margin: 0.3rem 1rem;" class="col-2">
+		   		<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person-circle mx-4" viewBox="0 0 16 16" style="color: #D2D1D1;">
+					<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+					<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+				</svg>  
+	       </a>
 
 		   <a class="col-2" href="" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
 		      <!-- <span class="navbar-toggler-icon" ></span> -->
@@ -81,8 +78,7 @@
 		   </div>
 
 		</div>
-		
-		
+
 	  </div>
 	</nav>
 

@@ -10,4 +10,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 public interface OrderedRepository extends JpaRepository<Ordered, Long>, QuerydslPredicateExecutor<Ordered> {
 
+	String FIND_FUNDINGS_BY_USER_ID_QUERY = "select * from ordered where user_id = :id";
+	@Query(nativeQuery = true, value = FIND_FUNDINGS_BY_USER_ID_QUERY)
+	List<Ordered> findFundingsByUserId(Long id);
 }

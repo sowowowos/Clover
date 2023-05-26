@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import org.springframework.data.repository.query.Param;
 
 import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.Ordered;
@@ -34,6 +33,6 @@ public interface FundingRepository extends JpaRepository<Funding, Long>, Queryds
 	String FIND_DONEFUNDINGS_BY_ID_QUERY = "select * from funding where company_id = :id and to_char(sysdate, 'YYYY-MM-DD') > end_date";
 	@Query(nativeQuery = true, value = FIND_DONEFUNDINGS_BY_ID_QUERY)
 	List<Funding> findDoneFundingsById(Long id);
-		
+	
 
 }	
