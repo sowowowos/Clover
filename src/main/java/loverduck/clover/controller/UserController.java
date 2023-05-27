@@ -29,9 +29,11 @@ import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.PointHistory;
 import loverduck.clover.entity.Users;
+import loverduck.clover.repository.PointHistoryRepository;
 import loverduck.clover.service.CompanyServiceImpl;
 import loverduck.clover.service.FundingService;
 import loverduck.clover.service.KakaoServiceImpl;
+import loverduck.clover.service.PointHistoryService;
 import loverduck.clover.service.UsersService;
 
 /**
@@ -44,6 +46,8 @@ public class UserController {
     private final UsersService usersService;
     
     private final FundingService fundingService;
+    
+    private final PointHistoryService pointHistoryService;
 
     @Autowired
     private KakaoServiceImpl kakaoService;
@@ -544,6 +548,12 @@ public class UserController {
             List<Funding> myFunds = usersService.findMyFundingsByUserId(user);
             
             model.addAttribute("myFunds", myFunds);
+            
+            Long wallet_id = user.getWallet().getId();
+            model.addAttribute("wallet_id", wallet_id);
+            
+            Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
+            model.addAttribute("nowPoint", nowPoint);   
             
             return "mypage/mypageInvestor";
             
