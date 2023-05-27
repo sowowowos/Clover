@@ -9,10 +9,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayDeque;
-import java.util.Date;
 import java.util.List;
 import java.util.Queue;
 
@@ -20,9 +18,10 @@ import java.util.Queue;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class AllocationService{
+public class AllocationService {
     private final JPAQueryFactory qFactory;
     private final PointHistoryRepository pointHistoryRepository;
+
     @Scheduled(cron = "0 0 3 * * *")
     public void cronJob() {
 
@@ -36,7 +35,7 @@ public class AllocationService{
     }
 
     private List<Funding> getEndedFunding() {
-        Date now = Date.from(Instant.from(LocalDateTime.now()));
+        LocalDateTime now = LocalDateTime.now();
         return qFactory.selectFrom(QFunding.funding)
                 .where(QFunding.funding.endDate.before(now))
                 .where(QFunding.funding.currentAmount.goe(QFunding.funding.targetMinAmount))
@@ -58,7 +57,7 @@ public class AllocationService{
                     .setAmount(ordered.getUser().getWallet().getAmount() + dividend);
             PointHistory history = PointHistory.builder()
                     .amount(dividend)
-                    .type(1)
+                    .type(3)
                     .wallet(ordered.getUser().getWallet())
                     .funding(funding)
                     .build();

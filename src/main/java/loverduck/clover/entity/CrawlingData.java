@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,6 +20,8 @@ public class CrawlingData {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    //unique
+    @Column(unique = true)
     private String code;
     private String name;
 
