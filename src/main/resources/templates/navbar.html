@@ -31,7 +31,7 @@
     		<img class="logo" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/logo.png?raw=true"/>
 	    </a>
 	    
-	    <div class="left-nav" th:if="${session.user.id != null}">
+	    <div class="left-nav">
 	    	<!--  검색창 -->
 	        <form class="" method="get" th:action="@{/search}" th:method="get">
 		  	  <input type="text" class="search-bar" name="keyword" placeholder="검색어를 입력해주세요" aria-label="Username" aria-describedby="basic-addon1">									  
@@ -100,7 +100,7 @@
     		<img class="logo" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/logo.png?raw=true"/>
 	    </a>
 	    
-	    <div class="left-nav" th:if="${session.user.id != null}">
+	    <div class="left-nav">
 	    	<!--  검색창 -->
 	        <form class="" method="get" th:action="@{/search}" th:method="get">
 		  	  <input type="text" class="search-bar" name="keyword" placeholder="검색어를 입력해주세요" aria-label="Username" aria-describedby="basic-addon1">									  

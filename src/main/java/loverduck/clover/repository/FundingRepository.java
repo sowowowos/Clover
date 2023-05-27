@@ -16,10 +16,16 @@ public interface FundingRepository extends JpaRepository<Funding, Long>, Queryds
 	 * 기업 이름 기준 검색 
 	 */
 	List<Funding> findByCompanyName(String keyword);
+	
 	/**
 	 * 펀딩 제목 기준 검색 
 	 */
 	List<Funding> findByTitleContaining(String keyword);
+	
+	/**
+	 * 펀딩 내용 기준 검색 
+	 */
+	List<Funding> findByContent(String keyword);
 	
 	/**
 	 * 해당 펀딩의 기업의 진행 중인 펀딩들 출력 
@@ -34,6 +40,6 @@ public interface FundingRepository extends JpaRepository<Funding, Long>, Queryds
 	String FIND_DONEFUNDINGS_BY_ID_QUERY = "select * from funding where company_id = :id and to_char(sysdate, 'YYYY-MM-DD') > end_date";
 	@Query(nativeQuery = true, value = FIND_DONEFUNDINGS_BY_ID_QUERY)
 	List<Funding> findDoneFundingsById(Long id);
-		
+	
 
 }	

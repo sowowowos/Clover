@@ -96,6 +96,11 @@ public class FundingServiceImpl implements FundingService{
 	public List<Funding> searchFundingByCompany(String keyword){
 		return fundingRepository.findByCompanyName(keyword);
 	}
+	
+	@Override
+	public List<Funding> searchFundingByContent(String keyword) {
+		return fundingRepository.findByContent(keyword);
+	}
 
 	@Override
 	public List<Funding> findNowFundingsById(Long id) {
