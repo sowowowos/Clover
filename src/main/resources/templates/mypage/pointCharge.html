@@ -111,7 +111,6 @@
 <!-- 	마이페이지 - 투자자 (포인트 충전) -->
 </head>
 <body>
-
 	<div>
 		<div class="nav"></div>
 		<div class="banner"></div>
@@ -131,7 +130,6 @@
 					<!-- WALLET Container -->
 					<div class="border box shadow-sm mb-5 bg-white rounded">
 						<div class="wallet col-6 fs-4 fw-bold txt-blue">CLOVER WALLET</div>
-
 						<!-- 잔여포인트 -->
 						<div class="row justify-content-end text-end fs-5">
 							<div class="pointIcon col-md-5 fw-bold">
@@ -195,8 +193,7 @@
 								<button type="button" class="btn btn-outline-secondary userBtn">배당</button>
 							</div>								
 						</div>
-						</div>
-					
+						</div>					
 						
 						<!-- 포인트 상세 내역 -->
 						<div th:if="${phDetailList}">
@@ -210,7 +207,7 @@
 							            <span th:if="${phDetail.type == 0}">+</span>
 		   								<span th:if="${phDetail.type == 1}">-</span>
 		   								<span th:if="${phDetail.type == 2}">-</span>
-		   								<span th:if="${phDetail.type == 3}">-</span>
+		   								<span th:if="${phDetail.type == 3}">+</span>
 										<span th:text="${#numbers.formatInteger(phDetail.amount,0,'COMMA')}"></span>									
 										</div>
 									<div class="col-2"></div>
@@ -224,8 +221,7 @@
 						</div>
 						<div class="existContainer align-middle text-black-50 bg-body-tertiary" th:if="${phDetailList == null or #lists.isEmpty(phDetailList)}">
 			    			<p class="centered-message">포인트 사용 내역이 존재하지 않습니다.</p>
-						</div>
-						
+						</div>						
 					    
 					</div>
 						<!-- 포인트 상세 내역 End-->
