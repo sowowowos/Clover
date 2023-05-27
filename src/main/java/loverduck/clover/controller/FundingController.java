@@ -208,11 +208,13 @@ public class FundingController {
 	public String searchFunding(@RequestParam("keyword") String keyword, Model model) {
 	    List<Funding> searchResults1 = fundingService.searchFundingByTitle(keyword);
 	    List<Funding> searchResults2 = fundingService.searchFundingByCompany(keyword);
+	    List<Funding> searchResults3 = fundingService.searchFundingByContent(keyword);
 
 	    
 
 	    model.addAttribute("searchResults1", searchResults1);
 	    model.addAttribute("searchResults2", searchResults2);
+	    model.addAttribute("searchResults3", searchResults3);
 	    model.addAttribute("keyword", keyword);
 	    return "/searchResults"; 
 	}

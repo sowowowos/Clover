@@ -62,6 +62,11 @@ public interface FundingService {
 	List<Funding> searchFundingByCompany(String keyword);
 	
 	/**
+	 * 펀딩 내용 기준 검색 
+	 */
+	List<Funding> searchFundingByContent(String keyword);
+	
+	/**
 	 * 현재 펀딩의 기업의 진행 중인 펀딩 목록 출력 
 	 */
 	List<Funding> findNowFundingsById(Long id);
