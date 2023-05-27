@@ -91,11 +91,15 @@
 .container-all{
 	display: flex;
 }
+.pd-left{
+	padding-left: 1rem;
+}
 
 .submit-date{
 	padding-left: 1rem;
 	margin-top : 1rem;
 }
+
 
 .warning-word{
 	display: flex;
