@@ -1,14 +1,14 @@
 @charset "UTF-8";
 
-.navbar{
-	display: flex;
-	background-color: #0042A0
-	opacity: 0.5;
-}
 .logo {
 	width: 10rem;
 	height: 2.8rem;
-	margin: 0.5rem 0 0 5rem;
+	margin-left: 1rem;
+}
+
+.bg-navbar {
+	opacity: 1;
+	background-color: #FFFFFF;
 }
 
 .search-bar{
@@ -22,14 +22,30 @@
 	border: 0.15rem solid #0042A0;
 	appearance: none;
 	border-radius: 0.5rem;
+	margin: 0.2rem 3rem 0 5rem;
 }
 
 .search-icon {
 	position: absolute;
-	right: 14rem;
-	top: 2rem;
+	right: 16rem;
+	top: 2.3rem;
+	
 }
 
+.logout-search-icon {
+	position: absolute;
+	right: 12rem;
+	top: 2.2rem;
+	
+}
+
+.account-icon {
+	margin: 0.4rem 3rem 0 0.3rem;
+}
+
+.hambuger-icon {
+	margin: 0 0.8rem;
+}
 
 .nav-item {
 	 list-style:none;
@@ -38,7 +54,6 @@
 .left-nav {
 	display: flex;
 	justify-content: end;
-	/* justify-items: end; */
 	align-content: center;
 }
 

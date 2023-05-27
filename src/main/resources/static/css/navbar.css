@@ -6,6 +6,11 @@
 	margin-left: 1rem;
 }
 
+.bg-navbar {
+	opacity: 1;
+	background-color: #FFFFFF;
+}
+
 .search-bar{
 	display: block;
     width: 13rem;
