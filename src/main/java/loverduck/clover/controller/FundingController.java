@@ -332,7 +332,14 @@ public class FundingController {
     }
 
     /**
-     * 좋아요 여부
+     * 소개 페이지 
      */
+    @RequestMapping(value = "/introduce")
+    public String introduce() {
+    	return "introduce";
+    }
+
+    
+    
 
 }
