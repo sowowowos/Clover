@@ -35,7 +35,7 @@ public interface CrawlingService {
      * catch의 회사 3년간의 재무제표 조회
      * @return List<Map<String, Object>> 재무제표 리스트
      */
-    List<Map<String,?>> getThreeYearFinanceList(Company companyName);
+    List<Map<String,?>> getThreeYearFinanceList(CrawlingData crawlingData);
 
     /**
      * 회사 상세 정보 조회

@@ -10,4 +10,6 @@ public interface CompanyService {
     Company updateCom(String address, String detailAddress, String phone, String homepage, String email);
 
     Company updateCompanyType(Long id, Integer status);
+
+    Company getMapCompany(Long id);
 }
