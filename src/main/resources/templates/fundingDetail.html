@@ -35,8 +35,11 @@
 				    		
 				    		<!-- 퍼센트바 -->
 				    		<div class="row">
-				    			<div class="percentage-bar"></div>
+				    			<progress th:value="${fund.currentAmount}" th:max="${fund.targetMaxAmount}" style="width: 25rem; height: 1.7rem; margin: 0 0 0 8rem;" ></progress>
+
 				    			<div style="color: #D9D9D9"><span th:text="${fund.targetMaxAmount}" style="color: #D9D9D9"></span>원</div>
+				    			
+				    		
 				    		</div>
 				    		
 				    		<!-- 관심기업으로 등록한 사용자 수 -->
