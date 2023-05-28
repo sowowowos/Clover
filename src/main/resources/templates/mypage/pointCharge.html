@@ -2,11 +2,13 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
+<meta name= "viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" href="/css/common.css">
 <link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/navbar.css">
+<link rel="stylesheet" href="/css/mypageInvestor.css">
 <link rel="stylesheet" href="/css/pointCharge.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
@@ -110,14 +112,12 @@
 <title>CLOVER | MYPAGE - 포인트 충전</title>
 <!-- 	마이페이지 - 투자자 (포인트 충전) -->
 </head>
-<body>
+<body style="padding-top: 5.5rem;">
 	<div>
-		<div class="nav"></div>
-		<div class="banner"></div>
-
-		<div class="category"></div>
+		<div th:insert="navbar :: navbar"> </div> 
 		<div class="container">
-			<div class="col-2" style="background-color:gray;">
+			
+			<div class="col-3" style="margin-top: 4rem;" th:insert="sideBar :: sideBar">
 			</div>
 			<div class="col-8 ms-auto me-auto">
 				<!-- 충전 -->
@@ -229,12 +229,10 @@
 					</div> <!-- 포인트 내역 End-->
 					
 				</div> <!-- 충전 End -->				
-
 			</div>
 
 		</div>
+		<div th:insert="footer :: footer"> </div>	
 
-		<div class="footer"></div>
-	</div>
 </body>
 </html>
