@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.container {
+.container { 
 	display: flex;
 	min-height: 100vh;	
 	padding-bottom:8rem;
