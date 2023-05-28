@@ -567,7 +567,7 @@ public class UserController {
      */
     @RequestMapping("/mypage/company/{id}")
     public String mypageCorp(@PathVariable Long id, Model model, @ModelAttribute("company") Company company) {
-//    	if (company != null) {
+    	if (company != null) {
     		// 기업이 진행 중인 펀딩 목록 
     	    List<Funding> nowFunds = fundingService.findNowFundingsById(company.getId());
     	    model.addAttribute("nowFunds", nowFunds);
@@ -577,8 +577,8 @@ public class UserController {
     	    model.addAttribute("doneFunds", doneFunds);
     	    
     	    return "/mypage/company";
-//    	} 
-//    	return "redirect:/loginForm";
+    	} 
+    	return "redirect:/loginForm";
     }
 
     ///////////////////////////////////////////////////////////////
