@@ -9,9 +9,9 @@
 }
 
 .crop-info {
-	border: 1px solid #DEDEDE;	
+	border: 1px solid #DEDEDE;
 	border-radius: 1.5rem;
-	padding: 3rem;
+	/* padding: 3rem; */
 }
 
 .keyword {
@@ -34,23 +34,22 @@
 	font-weight: 600;
 }
 
-.menu{
-	border: 1px solid #DEDEDE;	
+.menu {
+	border: 1px solid #DEDEDE;
 	border-radius: 1rem;
 	padding: 1rem 0;
 	text-align: center;
-	margin: 3rem 0 0 0;
+	/* margin: 1rem 0 0 0; */
 }
 
 .menu li {
 	margin: 1rem 0;
-	list-style:none;
+	list-style: none;
 }
 
-.menu li a{
+.menu li a {
 	text-decoration: none;
 }
-
 
 .menu-main {
 	font-size: 1.2rem;
@@ -63,21 +62,27 @@
 	color: #7c7e7e;
 }
 
-.menu-division{
+.menu-division {
 	color: #DEDEDE;
+}
+
+.profile {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .profile-img {
 	width: 6rem;
-	height: 6rem;
+	/* height: 6rem; */
 	border-radius: 5rem;
 }
 
-.profile-name{
+.profile-name {
 	position: relative;
 }
 
-.profile-name > div{
+.profile-name>div {
 	position: absolute;
 	left: 2.3rem;
 	bottom: 2.8rem;
@@ -98,7 +103,7 @@
 	width: 31rem;
 }
 
-.card-company-name{
+.card-company-name {
 	margin: 0 0 0.3rem 0.3rem;
 	font-weight: 630;
 }
@@ -118,15 +123,22 @@
 	color: #ffffff;
 	background-color: #0042A0;
 	border-radius: 0.5rem;
-	font-size: 0.8rem;	
+	font-size: 0.8rem;
 	padding: 0.3rem 0.5rem;
 	margin: 0 0 1rem 0;
 }
 
-.percentage-bar{
+.percentage-bar {
 	background-color: #0042A0;
 	border-radius: 1rem;
 	width: 10rem;
 	height: 1rem;
 	margin: 1rem 0 2rem 0;
+}
+
+.hr-line {
+	width: 100%;
+	height: 0.15rem;
+	background-color: black;
+	color: black;
 }

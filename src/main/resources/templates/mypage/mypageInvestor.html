@@ -1,121 +1,170 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<!-- 서버 돌릴 시 '../static/ 빼기! -->
-	<link rel="stylesheet" href="/css/common.css">
-	<link rel="stylesheet" href="/css/reset.css">
-	<link rel="stylesheet" href="/css/navbar.css">
-	<link rel="stylesheet" href="/css/mypageInvestor.css">
-   	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-	<title>CLOVER</title>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- 서버 돌릴 시 '../static/ 빼기! -->
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/navbar.css">
+<link rel="stylesheet" href="/css/mypageInvestor.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+	crossorigin="anonymous">
+<title>CLOVER</title>
 </head>
 <!-- 마이페이지 - 투자자 -->
 <body>
 	<div>
 		<!-- Navbar -->
-		<div th:insert="navbar :: navbar"> </div> 
-		
-		<div class="container section">
-			<div class="row" style="margin: 5rem 0 0 0; padding: 2rem 10rem;">
+		<div th:insert="navbar :: navbar"></div>
+
+		<div class="container section" style="">
+			<div class="row" style="margin: 5rem 0 0 0; padding: 2rem 4rem 0;">
 				<div class="crop-info">
 					<div class="row align-items-center">
 						<!-- 수정하기 -->
-						<a th:href="@{/updateInvestor}">
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16" style="margin: 0 0 0rem 55rem; color: #D2D1D1;">
-							  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-							  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+						<a th:href="@{/updateInvestor}" style="padding-top: 1rem;" class="text-end"> 
+						<svg
+								xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+								fill="currentColor" class="bi bi-pencil-square"
+								viewBox="0 0 16 16"
+								style="color: #D2D1D1;">
+							  <path
+									d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+							  <path fill-rule="evenodd"
+									d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
 							</svg>
 						</a>
-						
-						<!-- 프로필사진 및 아이디 -->
-						<div class="col-6 text-end">
-							<img src="/logo" class="profile-img"/>
+
+						<div class="d-flex">
+							<!-- 프로필사진 및 아이디 -->
+							<div class="col-5 profile" >
+								<div class=" text-end" style="padding-left: 10rem;">
+									<img src="/logo" class="profile-img" />
+								</div>
+								<div class=" profile-name" style="padding-left: 10rem;">
+									<div class="fw-semibold" th:text="${user.nickname}" style="padding-left: 10rem;"></div>
+									<img width=180 height=120
+										src="https://raw.githubusercontent.com/CLOVER-DUCK/Clover/d55e6dddeac257ba948c8893bc12a49aa0183a85/src/main/resources/static/img/intro/title_bg.png" />
+								</div>
+							</div>
+							<div class="col-7 ">
+								<div class="row mt-3"></div>							
+								<div class="row mt-3"></div>							
+								<div class="row mt-3">
+									<div class="d-flex justify-content-center mb-3">
+										<div class="keyword text-color-navy">#성장하는 투자자🔥</div>
+										<div class="keyword text-color-navy">#투자 성공률32%</div>
+										<div class="keyword text-color-navy">#비건 뷰티</div>
+									</div>
+								</div>
+
+								<!-- 관심기업 -->
+								<div class="row mt-3">
+									<div class="d-flex justify-content-center mb-3">
+										<div class="yellow-keyword text-color-navy">#비건 뷰티</div>
+									</div>
+								</div>
+
+								<!-- 포인트 -->
+								<div class="d-flex" style="justify-content: center;align-items: baseline;">
+									<div class="">
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+											fill="currentColor" class="bi bi-p-circle-fill"
+											viewBox="0 0 16 16" style="color: #0042A0;">
+							  <path
+												d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM5.5 4.002V12h1.283V9.164h1.668C10.033 9.164 11 8.08 11 6.586c0-1.482-.955-2.584-2.538-2.584H5.5Zm2.77 4.072c.893 0 1.419-.545 1.419-1.488s-.526-1.482-1.42-1.482H6.778v2.97H8.27Z" />
+							</svg>
+									</div>
+									<div style="justify-content: center;margin-left:1rem;margin-top: 1rem;font-weight: 700;">
+										<div th:text="${nowPoint != null ? #numbers.formatInteger(nowPoint, 0, 'COMMA') + ' point' : '0 point'}"></div>
+									</div>
+
+								</div>
+							</div>
+
 						</div>
-						<div class="col-6 profile-name">
-							<div class="" th:text="${user.nickname}"></div>
-							<img width=180 height=120 src="https://raw.githubusercontent.com/CLOVER-DUCK/Clover/d55e6dddeac257ba948c8893bc12a49aa0183a85/src/main/resources/static/img/intro/title_bg.png"/>
-						</div>
-						
+
+
 					</div>
 					<!-- 키워드 -->
-					<div class="row mt-3">
-			    		<div class="d-flex justify-content-center mb-3">
-			    			<div class="keyword text-color-navy">#성장하는 투자자🔥</div>
-			    			<div class="keyword text-color-navy">#투자 성공률32%</div>
-			    			<div class="keyword text-color-navy">#비건 뷰티</div>
-			    		</div>
-		    		</div>
-		    		
-		    		<!-- 관심기업 -->
-		    		<div class="row mt-3">
-			    		<div class="d-flex justify-content-center mb-3">
-			    			<div class="yellow-keyword text-color-navy">#비건 뷰티</div>
-			    		</div>
-		    		</div>
-		    		
-		    		<!-- 포인트 -->
-		    		<div class="row mt-3">
-		    			<div class="col-6 text-end">
-		    				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-p-circle-fill" viewBox="0 0 16 16" style="color: #0042A0;">
-							  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM5.5 4.002V12h1.283V9.164h1.668C10.033 9.164 11 8.08 11 6.586c0-1.482-.955-2.584-2.538-2.584H5.5Zm2.77 4.072c.893 0 1.419-.545 1.419-1.488s-.526-1.482-1.42-1.482H6.778v2.97H8.27Z"/>
-							</svg>
-		    			</div>
-		    			<div class="col-6" >
-		    				<div th:text="${nowPoint != null ? #numbers.formatInteger(nowPoint, 0, 'COMMA') + ' point' : '0 point'}"></div>
-		    			</div>
-		    			
-		    		</div>
+
+
+				</div>
+
+
+
+
+			</div>
+
+			<div class="container d-flex" style="min-height: 100vh;">
+				<div class="col-3" style="margin-top: 4rem; padding: 0 3rem;"
+					th:insert="sideBar :: sideBar">
+				</div>
+				<div class="col-8 ms-auto me-auto" style="margin-top: 1.5rem;">
 					
+					
+					<p class="section-title">내 펀딩</p>
+					<hr class="hr-line">
+
+					<p style="margin: 0 0 3rem 0; font-size: 1rem; font-weight: 530;">현재
+						진행 중인 펀딩</p>
+					<div th:each="myFund : ${myFunds}" id="tab3"
+						class="col-6 justify-content-center cont" style="display: block;">
+
+						<div class="card mb-5" style="width: 50rem;">
+							<div class="card-body d-flex flex-colum">
+								<div class="col-3">
+									<img width="280" height="180"
+										src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sitta.jpeg?raw=true"
+										style="margin: 0.5rem 0 auto;">
+								</div>
+								<div class="col-7 justify-content-end"
+									style="margin: 2rem 0 0 8rem;">
+									<div class="row">
+										<h5 class="card-title" th:text="${myFund.title}"></h5>
+										<div class="d-flex">
+											<div class="text-color-navy"
+												th:text="${#temporals.format(myFund.startDate, 'yy.MM.dd')}"></div>
+											<div class="text-color-navy mx-1">-</div>
+											<div class="text-color-navy"
+												th:text="${#temporals.format(myFund.endDate, 'yy.MM.dd')}"></div>
+										</div>
+										<div class="text-end mt-2" style="color: #D9D9D9;">
+											<div th:text="${myFund.targetMaxAmount}"></div>
+										</div>
+										<div class="">
+											<progress th:value="${myFund.currentAmount}" th:max="${myFund.targetMaxAmount}" style="width: 25rem; height: 1.7rem; margin: 0 0 0 3rem;" ></progress>
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+
 				</div>
+				<!-- 포인트 상세 내역 End-->
+
 			</div>
-			
-			<!-- 메뉴 -->
-			<div class="row" style="margin: 0 9rem auto;">
-				<div class="col-3" style="padding: 1rem">
-					<div th:insert="sideBar :: sideBar"> </div> 
-				</div> 
-				
-	
-				<!-- 투자한 펀딩 목록 -->
-				<div class="col-7 main-section">
-				   	<p class="section-title">내 펀딩</p>
-				    <p style="margin: 0 0 3rem 1rem; font-size:1rem; font-weight: 530;">현재 진행 중인 펀딩</p>
-				    
-				    	<!-- 카드 -->
-				    	<div th:each="myFund : ${myFunds}" class="card mb-5 main-section">
-					        <img  src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sitta.jpeg?raw=true">
-					        <div class="card-body">    
-					       	  <h3 th:text="${myFund.company.name}" class="card-company-name"></h3>
-					            <div class="d-flex justify-content-between">
-					                <p class="card-title" th:text="${myFund.title}"></p>
-					                <div class="card-dday">D-60</div>
-					            </div>                  
-					            <div class="d-flex justify-content-end">
-					                <div class="text-color-navy" th:text="${#temporals.format(myFund.startDate, 'yy.MM.dd')}"></div>
-					                <div class="text-color-navy mx-1"> - </div>
-					                <div class="text-color-navy" th:text="${#temporals.format(myFund.endDate, 'yy.MM.dd')}"></div>
-					            </div>
-					            <div class="text-end mt-2 mb-2" style="color: #D9D9D9;">
-					                <div th:text="${myFund.targetMaxAmount}"></div>
-					            </div>
-					            <div class="">
-					                <div class="percentage-bar"></div>
-					            </div>
-				        </div> 
-				    </div>
-				</div>
-				
-			</div>
-			
+			<!-- 포인트 내역 End-->
 
 		</div>
-		<div th:insert="footer :: footer"> </div>
-	</div>	
+		<!-- 충전 End -->
+	</div>
+	<div th:insert="footer :: footer"></div>
+	</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+		crossorigin="anonymous"></script>
 </body>
 </html>
