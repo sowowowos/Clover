@@ -24,29 +24,6 @@
 	font-size: 0.7rem;
 }
 
-.menu{
-	border: 1px solid #DEDEDE;	
-	border-radius: 1rem;
-	padding: 1rem 0;
-	text-align: center;
-}
-
-.menu li {
-	margin: 1rem 0;
-	list-style:none;
-}
-
-.menu li a{
-	text-decoration: none;
-	color: #151515;
-}
-
-.menu-main {
-	font-size: 1.2rem;
-	font-weight: 600;
-	color: #0042A0;
-}
-
 .menu-division{
 	color: #DEDEDE;
 }

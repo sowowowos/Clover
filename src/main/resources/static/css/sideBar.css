@@ -6,6 +6,7 @@
 
 .text-color-black {
 	color: #4b4b4b;
+	font-size: 0.8rem;
 }
 
 .menu{
@@ -17,8 +18,21 @@
 }
 
 .menu-main {
-	font-size: 1.3rem;
-	font-weight: 600;
+	font-size: 1.2rem;
+	font-weight: 700;
 	color: #0042A0;
 }
 
+.menu li {
+	margin: 1rem 0;
+	list-style:none;
+}
+
+.menu li a{
+	text-decoration: none;
+}
+
+.menu-sub {
+	font-size: 0.9rem;
+	color: #7c7e7e;
+}
