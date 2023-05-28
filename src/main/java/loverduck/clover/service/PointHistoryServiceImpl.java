@@ -56,7 +56,7 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 	 */	
 	public void fundingPayInsert(Long amount, LocalDateTime created_at, Integer type, Funding funding_id, Wallet wallet_id) {
 		phRepository.insertUsePointHistoryByWalletId(amount, created_at, type, funding_id, wallet_id);
-		orderedRepository.save(Ordered.builder().user(wallet_id.getUser()).funding(funding_id).build());
+		orderedRepository.save(Ordered.builder().user(wallet_id.getUser()).funding(funding_id).amount(amount).build());
 	}
 	
 	/**

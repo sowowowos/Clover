@@ -77,6 +77,7 @@ public class PointChargeController{
 		
 		LocalDateTime currentTime = LocalDateTime.now();				
 	    Wallet wallet = walletService.findById(wallet_id);	
+	    System.out.println("amount : " + amount);
 	    
 	    //포인트 충전 내역 저장
 		pointHistoryService.pointChargeInsert(amount, currentTime, type, wallet);

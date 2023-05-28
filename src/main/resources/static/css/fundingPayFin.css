@@ -1,18 +1,22 @@
 @charset "EUC-KR";
+
 * {
 	font-family: 'Noto Sans KR', sans-serif;
 }
+#watch{
+	color: none!important;
+	
+}
 .section {
 	box-sizing: content-box !important;
-	border: none!important;
+	border: none !important;
 }
 
 .info-detail-container {
 	width: 55%;
 	height: 80%;
 	margin: auto;
-	padding-bottom : 30rem;
-	
+	padding-bottom: 30rem;
 }
 
 .sequence-img-container {
@@ -45,8 +49,8 @@
 }
 
 .info-input-container {
-    height: 100%;
-    border-top: 3px solid #0042A0;
+	height: 100%;
+	border-top: 3px solid #0042A0;
 }
 
 /*펀딩 완료 정보*/
@@ -69,21 +73,25 @@
 	border-radius: 5px;
 	height: 10rem;
 }
-#fundTotalTitle{
+
+#fundTotalTitle {
 	font-weight: bold;
 }
+
 #fundTotal {
-	font-weight:600;
-    font-size: 1.2rem;
-    color: #0042A0;
+	font-weight: 600;
+	font-size: 1.2rem;
+	color: #0042A0;
 }
-#fundDateTitle{
+
+#fundDateTitle {
 	font-weight: bold;
 }
-#fundDate{
-	font-weight:600;
-    font-size: 1.2rem;
-    color: #0042A0;
+
+#fundDate {
+	font-weight: 600;
+	font-size: 1.2rem;
+	color: #0042A0;
 }
 
 .funding-fin {
@@ -101,16 +109,17 @@
 }
 
 .funding-fin-detail {
-    text-align: center;
-    font-size: 0.8rem;
-    text-decoration: underline;
-    margin: 0.4rem;
-    color: gray;
+	text-align: center;
+	font-size: 0.8rem;
+	text-decoration: underline;
+	margin: 0.4rem;
+	color: gray;
 }
+
 .card-title-keyword {
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
 	margin-right: 0.5rem;
 }
-.
+
