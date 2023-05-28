@@ -64,6 +64,11 @@ public class Funding {
     @NotNull
     private Integer status;
     
+    /**
+     * 펀딩 상세에 들어가는 이미지 이름 = company.name + .png 로 설정
+     * 경로 : src/main/resources/static/detailFunding/imgName(이름)
+     */
+    private String imgName;
     
     @NotNull
     @JsonIgnore
