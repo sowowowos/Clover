@@ -53,9 +53,14 @@
 
 
 .menu-main {
-	font-size: 1.3rem;
+	font-size: 1.2rem;
 	font-weight: 600;
 	color: #0042A0;
+}
+
+.menu-sub {
+	font-size: 0.9rem;
+	color: #7c7e7e;
 }
 
 .menu-division{
