@@ -82,8 +82,13 @@ public class CrawlingServiceImpl implements CrawlingService {
     }
 
     @Override
-    public Map<String, ?> getCompanyDetail(Company companyName) {
-        Map<String, ?> map = getFile(prefix + "/compInfo/" + crawlingRepository.findByName(companyName.getName()));
+    public Map<String, ?> getCompanyDetail(Company company) {
+        String code = qFactory.selectFrom(QCompanyMapData.companyMapData)
+                .where(QCompanyMapData.companyMapData.company.eq(company))
+                .select(QCompanyMapData.companyMapData.crawlingData.code)
+                .fetchOne();
+        String s = prefix + "commonTop/" + code + ".json";
+        Map<String, ?> map = getFile(s);
         if (map == null) return null;
         return (Map<String, ?>) map.get("compInfo");
     }

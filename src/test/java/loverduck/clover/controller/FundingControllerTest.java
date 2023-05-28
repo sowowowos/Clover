@@ -81,4 +81,14 @@ class FundingControllerTest {
             log.info(String.valueOf(Integer.parseInt(e.get("매출액").toString().replaceAll(",", ""))));
         });
     }
+
+    @Test
+    void getCrawlingCompanyInfo() {
+        Long id = 1L;
+        Company c = companyService.getMapCompany(id);
+        log.info(c.getName());
+//        CrawlingData data = crawlingService.getCrawlingData(c.getName());
+        Map<String, ?> s = crawlingService.getCompanyDetail(c);
+        log.info(s.toString());
+    }
 }

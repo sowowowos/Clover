@@ -87,7 +87,7 @@ public class FundingController {
             model.addAttribute("commentList", commentList);
         }
 
-        return "/fundingDetail";
+        return "fundingDetail";
     }
 
     /**
@@ -108,26 +108,47 @@ public class FundingController {
         List<String> labels = new ArrayList<>();
         List<Integer> sales = new ArrayList<>();
         if (p != null && !p.isEmpty()) {
+            List<String> finalLabels = labels;
+            List<Integer> finalSales = sales;
             p.forEach(e -> {
-                labels.add((String) e.get("YMD"));
-                sales.add(Integer.parseInt(e.get("영업이익").toString().replaceAll(",", "")));
+                finalLabels.add((String) e.get("YMD"));
+                finalSales.add(Integer.parseInt(e.get("영업이익").toString().replaceAll(",", "")));
             });
         }
-        System.out.println("labels = " + labels);
-        System.out.println("sales = " + sales);
+        switch (labels.size()) {
+            case 0:
+                labels.add("2020");
+                sales.add(0);
+            case 1:
+                labels.add("2021");
+                sales.add(0);
+            case 2:
+                labels.add("2022");
+                sales.add(0);
+                break;
+            default:
+                labels = labels.subList(labels.size()-3, labels.size());
+                sales = sales.subList(sales.size()-3, sales.size());
+                break;
+        }
+//        System.out.println("labels = " + labels);
+//        System.out.println("sales = " + sales);
         Map<String, Object> map = new HashMap<>();
         map.put("type", "bar");
+        List<String> finalLabels1 = labels;
+        List<Integer> finalSales1 = sales;
         map.put("data", new HashMap<String, Object>() {
             {
-                put("labels", labels);
+                put("labels", finalLabels1);
                 put("datasets", new ArrayList<Map<String, Object>>() {
                     {
                         add(new HashMap<>() {
                             {
                                 put("label", "영업이익");
-                                put("data", sales);
-                                put("backgroundColor", "");
+                                put("data", finalSales1);
+                                put("backgroundColor", "rgb(0, 66, 160)");
                                 put("borderWidth", 1);
+                                put("align", "left");
                             }
                         });
                     }
@@ -166,7 +187,7 @@ public class FundingController {
         Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
         model.addAttribute("nowPoint", nowPoint);
 
-        return "/fundingPay";
+        return "fundingPay";
     }
 
 
@@ -235,89 +256,87 @@ public class FundingController {
     public String fundingComment(FundingReply fundingReply, HttpSession session) throws Exception {
 //		System.out.println("reply -> " + fundingReply.toString());
 
-		fundingReply.setUser((Users)session.getAttribute("user"));
-		
-		//fundingReply.setUser(usersRepository.findAll().get(0));
-		
-		fundingService.fundingComment(fundingReply);
-		
-		return "redirect:/fundingDetail/{id}";
-	}
-	
-	/**
-	 * 검색 
-	 */
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String searchFunding(@RequestParam("keyword") String keyword, Model model) {
-	    List<Funding> searchResults1 = fundingService.searchFundingByTitle(keyword);
-	    List<Funding> searchResults2 = fundingService.searchFundingByCompany(keyword);
-	    List<Funding> searchResults3 = fundingService.searchFundingByContent(keyword);
+        fundingReply.setUser((Users) session.getAttribute("user"));
 
-	    
+        //fundingReply.setUser(usersRepository.findAll().get(0));
 
-	    model.addAttribute("searchResults1", searchResults1);
-	    model.addAttribute("searchResults2", searchResults2);
-	    model.addAttribute("searchResults3", searchResults3);
-	    model.addAttribute("keyword", keyword);
-	    return "/searchResults"; 
-	}
-	
-	/**
-	 * 펀딩 신청 - 기업 펀드신청 폼
-	 */
-	@GetMapping("/fundSubmitForm")
-	public String fundSubmitForm() {
-		
-		return "mypage/fundSubmitForm";
-	}
-	
-	
-	
-	/**
-	 * 펀딩 신청 - 기업 펀드신청 폼
-	 */
-	@PostMapping(value="/fundSubmitForm")
-	public String fundSubmit(String title, String content,Long targetMinAmount,Long targetMaxAmount,     
-			Long currentAmount, 
-			String startDate, 
-			String endDate , Double dividend , HttpSession session) {
-	
-		String email = (String) session.getAttribute("loginEmail");
-		Company company = usersService.findCompany(email);
+        fundingService.fundingComment(fundingReply);
 
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate dateStartDate = LocalDate.parse(startDate, formatter);
-		LocalDate dateEndDate = LocalDate.parse(endDate, formatter);
+        return "redirect:/fundingDetail/{id}";
+    }
 
-		LocalDateTime dateTimeStartDate = dateStartDate.atStartOfDay();
-		LocalDateTime dateTimeEndDate = dateEndDate.atStartOfDay();
-		
-		
-		String company_name = company.getName() + ".png";
-		
-		Funding funding = Funding.builder().title(title).content(content).targetMinAmount(targetMinAmount)
-				.targetMaxAmount(targetMaxAmount)
-				.currentAmount(0L)
-				.startDate(dateTimeStartDate)
-				.endDate(dateTimeEndDate)
-				.dividend(dividend)
-				.status(0)
-				.imgName(company_name)
-				.company(company).build();
+    /**
+     * 검색
+     */
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String searchFunding(@RequestParam("keyword") String keyword, Model model) {
+        List<Funding> searchResults1 = fundingService.searchFundingByTitle(keyword);
+        List<Funding> searchResults2 = fundingService.searchFundingByCompany(keyword);
+        List<Funding> searchResults3 = fundingService.searchFundingByContent(keyword);
 
-		fundingService.fundSubmit(funding);
-			
-		return "mypage/fundSubmitForm";
-	}
-	
-	/**
-	 * 펀딩 좋아요 
-	 */
-	@RequestMapping(value = "/fundingDetail/{id}/addLike", method = RequestMethod.POST)
-	@ResponseBody
-	public boolean addLike(Long fundingId, Long userId) {
-		//System.out.println("ddd = "+fundingId + userId);
-		
+
+        model.addAttribute("searchResults1", searchResults1);
+        model.addAttribute("searchResults2", searchResults2);
+        model.addAttribute("searchResults3", searchResults3);
+        model.addAttribute("keyword", keyword);
+        return "searchResults";
+    }
+
+    /**
+     * 펀딩 신청 - 기업 펀드신청 폼
+     */
+    @GetMapping("/fundSubmitForm")
+    public String fundSubmitForm() {
+
+        return "mypage/fundSubmitForm";
+    }
+
+
+    /**
+     * 펀딩 신청 - 기업 펀드신청 폼
+     */
+    @PostMapping(value = "/fundSubmitForm")
+    public String fundSubmit(String title, String content, Long targetMinAmount, Long targetMaxAmount,
+                             Long currentAmount,
+                             String startDate,
+                             String endDate, Double dividend, HttpSession session) {
+
+        String email = (String) session.getAttribute("loginEmail");
+        Company company = usersService.findCompany(email);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dateStartDate = LocalDate.parse(startDate, formatter);
+        LocalDate dateEndDate = LocalDate.parse(endDate, formatter);
+
+        LocalDateTime dateTimeStartDate = dateStartDate.atStartOfDay();
+        LocalDateTime dateTimeEndDate = dateEndDate.atStartOfDay();
+
+
+        String company_name = company.getName() + ".png";
+
+        Funding funding = Funding.builder().title(title).content(content).targetMinAmount(targetMinAmount)
+                .targetMaxAmount(targetMaxAmount)
+                .currentAmount(0L)
+                .startDate(dateTimeStartDate)
+                .endDate(dateTimeEndDate)
+                .dividend(dividend)
+                .status(0)
+                .imgName(company_name)
+                .company(company).build();
+
+        fundingService.fundSubmit(funding);
+
+        return "mypage/fundSubmitForm";
+    }
+
+    /**
+     * 펀딩 좋아요
+     */
+    @RequestMapping(value = "/fundingDetail/{id}/addLike", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean addLike(Long fundingId, Long userId) {
+        //System.out.println("ddd = "+fundingId + userId);
+
 //		return "redirect:/fundingDetail/{id}";
         return fundingService.addLike(fundingId, userId);
     }
