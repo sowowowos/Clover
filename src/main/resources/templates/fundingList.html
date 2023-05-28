@@ -54,6 +54,7 @@
 					<div class="card-container col-9">
 						<div th:each="funding : ${fundingList}" class="card card-box card2">
 							<a th:href="@{/fundingDetail/{id}(id=${funding.id})}">
+<!-- 								<img class="company-img" th:src="@{../detailFunding/}+${funding.imgName}" alt="${funding.imgName}"/> -->
 						        <img class="card-img-top" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/granhand_sample_01.png?raw=true" alt="Card image cap">
 						        <a class="card-liked" href="#">
 				                	 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">

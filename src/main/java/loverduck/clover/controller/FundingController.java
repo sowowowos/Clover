@@ -306,7 +306,8 @@ public class FundingController {
 
 		fundingService.fundSubmit(funding);
 			
-		return "mypage/fundSubmitForm";
+//		return "redirect:/mypage/company/" + company.getId();
+		return "redirect:/fundSubmitHistory";
 	}
 	
 	/**
