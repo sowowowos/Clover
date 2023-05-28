@@ -7,6 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" href="/css/common.css">
 <link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/navbar.css">
 <link rel="stylesheet" href="/css/fundingPayFin.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
@@ -24,8 +25,8 @@
 </head>
 <body>
 	<div>
-		<div class="nav">네브바</div>
-		<div class="banner">배너</div>
+		<div th:insert="navbar :: navbar"> </div> 
+		<div th:insert="banner :: banner"></div>
 		<div class="container">
 			<div class="section">
 				<div class="info-detail-container">
@@ -37,7 +38,7 @@
 							<div class="funding-fin">
 								<div class="funding-fin-title">펀딩 완료</div>
 								<!-- 추후 펀딩 상세내역 URL연결 -->
-								<div class="funding-fin-detail">펀딩 상세내역 보기</div>
+								<div class="funding-fin-detail" ><a id="watch" th:href="@{/mypage/investor/{id}(id=${session.user.id})}">내 펀딩 보기</a></div>
 							</div>
 							<div class="funding-info-container1">
 								<div>
@@ -58,7 +59,7 @@
 			</div>
 
 		</div>
-		<div class="footer">풋터</div>
+		<div th:insert="footer :: footer"> </div>
 
 	</div>
 </body>
