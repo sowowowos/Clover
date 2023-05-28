@@ -9,14 +9,29 @@
 	font-weight: 600;
 }
 
+.btn-navy{
+	background-color: #0042A0;
+	color: #ffffff;
+	padding: 0.5rem 4.5rem;
+	border-radius: 0.6rem;
+	text-decoration: none;
+	margin: 3rem 0rem auto;
+}
+
+.btn-primary {
+	background-color: #0042A0;
+/* 	color: #FFFFFF;
+ */	
+}
+
 .company-info {
 	float: right;
 	text-align: right;
-	padding: 3rem 1rem 1rem 0;
+	padding: 4rem 1rem 1rem 0;
 }
 
 .company-name {
-	font-size: 2.5rem;
+	font-size: 2rem;
 	padding: 0 0 2rem 0;
 }
 
@@ -25,10 +40,10 @@
 }
 
 .company-img{
-	width: 47rem;
-	height: 25rem;
+	width: 35rem;
+	height: 17rem;
 	border-radius: 0.3rem;
-	margin: 2.7rem 0 0 0;
+	margin: 4.5rem 0 0 0;
 }
 
 .keyword {
@@ -37,6 +52,7 @@
 	padding: 0.3rem 0.8rem;
 	border-radius: 1rem;
 	margin: 0 0 0 0.5rem;
+	font-size: 0.8rem;
 }
 
 .yellow-keyword {
@@ -45,7 +61,7 @@
 	padding: 0.3rem 0.8rem;
 	border-radius: 1rem;
 	margin: 0 0 0 0.5rem;
-	font-size: 0.7rem;
+	font-size: 0.8rem;
 }
 
 .liked-company {
@@ -56,17 +72,18 @@
 .dday {
 	background-color: #0042A0;
 	color: #FFFFFF;
-	border-radius: 0.7rem;
-	margin: 0.3rem 0 3rem 1rem;
-	padding: 0.3rem 0.5rem;
+	border-radius: 0.5rem;
+	margin: 0.5rem 0 0 1rem;
+	padding: 0.2rem 0.4rem;
+	font-size: 0.9rem;
 }
 
 .percentage-bar{
 	background-color: #0042A0;
-	border-radius: 1rem;
+	border-radius: 0.7rem;
 	width: 10rem;
-	height: 1rem;
-	margin: 1rem 0 2rem 0;
+	height: 0.7rem;
+	margin: 1rem 0 0.2rem 0;
 }
 
 .tab-card {
@@ -110,12 +127,8 @@
 	width: 80%;
 }
 
-.tab-list {
-	text-decoration: none;
-	color: #DEDEDE;
-}
-
 .card-dday {
+	width: 5rem;
 	color: #ffffff;
 	background-color: #0042A0;
 	border-radius: 0.5rem;
@@ -124,10 +137,11 @@
 	margin: 0 0 1rem 0;
 }
 
+/* 기업소개 */
 .intro-container {
 	display: flex;
 	justify-content: center;
-	maring: 3rem 0;
+	margin: 3rem 2rem auto;
 }
 
 .intro-title {
@@ -141,7 +155,7 @@
 }
 .intro-img {
 	width: 27rem;
-	height: 16rem;
+	height: 15rem;
 	border-radious: 2rem;
 }
 
@@ -169,3 +183,38 @@
 	font-weight: 600;
 	color: #0042A0;
 }
+
+/* Tab menu */
+.tab-list {
+	text-decoration: none;
+	color: #DEDEDE;
+	font-size: 1rem;
+}
+ 
+ .tab_menu .list{
+    overflow:hidden;
+ }
+ 
+ .tab_menu .list .btn{
+ 	font-size: 13px;
+ }
+
+.cont_area .cont{
+ 	display:none; 
+ }
+ 
+.tab_menu > p.is_on > a{
+	font-weight:bold; 
+	color: #0042A0;
+}
+ 	
+.tab_menu > p > a,
+.tab_menu > p > a:after,
+.tab_menu > p > a:before {
+  transition: all .5s;
+}
+
+.tab_menu > p > a:hover {
+  color: #0042A0;
+}
+
