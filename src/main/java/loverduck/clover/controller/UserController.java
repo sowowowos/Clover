@@ -3,6 +3,7 @@ package loverduck.clover.controller;
 import lombok.RequiredArgsConstructor;
 import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Funding;
+import loverduck.clover.entity.FundingReply;
 import loverduck.clover.entity.PointHistory;
 import loverduck.clover.entity.Users;
 import loverduck.clover.service.*;
@@ -549,13 +550,17 @@ public class UserController {
     @RequestMapping("/mypage/company/{id}")
     public String mypageCorp(@PathVariable Long id, Model model, @ModelAttribute("user") Users user) {
         if (user != null) {
+        	
             // 기업이 진행 중인 펀딩 목록
             List<Funding> nowFunds = fundingService.findNowFundingsById(user.getCompany().getId());
             model.addAttribute("nowFunds", nowFunds);
+            System.out.println("nowFunds" + nowFunds);
 
             // 기업의 완료된 펀딩 목록
             List<Funding> doneFunds = fundingService.findDoneFundingsById(user.getCompany().getId());
             model.addAttribute("doneFunds", doneFunds);
+            //System.out.println("doneFunds" + doneFunds);
+
             
             Long wallet_id = user.getWallet().getId();
             model.addAttribute("wallet_id", wallet_id);
