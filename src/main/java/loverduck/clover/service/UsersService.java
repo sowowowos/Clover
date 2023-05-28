@@ -57,7 +57,7 @@ public interface UsersService {
 	/**
 	 * 마이페이지 배당 내역 출력 (정산) 
 	 */
-	List<PointHistory> allocationHistoryInvestor(Long user_id);
+	List<PointHistory> allocationHistoryInvestor(Long wallet_id);
 	
 	List<Funding> findMyFundingsByUserId(Users user);
 	

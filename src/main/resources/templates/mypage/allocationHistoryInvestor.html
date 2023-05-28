@@ -20,29 +20,32 @@
 		<div th:insert="navbar :: navbar"> </div> 
 		
 		<div class="container section">
-			<div class="row mt-3">
+			<div class="row" style="margin: 5rem 0 0 0; padding: 2rem 10rem;">
 				<div class="crop-info">
 					<div class="row align-items-center">
 						<!-- 프로필사진 및 아이디 -->
 						<div class="col-6 text-end">
 							<img src="/logo" class="profile-img"/>
 						</div>
-						<div class="col-6" th:text="${user.nickname}"></div>
-			    		
+						<div class="col-6 profile-name">
+							<div class="" th:text="${user.nickname}"></div>
+							<img width=180 height=120 src="https://raw.githubusercontent.com/CLOVER-DUCK/Clover/d55e6dddeac257ba948c8893bc12a49aa0183a85/src/main/resources/static/img/intro/title_bg.png"/>
+						</div>			    		
 					</div>
+					
 					<!-- 키워드 -->
 					<div class="row mt-3">
 			    		<div class="d-flex justify-content-center mb-3">
-			    			<div class="keyword">#펀딩성공률 53%</div>
-			    			<div class="keyword">#러버추천</div>
-			    			<div class="keyword">#비건 뷰티</div>
+			    			<div class="keyword text-color-navy">#성장하는 투자자🔥</div>
+			    			<div class="keyword text-color-navy">#투자 성공률32%</div>
+			    			<div class="keyword text-color-navy">#비건 뷰티</div>
 			    		</div>
 		    		</div>
 		    		
 		    		<!-- 관심기업 -->
 		    		<div class="row mt-3">
 			    		<div class="d-flex justify-content-center mb-3">
-			    			<div class="yellow-keyword">#비건 뷰티</div>
+			    			<div class="yellow-keyword text-color-navy">#비건 뷰티</div>
 			    		</div>
 		    		</div>
 		    		
@@ -54,7 +57,7 @@
 							</svg>
 		    			</div>
 		    			<div class="col-6">
-		    				<div th:text="${user.wallet.amount}"></div>
+		    				<div th:text="${nowPoint != null ? #numbers.formatInteger(nowPoint, 0, 'COMMA') + ' point' : '0 point'}"></div>
 		    			</div>
 		    		</div>
 					
@@ -62,44 +65,31 @@
 			</div>
 			
 			<!-- 메뉴 -->
-			<div class="row">
+			<div class="row" style="margin: 0 9rem auto;">
 				<div class="col-3" style="padding: 1rem">
-					<div class="menu">
-						<li class="menu-main text-color-navy"><a href="" class="text-color-navy">내 펀딩</a></li>
-						<hr>
-						<li><a href="" class="text-color-black">현재 진행 중인 펀딩</a></li>
-						<li><a href="" class="text-color-black">마감한 펀딩</a></li>
-						<hr>
-						<li class="menu-main text-color-navy" ><a href="" class="text-color-navy">정산</a></li>
-						<hr>
-						<li class="menu-main text-color-navy"><a href="" class="text-color-navy">포인트</a></li>
-						<hr>
-						<li><a href="" class="text-color-black">포인트 환전 신청 하기</a></li>
-						<li><a href="" class="text-color-black">포인트 환전 신청 내역</a></li>
-						<li><a th:href="@{/mypage/pointCharge}" class="text-color-black">포인트 충전 및 내역</a></li>
-					</div>
-				</div>
+					<div th:insert="sideBar :: sideBar"> </div> 
+				</div> 
 	
 				<!-- 투자한 펀딩 목록 -->
-				<div class="col-8 main-section">
+				<div class="col-7 main-section">
 				   	<p class="section-title">정산</p>
 				    
 				    	<!-- 카드 -->
-				    	<div th:each="myFund : ${myFunds}" class="card mb-5 main-section">
+				    	<div th:each="allocation : ${allocations}" class="card mb-5 main-section">
 					        <img  src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sitta.jpeg?raw=true">
 					        <div class="card-body">    
-					       	  <h3 th:text="${myFund.company.name}" class="card-company-name"></h3>
+					       	  <h3 th:text="${allocation.company.name}" class="card-company-name"></h3>
 					            <div class="d-flex justify-content-between">
-					                <p class="card-title" th:text="${myFund.title}"></p>
+					                <p class="card-title" th:text="${allocation.title}"></p>
 					                <div class="card-dday">D-60</div>
 					            </div>                  
 					            <div class="d-flex justify-content-end">
-					                <div class="text-color-navy" th:text="${#temporals.format(myFund.startDate, 'yy.MM.dd')}"></div>
+					                <div class="text-color-navy" th:text="${#temporals.format(allocation.startDate, 'yy.MM.dd')}"></div>
 					                <div class="text-color-navy mx-1"> - </div>
-					                <div class="text-color-navy" th:text="${#temporals.format(myFund.endDate, 'yy.MM.dd')}"></div>
+					                <div class="text-color-navy" th:text="${#temporals.format(allocation.endDate, 'yy.MM.dd')}"></div>
 					            </div>
 					            <div class="text-end mt-2 mb-2" style="color: #D9D9D9;">
-					                <div th:text="${myFund.targetMaxAmount}"></div>
+					                <div th:text="${allocation.targetMaxAmount}"></div>
 					            </div>
 					            <div class="">
 					                <div class="percentage-bar"></div>
