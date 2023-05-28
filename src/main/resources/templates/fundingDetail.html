@@ -16,145 +16,141 @@
 </head>
 <!--  펀딩 디테일 페이지  -->
 <body>
-<div>
-    <!-- Navbar -->
-    <div th:insert="navbar :: navbar"></div>
-
-    <div class="container">
-        <div class="section" style="padding: 3rem 0 0 0;">
-            <!-- 상단 정보 카드 -->
-            <div class="row">
-                <div class="col-5">
-                    <!-- 왼쪽 카드 -->
-                    <div class="company-info">
-
-                        <!-- 기업 이름 -->
-                        <div class="row">
-                            <div class="company-name" th:text="${fund.company.name}"></div>
-                        </div>
-
-                        <!-- 퍼센트바 -->
-                        <div class="row">
-                            <div class="percentage-bar"></div>
-                            <div style="color: #D9D9D9"><span th:text="${fund.targetMaxAmount}"
-                                                              style="color: #D9D9D9"></span>원
-                            </div>
-                        </div>
-
-                        <!-- 관심기업으로 등록한 사용자 수 -->
-                        <!-- <div class="row">
-                            <div class="liked-company mt-3 mb-3">
-                                <div class="mx-3">LOVERS</div>
-                                <div class="text-color-navy">125명</div>
-                            </div>
-                        </div> -->
-
-                        <!-- 키워드 -->
-                        <div class="row">
-                            <div class="d-flex mt-4 mb-4 justify-content-end" style="padding-right: 0;">
-                                <div class="keyword text-color-navy">#펀딩성공률 53%</div>
-                                <div class="keyword text-color-navy">#러버추천</div>
-                                <div class="yellow-keyword text-color-navy">#비건 뷰티</div>
-                            </div>
-                        </div>
-
-
-                        <!-- 펀딩기간 & 디데이 -->
-                        <div class="d-flex justify-content-end align-items-center">
-                            <div class="dday">D-32</div>
-                        </div>
-                        <div class="d-flex justify-content-end align-items-centers mt-2 mb-4">
-                            <div class="text-color-navy" style="font-size: 0.8rem"
-                                 th:text="${#temporals.format(fund.startDate, 'yy-MM-dd')}"></div>
-                            <div class="text-color-navy mx-1" style="font-size: 0.8rem"> -</div>
-                            <div class="text-color-navy" style="font-size: 0.8rem"
-                                 th:text="${#temporals.format(fund.endDate, 'yy-MM-dd')}"></div>
-                        </div>
-
-
-                        <!-- 아이콘 -->
-                        <div class="row mt-4 justify-content-end align-items-center">
-
-                            <div class="col-2 align-items-center">
-                                <a href="">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                                         class="bi bi-send" viewBox="0 0 16 16" style="color: #0042A0;">
-                                        <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
-                                    </svg>
-                                </a>
-                            </div>
-
-
-                            <div class="col-2">
-                                <!-- 좋아요 -->
-                                <a href="#" id="likeButton1" onclick="handleLike()">
-                                    <input type="hidden" id="like_check1" th:value="${like}"/>
-                                    <svg id="likeImg" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                         fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16"
-                                         style="color: #0042A0;">
-                                        <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/>
-                                    </svg>
-                                </a>
-                                <a href="#" id="likeButton2" onclick="handleLike()">
-                                    <input type="hidden" id="like_check2" th:value="${like}"/>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                                         class="bi bi-suit-heart-fill" viewBox="0 0 16 16" style="color: #0042A0;">
-                                        <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
-                                    </svg>
-                                </a>
-                            </div>
-
-
-                        </div>
-
-                        <!-- 투자하기 버튼 -->
-                        <a th:href="@{/fundingPay}" type="button" class="btn-navy">투자하기</a>
-
-                    </div>
-                </div>
-
-                <!-- 기업 사진 -->
-                <div class="col-7 company-img-container mw-100">
-                    <img class="company-img mw-100"
-                         src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sitta.jpeg?raw=true"/>
-                </div>
-
-            </div> <!-- 상단 정보 카드 -->
-
-            <!-- 하단 탭 -->
-            <div class="row justify-content-center">
-                <!-- 탭 메뉴 -->
-                <div class="tab_menu d-flex justify-content-evenly m-5">
-                    <p class="is_on"><a class="tab-list" href="#tab1">기업소개</a></p>
-                    <p class=""><a class="tab-list" href="#tab2">재무분석</a></p>
-                    <p class=""><a class="tab-list" href="#tab3">진행 중인 펀드</a></p>
-                    <p class=""><a class="tab-list" href="#tab4">완료된 펀드</a></p>
-                </div>
-
-                <!-- 카드 -->
-                <div class="cont_area">
-
-                    <!-- 기업소개 -->
-                    <div id="tab1" class="cont" style="display:block; margin: 3rem 2rem auto;">
-                        <div class="intro-container">
-                            <div class="mw-100">
-                                <img class="intro-img mw-100"
-                                     src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sitta.jpeg?raw=true"/>
-                            </div>
-                            <div class="col-4 mx-5 justify-content-end">
-                                <div class="intro-title" th:text="${fund.title}"></div>
-                                <div class="intro-content" th:text="${fund.content}"></div>
-                            </div>
-
-                        </div>
-
-                        <!-- <div class="">
-                            <div class="core-biz-title">
-                                핵심 사업
-                            </div>
-                        </div> -->
-                    </div>
-
+	<div>
+		<!-- Navbar -->
+		<div th:insert="navbar :: navbar"> </div> 
+		
+		<div class="container">
+			<div class="section" style="padding: 3rem 0 0 0;">
+				<!-- 상단 정보 카드 -->
+				<div class="row">
+				    <div class="col-5">
+				    	<!-- 왼쪽 카드 -->
+				    	<div class="company-info">
+				    	
+				    		<!-- 기업 이름 -->
+				    		<div class="row">
+				    			<div class="company-name" th:text="${fund.company.name}"></div>
+				    		</div>
+				    		
+				    		<!-- 퍼센트바 -->
+				    		<div class="row">
+				    			<div class="percentage-bar"></div>
+				    			<div style="color: #D9D9D9"><span th:text="${fund.targetMaxAmount}" style="color: #D9D9D9"></span>원</div>
+				    		</div>
+				    		
+				    		<!-- 관심기업으로 등록한 사용자 수 -->
+				    		<!-- <div class="row">
+					    		<div class="liked-company mt-3 mb-3">
+					    			<div class="mx-3">LOVERS</div>
+					    			<div class="text-color-navy">125명</div>
+					    		</div>
+				    		</div> -->
+				    		
+				    		<!-- 키워드 -->
+				    		<div class="row">
+					    		<div class="d-flex mt-4 mb-4 justify-content-end" style="padding-right: 0;">
+					    			<div class="keyword text-color-navy">#펀딩성공률 53%</div>
+					    			<div class="keyword text-color-navy">#러버추천</div>
+					    			<div class="yellow-keyword text-color-navy">#비건 뷰티</div>
+					    		</div>
+				    		</div>
+				    		
+				    		
+				    		
+				    		<!-- 펀딩기간 & 디데이 -->
+				    		<div class="d-flex justify-content-end align-items-center">
+					    		<div class="dday">D-32</div>
+				    		</div>
+				    		<div class="d-flex justify-content-end align-items-centers mt-2 mb-4">
+				    			<div class="text-color-navy" style="font-size: 0.8rem"th:text="${#temporals.format(fund.startDate, 'yy-MM-dd')}"></div>
+			    				<div class="text-color-navy mx-1" style="font-size: 0.8rem"> - </div>
+			    				<div class="text-color-navy" style="font-size: 0.8rem" th:text="${#temporals.format(fund.endDate, 'yy-MM-dd')}"></div>
+				    		</div>
+				    		
+				    		
+				    		<!-- 아이콘 -->
+				    		<div class="row mt-4 justify-content-end align-items-center">
+				    		
+				    			<div class="col-2 align-items-center">
+				    				<a href="">
+				    					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16" style="color: #0042A0;">
+										  <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+										</svg>
+				    				</a>
+				    			</div>
+				    			
+	
+				    			<div class="col-2" >
+				    				<!-- 좋아요 -->
+				    				<a href="#" id="likeButton1" onclick="handleLike()" >
+				    					<input type="hidden" id="like_check1" th:value="${like}" />
+									    <svg id="likeImg" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16" style="color: #0042A0;">
+									        <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/>
+									   </svg> 
+									</a>
+									<a href="#" id="likeButton2" onclick="handleLike()" >
+										<input type="hidden" id="like_check2" th:value="${like}" />
+									    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16" style="color: #0042A0;">
+									        <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+									    </svg>
+									</a> 
+				    			</div>
+				    			
+				    		
+				    		</div>
+				    		
+				    		<!-- 투자하기 버튼 -->
+				    		<a th:href="@{/fundingPay}" type="button" class="btn-navy">투자하기</a>
+				    		
+				    	</div>
+					</div>
+					
+					<!-- 기업 사진 -->
+					<div class="col-7 company-img-container">
+						<img class="company-img" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sitta.jpeg?raw=true"/>
+					</div>
+					<!-- static/detailFunding 안에 기업명.png 파일을 넣으면 알아서 상세목록에 사진이 들어갑니다. -->
+<!-- 					<div class="col-7 company-img-container"> -->
+<!-- 						<img class="company-img" th:src="@{../detailFunding/}+${fund.imgName}" alt="${fund.imgName}"/> -->
+<!-- <!-- 						<div th:text="${fund.imgName}"></div> -->   이 줄은 테스트출력확인용 -->
+<!-- 					</div> -->
+					
+				</div> <!-- 상단 정보 카드 -->
+				
+				<!-- 하단 탭 -->
+				<div class="row justify-content-center">
+					<!-- 탭 메뉴 -->
+					<div class="tab_menu d-flex justify-content-evenly m-5">
+						<p class="is_on"><a class="tab-list" href="#tab1">기업소개</a></p>
+						<p class=""><a class="tab-list" href="#tab2">재무분석</a></p>
+						<p class=""><a class="tab-list" href="#tab3">진행 중인 펀드</a></p>
+						<p class=""><a class="tab-list"  href="#tab4">완료된 펀드</a></p>
+					</div>
+					
+					<!-- 카드 -->
+					<div class="cont_area">
+					
+						<!-- 기업소개 -->
+						<div id="tab1" class="cont" style="display:block; margin: 3rem 2rem auto;">
+						    <div class="intro-container">
+						    	<div class="">
+						            <img class="intro-img" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sitta.jpeg?raw=true"/>
+						        </div>
+						        <div class="col-4 mx-5 justify-content-end">
+						            <div class="intro-title" th:text="${fund.title}"></div>
+						            <div class="intro-content" th:text="${fund.content}"></div>
+						        </div>
+						        
+						    </div>
+						
+						    <!-- <div class="">
+						        <div class="core-biz-title">
+						            핵심 사업
+						        </div>
+						    </div> -->
+						</div>
+						
                     <!-- 재무분석 -->
                     <div id="tab2" class="cont">
                         <!-- 기업이름 -->

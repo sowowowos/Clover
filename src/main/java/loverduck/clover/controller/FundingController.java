@@ -87,8 +87,84 @@ public class FundingController {
             model.addAttribute("commentList", commentList);
         }
 
-        return "fundingDetail";
-    }
+        
+		return "/fundingDetail";
+	}
+	
+	/** 
+	 * 펀딩 투자하기 - 펀딩하기
+	 */
+	@RequestMapping("/fundingPay")
+	public String fundingPay(Model model, @ModelAttribute("user") Users user) {
+		
+		//세션 담기
+		model.addAttribute("user", user);
+
+		Long wallet_id = user.getWallet().getId();
+		model.addAttribute("wallet_id", wallet_id);
+
+		//포인트 충전/사용 결과에 따른 잔여 포인트 값 변경 저장
+	    Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
+	    model.addAttribute("nowPoint", nowPoint);
+
+		return "/fundingPay";
+	}
+	
+
+	/**
+	 * 펀딩 투자하기 - 펀딩 완료 
+	 * 추후 펀딩 아이디가 세션에 담겨야함
+	 */
+	@PostMapping("/fundingPay")
+	@ResponseBody
+	public Map<String,Object> fundingPayFin(@ModelAttribute("user") Users user,
+            @RequestParam("amount") Long amount, 
+            @RequestParam("type") Integer type,
+            @RequestParam("wallet_id") Long wallet_id, 
+            @RequestParam("funding_id") Long funding_id,
+									HttpSession session, Model model) {
+		
+		//세션 담기
+		model.addAttribute("user", user);
+
+		LocalDateTime currentTime = LocalDateTime.now();		
+		Funding funding = fundingService.findById(funding_id);
+		Wallet wallet = walletService.findById(wallet_id);
+
+		//funding_id 추후 저장된 값으로 변경하여 저장 --> company, funding table data 존재해야함
+		//포인트 사용 내역 저장 --> funding_id도 함께 저장
+		pointHistoryService.fundingPayInsert(amount, currentTime, type, funding, wallet);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("amount", amount);
+		map.put("data", "success");
+		map.put("date", currentTime);
+		map.put("wallet", wallet);
+
+		return map; 
+	}
+	
+	/**
+	 * 펀딩 투자하기 완료시
+	 */
+	
+	@RequestMapping("/fundingPayFin")
+	public ModelAndView fundingPayFin(@RequestParam("amount") Long amount,
+			@RequestParam("wallet_id") Long wallet_id, 
+			@RequestParam("exchangeDate") String exchangeDate) {
+		//추후 세션 로그인 회원 정보에 따른 wallet_id로 코드 수정할 예정
+		
+		ModelAndView mv = new ModelAndView();	
+		
+        mv.addObject("amount", amount);
+		mv.addObject("walletId", wallet_id);
+		mv.addObject("exchangeDate", exchangeDate);
+		
+		mv.setViewName("fundingPayFin");
+		
+		return mv;
+	}
+	
 
     /**
      * 차트
@@ -170,90 +246,12 @@ public class FundingController {
         return map;
     }
 
-
-    /**
-     * 펀딩 투자하기 - 펀딩하기
-     */
-    @RequestMapping("/fundingPay")
-    public String fundingPay(Model model, @ModelAttribute("user") Users user) {
-
-        //세션 담기
-        model.addAttribute("user", user);
-
-        Long wallet_id = user.getWallet().getId();
-        model.addAttribute("wallet_id", wallet_id);
-
-        //포인트 충전/사용 결과에 따른 잔여 포인트 값 변경 저장
-        Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
-        model.addAttribute("nowPoint", nowPoint);
-
-        return "fundingPay";
-    }
-
-
-    /**
-     * 펀딩 투자하기 - 펀딩 완료
-     * 추후 펀딩 아이디가 세션에 담겨야함
-     */
-    @PostMapping("/fundingPay")
-    @ResponseBody
-    public Map<String, Object> fundingPayFin(@ModelAttribute("user") Users user,
-                                             @RequestParam("amount") Long amount,
-                                             @RequestParam("type") Integer type,
-                                             @RequestParam("wallet_id") Long wallet_id,
-                                             @RequestParam("funding_id") Long funding_id,
-                                             HttpSession session, Model model) {
-
-        //세션 담기
-        model.addAttribute("user", user);
-
-        LocalDateTime currentTime = LocalDateTime.now();
-        Funding funding = fundingService.findById(funding_id);
-        Wallet wallet = walletService.findById(wallet_id);
-
-        //funding_id 추후 저장된 값으로 변경하여 저장 --> company, funding table data 존재해야함
-        //포인트 사용 내역 저장 --> funding_id도 함께 저장
-        pointHistoryService.fundingPayInsert(amount, currentTime, type, funding, wallet);
-
-        Map<String, Object> map = new HashMap<String, Object>();
-
-        map.put("amount", amount);
-        map.put("data", "success");
-        map.put("date", currentTime);
-        map.put("wallet", wallet);
-
-        return map;
-    }
-
-    /**
-     * 펀딩 투자하기 완료시
-     */
-
-
-    @RequestMapping("/fundingPayFin")
-    public ModelAndView fundingPayFin(
-            Long amount,
-            Long wallet_id,
-            Long funding_id, String exchangeDate) {
-        //추후 세션 로그인 회원 정보에 따른 wallet_id로 코드 수정할 예정
-
-        ModelAndView mv = new ModelAndView();
-
-        mv.addObject("amount", amount);
-        mv.addObject("walletId", wallet_id);
-        mv.addObject("exchangeDate", exchangeDate);
-
-        mv.setViewName("fundingPayFin");
-
-        return mv;
-    }
-
-
     /**
      * 펀딩 상세 페이지 댓글 작성
      */
     @RequestMapping(value = "/fundingDetail/{id}/comment", method = RequestMethod.POST)
     public String fundingComment(FundingReply fundingReply, HttpSession session) throws Exception {
+
 //		System.out.println("reply -> " + fundingReply.toString());
 
         fundingReply.setUser((Users) session.getAttribute("user"));
@@ -336,7 +334,6 @@ public class FundingController {
     @ResponseBody
     public boolean addLike(Long fundingId, Long userId) {
         //System.out.println("ddd = "+fundingId + userId);
-
 //		return "redirect:/fundingDetail/{id}";
         return fundingService.addLike(fundingId, userId);
     }
@@ -351,7 +348,14 @@ public class FundingController {
     }
 
     /**
-     * 좋아요 여부
+     * 소개 페이지 
      */
+    @RequestMapping(value = "/introduce")
+    public String introduce() {
+    	return "introduce";
+    }
+
+    
+    
 
 }

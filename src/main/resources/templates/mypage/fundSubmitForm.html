@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="/css/common.css">
 <link rel="stylesheet" href="/css/reset.css">
 <link rel="stylesheet" href="/css/navbar.css">
+<link rel="stylesheet" href="/css/mypageCorp.css">
+<link rel="stylesheet" href="/css/mypageInvestor.css">
 <link rel="stylesheet" href="/css/fundSubmitForm.css">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 <link
@@ -27,24 +29,18 @@
 	<div>
 		<!-- Navbar -->
 		<div th:insert="navbar :: navbar"></div> 
-		<div class="banner">배너</div>
-		<div class="container">
+		<div class="banner"></div>
+		<div class="m-auto container row" style="margin: 0 9rem auto;">
 			<!-- 메뉴 -->
-			<div class="col-2">
-				<div class="menu mt-4">
-					<li>펀딩 현황</li>
-					<li>투자자 문의내역</li>
-					<li>펀딩 신청</li>
-					<li>정산</li>
-					<li>포인트</li>
-				</div>
-			</div>
+			<div class="col-3" style="padding: 1rem" >
+					<div th:insert="sideBarCorp :: sideBarCorp"> </div> 
+			</div> 
 
 			<!-- 펀딩신청폼 컨테이너-->
 			
 			<form action="/fundSubmitForm"  method="post" 
-			 	  class="submit-container col-8 m-auto" style="min-height: 100vh;"><!-- th:action="@{/fundSubmitForm}"  -->
-				<div class="fw-bold fs-3 mt-4" style="color:#0042A0;">펀딩신청</div>
+			 	  class="submit-container col-9 p-5" style="min-height: 100vh;"><!-- th:action="@{/fundSubmitForm}"  -->
+				<div class="fw-bold fs-2 m-2" style="color:#0042A0;">펀딩신청</div>
 				<hr>
 
 				<!-- 펀딩절차설명  -->
@@ -249,9 +245,8 @@
 			 <!-- 펀딩신청폼 컨테이너 end  -->
 			</form>
 		</div>
-		<div class="footer">푸터</div>
 	</div>
-
+<div th:insert="footer :: footer"> </div>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
