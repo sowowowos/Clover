@@ -20,14 +20,14 @@
 		<div th:insert="navbar :: navbar"> </div> 
 		
 		<div class="container section">
-			<div class="row mt-3">
+			<div class="row" style="margin: 8rem 0 0 0; padding: 0 5rem;">
 				<div class="crop-info">
 					<div class="row align-items-center">
 						<!-- 프로필사진 및 아이디 -->
 						<div class="col-6 text-end">
 							<img src="/logo" class="profile-img"/>
 						</div>
-						<div class="col-6" th:text="${user.nickname}"></div>
+						<div class="col-6 profile-name" th:text="${user.nickname}"></div>
 			    		
 					</div>
 					<!-- 키워드 -->
