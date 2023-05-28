@@ -48,10 +48,6 @@ public class UserController {
         return (Users) session.getAttribute("user");
     }
 
-    @ModelAttribute("company")
-    public Company getCompany(HttpSession session) {
-        return (Company) session.getAttribute("compnay");
-    }
 
     /**
      * 메인
@@ -551,17 +547,23 @@ public class UserController {
      * 마이페이지 - 기업 (펀딩 현황 - 현 진행 중인 펀딩 목록)
      */
     @RequestMapping("/mypage/company/{id}")
-    public String mypageCorp(@PathVariable Long id, Model model, @ModelAttribute("company") Company company) {
-        if (company != null) {
+    public String mypageCorp(@PathVariable Long id, Model model, @ModelAttribute("user") Users user) {
+        if (user != null) {
             // 기업이 진행 중인 펀딩 목록
-            List<Funding> nowFunds = fundingService.findNowFundingsById(company.getId());
+            List<Funding> nowFunds = fundingService.findNowFundingsById(user.getCompany().getId());
             model.addAttribute("nowFunds", nowFunds);
 
             // 기업의 완료된 펀딩 목록
-            List<Funding> doneFunds = fundingService.findDoneFundingsById(company.getId());
+            List<Funding> doneFunds = fundingService.findDoneFundingsById(user.getCompany().getId());
             model.addAttribute("doneFunds", doneFunds);
+            
+            Long wallet_id = user.getWallet().getId();
+            model.addAttribute("wallet_id", wallet_id);
 
-            return "/mypage/company";
+            Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
+            model.addAttribute("nowPoint", nowPoint);
+
+            return "/mypage/mypageCorp";
         }
         return "redirect:/loginForm";
     }
