@@ -586,13 +586,21 @@ public class UserController {
     /**
      * 마이페이지 - 투자자 (배당 내역 (정산))
      */
-    @RequestMapping("mypage/investor/{id}/allocationHistoryInvestor")
-    public String allocationHistoryInvestor(@PathVariable Long id, Model model, @ModelAttribute("user") Users user) {
+    @RequestMapping("/mypage/investor/{id}/allocationHistoryInvestor")
+    public String allocationHistoryInvestor(@PathVariable("id") Long wallet_id, Model model, @ModelAttribute("user") Users user) {
     	if (user != null) {
-    		List<PointHistory> allocations = usersService.allocationHistoryInvestor(user.getId());
+    		System.out.println("user_id 2" + wallet_id);
+    		
+    		Long wallet = user.getWallet().getId();
+    		model.addAttribute("wallet", wallet);
+			
+			Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
+	        model.addAttribute("nowPoint", nowPoint);   
+             
+    		List<PointHistory> allocations = usersService.allocationHistoryInvestor(wallet_id);
     		model.addAttribute("allocations", allocations);
     		
-    		return "mypage/investor/" + id + "/allocationHistoryInvestor";
+    		return "mypage/allocationHistoryInvestor";
     	}
     	
         return "redirect:/loginForm";
