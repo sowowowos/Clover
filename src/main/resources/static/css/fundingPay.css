@@ -3,7 +3,9 @@
 * {
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
+.container{
+	padding-bottom : 8rem;
+}
 .section {
 	box-sizing: content-box !important;
 	border:none;
@@ -214,10 +216,19 @@ button {
 
 }
 .card-title-keyword>div.keword {
-    box-sizing: content-box;
+/*     box-sizing: content-box;
     margin-right: 0.5rem;
     padding: 0.4rem;
-    border-radius: 15px;
+    border-radius: 15px; */
+        background-color: #ebeded;
+    color: #0042A0;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    margin: 0 0 0 0.5rem;
+    font-size: 0.8rem;
+}
+.yellow-keyword text-color-navy{
+	
 }
 
 button.btn-st {
