@@ -7,7 +7,7 @@
 
 .banner {
 	width: 100%;
-	height : 25rem;
+	/* height : 25rem; */
 	margin: 5rem 0 0 0;
 }
 
@@ -25,5 +25,14 @@
 .footer {
 	width: 100%;
 	height: 5rem;
-	border: 1px solid;	
+	align-items: flex-end;
+}
+
+#logo{
+	width : 10rem!important;
+	opacity: 0.5;
+}
+.Copyright{
+	border-top : 1px solid #6C757D;
+	font-size : 0.8rem;
 }
