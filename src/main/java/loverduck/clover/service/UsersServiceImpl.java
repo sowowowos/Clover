@@ -137,6 +137,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void mappingCompanyUser(Users user, Company company) {
         jpaQueryFactory.update(QUsers.users)
+                .where(QUsers.users.id.eq(user.getId()))
                 .set(QUsers.users.company, company)
                 .execute();
     }
