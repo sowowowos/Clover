@@ -7,6 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" href="/css/common.css">
 <link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/navbar.css">
 <link rel="stylesheet" href="/css/fundingList.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
@@ -19,81 +20,145 @@
 </head>
 <body>
 	<div>
-		<div class="nav"></div>
+		<div th:insert="navbar :: navbar"> </div> 
 		
-		<div class="category d-flex flex-row ">
+		<div class="banner">
+			<img style="width:100%; height : 23rem;" src="https://cdn.wadiz.kr/ft/images/green001/2023/0518/20230518153207100_2615.jpg/wadiz/resize/5200/format/jpg/quality/85/"/>
+		</div>
+		
+		<div class="category d-flex flex-row">
 			<ul class="category-list list-group list-group-horizontal ">
-				<li data-index="0">📜전체</li>
-				<li data-index="1">👍BEST</li>
-				<li data-index="2">💻전자ICT</li>
-				<li data-index="3">💰금융</li>
-				<li data-index="4">🚗자동차</li>
-				<li data-index="5">🛳️철강조선</li>
-				<li data-index="6">⚡에너지</li>
-				<li data-index="7">🚛유통</li>
+				<li data-index="0"><a href="">📜전체</a></li>
+				<li data-index="1"><a href="">👍BEST</a></li>
+				<li data-index="2"><a href="">💻전자ICT</a></li>
+				<li data-index="3"><a href="">💰금융</a></li>
+				<li data-index="4"><a href="">🚗자동차</a></li>
+				<li data-index="5"><a href="">🛳️철강조선</a></li>
+				<li data-index="6"><a href="">⚡에너지</a></li>
+				<li data-index="7"><a href="">🚛유통</a></li>
 			</ul>
 		</div>
 
 		<div class="container">
 			<div class="section">
+				
+				<div class="result-keyword">"<span th:text="${keyword}"></span>" 로 검색된 결과 </div>
 				<div class="division-line"></div>
-				<div>"<span th:text="${keyword}"></span>" 로 검색된 결과 </div>
-				<div class="card-deck card-container">
-					<!-- 펀딩 제목 기준 검색 결과 -->
-				    <div th:each="funding : ${searchResults1}" class="card card-box">
-				        <img class="card-img-top" src="/img/granhand_sample_01.png" alt="Card image cap">
-				        <div class="card-body card-body-gap">
-				            <div class="card-title-container">
-				                <img class="card-logo" src="/img/granhand_logo_01.png" alt="Card image cap">
-				                <h5 class="card-title" th:text="${funding.title}"></h5>
-				                <div class="rounded bg-primary text-white card-dday">D-60</div>
-				            </div>
-				            <p class="card-text">
-				                <div class="card-title-keyword">
-				                    <div class="keword rounded bg-light text-primary">#러버추천</div>
-				                    <div class="keword rounded bg-light text-primary">#성공률50%</div>
-				                </div>
-				            </p>
-				        </div>
-				        <ul class="list-group list-group-flush">
-				            <li class="list-group-item list-group-item-border" th:text="${funding.company.description}"></li>
-				            <li class="list-group-item list-group-item-border">
-				                <div class="percent text-primary">95%</div>
-				                <div class="progress">
-				                    <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-				                </div>
-				            </li>
-				        </ul>
-				    </div>
-				    
-				    <!-- 기업 이름 기준 검색 결과 -->
-				    <div th:each="funding : ${searchResults2}" class="card card-box">
-				        <img class="card-img-top" src="/img/granhand_sample_01.png" alt="Card image cap">
-				        <div class="card-body card-body-gap">
-				            <div class="card-title-container">
-				                <img class="card-logo" src="/img/granhand_logo_01.png" alt="Card image cap">
-				                <h5 class="card-title" th:text="${funding.title}"></h5>
-				                <div class="rounded bg-primary text-white card-dday">D-60</div>
-				            </div>
-				            <p class="card-text">
-				                <div class="card-title-keyword">
-				                    <div class="keword rounded bg-light text-primary">#러버추천</div>
-				                    <div class="keword rounded bg-light text-primary">#성공률50%</div>
-				                </div>
-				            </p>
-				        </div>
-				        <ul class="list-group list-group-flush">
-				            <li class="list-group-item list-group-item-border" th:text="${funding.company.description}"></li>
-				            <li class="list-group-item list-group-item-border">
-				                <div class="percent text-primary">95%</div>
-				                <div class="progress">
-				                    <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-				                </div>
-				            </li>
-				        </ul>
-				    </div>
-				    
+				
+				<div class="row">
+					<div class="card-container col-9">
+						<!-- 펀딩 제목 기준 검색 결과 -->
+					    <div th:each="funding : ${searchResults1}" class="card card-box card2">
+					        <a th:href="@{/fundingDetail/{id}(id=${funding.id})}">
+					        	<img class="card-img-top" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/granhand_sample_01.png?raw=true" alt="Card image cap">
+						        <a class="card-liked" href="#">
+				                	 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+									  <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/>
+									</svg>
+				                </a>
+						        <div class="card-content">
+						            <div class="d-flex align-items-center">
+						                <img class="card-logo" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/granhand_logo_01.png?raw=true" alt="Card image cap"/>
+						                <div class="card-title" th:text="${funding.company.name}" style=" font-size: 1.2rem; margin: 0 1rem 0 0;"></div>
+						            </div>
+						            <p class="card-text">
+						                <div class="card-title-keyword">
+						                    <div class="keword">#러버추천</div>
+						                    <div class="keword">#성공률50%</div>
+						                </div>
+						      			<div class="card-dday text-center"> D-60</div>
+						            </p>
+						        </div>
+						        <ul class="list-group list-group-flush" style="margin: 0 0 1rem 0;">
+						            <li class="list-group-item list-group-item-border" th:text="${funding.company.description}" style="font-size: 0.9rem"></li>
+						            <li class="list-group-item list-group-item-border">
+						                <div class="percent" style="color: #0062ED;">95%</div>
+						                <div class="progress">
+						                    <div class="percentage-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+						                </div>
+						            </li>
+						        </ul>
+						     </a>
+					    </div>
+					
+					    <!-- 기업 이름 기준 검색 결과 -->
+					    <div th:each="funding : ${searchResults2}" class="card card-box">
+					        <a th:href="@{/fundingDetail/{id}(id=${funding.id})}">
+					        	<img class="card-img-top" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/granhand_sample_01.png?raw=true" alt="Card image cap">
+						        <a class="card-liked" href="#">
+				                	 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+									  <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/>
+									</svg>
+				                </a>
+						        <div class="card-content">
+						            <div class="d-flex align-items-center">
+						                <img class="card-logo" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/granhand_logo_01.png?raw=true" alt="Card image cap"/>
+						                <div class="card-title" th:text="${funding.company.name}" style=" font-size: 1.2rem; margin: 0 1rem 0 0;"></div>
+						            </div>
+						            <p class="card-text">
+						                <div class="card-title-keyword">
+						                    <div class="keword">#러버추천</div>
+						                    <div class="keword">#성공률50%</div>
+						                </div>
+						      			<div class="card-dday text-center"> D-60</div>
+						            </p>
+						        </div>
+						        <ul class="list-group list-group-flush" style="margin: 0 0 1rem 0;">
+						            <li class="list-group-item list-group-item-border" th:text="${funding.company.description}" style="font-size: 0.9rem"></li>
+						            <li class="list-group-item list-group-item-border">
+						                <div class="percent" style="color: #0062ED;">95%</div>
+						                <div class="progress">
+						                    <div class="percentage-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+						                </div>
+						            </li>
+						        </ul>
+						     </a>
+					    </div> <!-- card -->
+					    
+					    <!-- 펀딩 컨텐츠 기준 검색 결과 -->
+					    <div th:each="funding : ${searchResults3}" class="card card-box">
+					        <a th:href="@{/fundingDetail/{id}(id=${funding.id})}">
+					        	<img class="card-img-top" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/granhand_sample_01.png?raw=true" alt="Card image cap">
+						        <a class="card-liked" href="#">
+				                	 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+									  <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/>
+									</svg>
+				                </a>
+						        <div class="card-content">
+						            <div class="d-flex align-items-center">
+						                <img class="card-logo" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/granhand_logo_01.png?raw=true" alt="Card image cap"/>
+						                <div class="card-title" th:text="${funding.company.name}" style=" font-size: 1.2rem; margin: 0 1rem 0 0;"></div>
+						            </div>
+						            <p class="card-text">
+						                <div class="card-title-keyword">
+						                    <div class="keword">#러버추천</div>
+						                    <div class="keword">#성공률50%</div>
+						                </div>
+						      			<div class="card-dday text-center"> D-60</div>
+						            </p>
+						        </div>
+						        <ul class="list-group list-group-flush" style="margin: 0 0 1rem 0;">
+						            <li class="list-group-item list-group-item-border" th:text="${funding.company.description}" style="font-size: 0.9rem"></li>
+						            <li class="list-group-item list-group-item-border">
+						                <div class="percent" style="color: #0062ED;">95%</div>
+						                <div class="progress">
+						                    <div class="percentage-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+						                </div>
+						            </li>
+						        </ul>
+						     </a>
+					    </div> <!-- card -->
+					</div>
+					
+					<!-- Chart -->
+					<div class="col-3">
+						<a href="">
+							<img class="side-chart" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sideChart.png?raw=true"/>
+						</a>
+					</div>
+					
 				</div>
+			
 			</div>
 			<div class="footer"></div>
 		</div>

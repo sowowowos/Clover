@@ -15,6 +15,7 @@ import loverduck.clover.entity.Exchange;
 import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.Ordered;
 import loverduck.clover.entity.PointHistory;
+import loverduck.clover.entity.Users;
 import loverduck.clover.entity.Wallet;
 
 @Repository
@@ -45,9 +46,9 @@ public interface PointHistoryRepository extends JpaRepository<PointHistory, Long
 	 /**
 	  * 사용자의 배당 내역 조회 (정산)
 	  */
-	 String FIND_ALLOCATIONS_BY_USER_ID = "select * from point_history where user_id = :user_id and type = 3";
+	 String FIND_ALLOCATIONS_BY_USER_ID = "select * from point_history where wallet_id = :wallet_id and type = 3";
 	 @Query(nativeQuery = true, value = FIND_ALLOCATIONS_BY_USER_ID)
-	 List<PointHistory> findAllocationsByUserId (Long user_id);
+	 List<PointHistory> findAllocationsByUserId (Long wallet_id);
 
   /* 포인트 환전 내역 저장 */
 	 String INSERT_EXCHANGE_POINTHISTORY_BY_WALLET_ID =

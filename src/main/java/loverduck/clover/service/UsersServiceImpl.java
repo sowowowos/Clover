@@ -152,10 +152,11 @@ public class UsersServiceImpl implements UsersService {
 	/**
 	 * 마이페이지 - 배당 내역 출력 (정산) 
 	 */
-	public List<PointHistory> allocationHistoryInvestor(Long user_id){
-		List<PointHistory> allocations = pointHistoryRepository.findAllocationsByUserId(user_id);
+	public List<PointHistory> allocationHistoryInvestor(Long wallet_id){
+//		System.out.println("user_id 1" + wallet_id);
+		List<PointHistory> allocations = pointHistoryRepository.findAllocationsByUserId(wallet_id);
 		return allocations;
 	}
-	
+
 	
 }

@@ -29,9 +29,11 @@ import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.PointHistory;
 import loverduck.clover.entity.Users;
+import loverduck.clover.repository.PointHistoryRepository;
 import loverduck.clover.service.CompanyServiceImpl;
 import loverduck.clover.service.FundingService;
 import loverduck.clover.service.KakaoServiceImpl;
+import loverduck.clover.service.PointHistoryService;
 import loverduck.clover.service.UsersService;
 
 /**
@@ -44,6 +46,8 @@ public class UserController {
     private final UsersService usersService;
     
     private final FundingService fundingService;
+    
+    private final PointHistoryService pointHistoryService;
 
     @Autowired
     private KakaoServiceImpl kakaoService;
@@ -545,6 +549,12 @@ public class UserController {
             
             model.addAttribute("myFunds", myFunds);
             
+            Long wallet_id = user.getWallet().getId();
+            model.addAttribute("wallet_id", wallet_id);
+            
+            Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
+            model.addAttribute("nowPoint", nowPoint);   
+            
             return "mypage/mypageInvestor";
             
         } 
@@ -557,7 +567,7 @@ public class UserController {
      */
     @RequestMapping("/mypage/company/{id}")
     public String mypageCorp(@PathVariable Long id, Model model, @ModelAttribute("company") Company company) {
-//    	if (company != null) {
+    	if (company != null) {
     		// 기업이 진행 중인 펀딩 목록 
     	    List<Funding> nowFunds = fundingService.findNowFundingsById(company.getId());
     	    model.addAttribute("nowFunds", nowFunds);
@@ -567,8 +577,8 @@ public class UserController {
     	    model.addAttribute("doneFunds", doneFunds);
     	    
     	    return "/mypage/company";
-//    	} 
-//    	return "redirect:/loginForm";
+    	} 
+    	return "redirect:/loginForm";
     }
 
     ///////////////////////////////////////////////////////////////
@@ -576,13 +586,21 @@ public class UserController {
     /**
      * 마이페이지 - 투자자 (배당 내역 (정산))
      */
-    @RequestMapping("mypage/investor/{id}/allocationHistoryInvestor")
-    public String allocationHistoryInvestor(@PathVariable Long id, Model model, @ModelAttribute("user") Users user) {
+    @RequestMapping("/mypage/investor/{id}/allocationHistoryInvestor")
+    public String allocationHistoryInvestor(@PathVariable("id") Long wallet_id, Model model, @ModelAttribute("user") Users user) {
     	if (user != null) {
-    		List<PointHistory> allocations = usersService.allocationHistoryInvestor(user.getId());
+    		System.out.println("user_id 2" + wallet_id);
+    		
+    		Long wallet = user.getWallet().getId();
+    		model.addAttribute("wallet", wallet);
+			
+			Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
+	        model.addAttribute("nowPoint", nowPoint);   
+             
+    		List<PointHistory> allocations = usersService.allocationHistoryInvestor(wallet_id);
     		model.addAttribute("allocations", allocations);
     		
-    		return "mypage/investor/" + id + "/allocationHistoryInvestor";
+    		return "mypage/allocationHistoryInvestor";
     	}
     	
         return "redirect:/loginForm";

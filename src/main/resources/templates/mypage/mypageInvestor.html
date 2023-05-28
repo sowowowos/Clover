@@ -20,29 +20,40 @@
 		<div th:insert="navbar :: navbar"> </div> 
 		
 		<div class="container section">
-			<div class="row mt-3">
+			<div class="row" style="margin: 5rem 0 0 0; padding: 2rem 10rem;">
 				<div class="crop-info">
 					<div class="row align-items-center">
+						<!-- 수정하기 -->
+						<a th:href="@{/updateInvestor}">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+							  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+							  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+							</svg>
+						</a>
+						
 						<!-- 프로필사진 및 아이디 -->
 						<div class="col-6 text-end">
 							<img src="/logo" class="profile-img"/>
 						</div>
-						<div class="col-6" th:text="${user.nickname}"></div>
-			    		
+						<div class="col-6 profile-name">
+							<div class="" th:text="${user.nickname}"></div>
+							<img width=180 height=120 src="https://raw.githubusercontent.com/CLOVER-DUCK/Clover/d55e6dddeac257ba948c8893bc12a49aa0183a85/src/main/resources/static/img/intro/title_bg.png"/>
+						</div>
+						
 					</div>
 					<!-- 키워드 -->
 					<div class="row mt-3">
 			    		<div class="d-flex justify-content-center mb-3">
-			    			<div class="keyword">#펀딩성공률 53%</div>
-			    			<div class="keyword">#러버추천</div>
-			    			<div class="keyword">#비건 뷰티</div>
+			    			<div class="keyword text-color-navy">#성장하는 투자자🔥</div>
+			    			<div class="keyword text-color-navy">#투자 성공률32%</div>
+			    			<div class="keyword text-color-navy">#비건 뷰티</div>
 			    		</div>
 		    		</div>
 		    		
 		    		<!-- 관심기업 -->
 		    		<div class="row mt-3">
 			    		<div class="d-flex justify-content-center mb-3">
-			    			<div class="yellow-keyword">#비건 뷰티</div>
+			    			<div class="yellow-keyword text-color-navy">#비건 뷰티</div>
 			    		</div>
 		    		</div>
 		    		
@@ -53,37 +64,26 @@
 							  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM5.5 4.002V12h1.283V9.164h1.668C10.033 9.164 11 8.08 11 6.586c0-1.482-.955-2.584-2.538-2.584H5.5Zm2.77 4.072c.893 0 1.419-.545 1.419-1.488s-.526-1.482-1.42-1.482H6.778v2.97H8.27Z"/>
 							</svg>
 		    			</div>
-		    			<div class="col-6">
-		    				<div th:text="${user.wallet.amount}"></div>
+		    			<div class="col-6" >
+		    				<div th:text="${nowPoint != null ? #numbers.formatInteger(nowPoint, 0, 'COMMA') + ' point' : '0 point'}"></div>
 		    			</div>
+		    			
 		    		</div>
 					
 				</div>
 			</div>
 			
 			<!-- 메뉴 -->
-			<div class="row">
+			<div class="row" style="margin: 0 9rem auto;">
 				<div class="col-3" style="padding: 1rem">
-					<div class="menu">
-						<li class="menu-main text-color-navy"><a href="" class="text-color-navy">내 펀딩</a></li>
-						<hr>
-						<li><a href="" class="text-color-black">현재 진행 중인 펀딩</a></li>
-						<li><a href="" class="text-color-black">마감한 펀딩</a></li>
-						<hr>
-						<li class="menu-main text-color-navy" ><a href="" class="text-color-navy">정산</a></li>
-						<hr>
-						<li class="menu-main text-color-navy"><a href="" class="text-color-navy">포인트</a></li>
-						<hr>
-						<li><a href="" class="text-color-black">포인트 환전 신청 하기</a></li>
-						<li><a href="" class="text-color-black">포인트 환전 신청 내역</a></li>
-						<li><a th:href="@{/mypage/pointCharge}" class="text-color-black">포인트 충전 및 내역</a></li>
-					</div>
-				</div>
+					<div th:insert="sideBar :: sideBar"> </div> 
+				</div> 
+				
 	
 				<!-- 투자한 펀딩 목록 -->
-				<div class="col-8 main-section">
+				<div class="col-7 main-section">
 				   	<p class="section-title">내 펀딩</p>
-				    <p style="margin: 0 0 3rem 1rem; font-size:1.3rem; font-weight: 530;">현재 진행 중인 펀딩</p>
+				    <p style="margin: 0 0 3rem 1rem; font-size:1rem; font-weight: 530;">현재 진행 중인 펀딩</p>
 				    
 				    	<!-- 카드 -->
 				    	<div th:each="myFund : ${myFunds}" class="card mb-5 main-section">

@@ -11,6 +11,7 @@
 	width: 75%;
 	border-top: 0.6px solid #4a4b4b;
 	margin: 1.5rem 0;
+	color: #DEDEDE;
 }
 
 /*category css*/
@@ -159,9 +160,9 @@ text-navy {
 .side-chart {
 	width: 18rem; 
 	height: 25rem;
-	padding: 1rem 0 1rem 1rem;
+	padding: 0 0 1rem 1rem;
 	justify-content: end;
-	margin: 1.3rem 0 0 0;
+	margin: 0.8rem 0 0 0;
 }
 
 .keyword {
@@ -178,6 +179,7 @@ text-navy {
   -webkit-box-shadow: 0 1px 7px rgba(0,0,0,.05);
   box-shadow: 0 1px 7px rgba(0,0,0,.05);
 }
+
 .card2:hover {
   transform: scale(1.04);
   border: none;
@@ -199,4 +201,15 @@ text-navy {
       .card2 > a:hover .card-tags:before, .card2 > a:active .card-tags:before {
         background-color: #fff; }
 
+/* searchResult */
+.result-keyword {
+	margin: 1.5rem 0;
+	font-size: 1.5rem;
+	font-weight: 400;
+}
 
+.result-keyword > span{
+	font-size: 1.65rem;
+	color: #0042A0;
+	font-weight: 600;
+}
