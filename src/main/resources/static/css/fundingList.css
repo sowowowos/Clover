@@ -145,6 +145,10 @@
 	text-align: right;
 }
 
+.progress{
+	background-color: none;
+}
+
 text-navy {
 	color: #0042A0;
 }

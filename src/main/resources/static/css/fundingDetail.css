@@ -79,10 +79,9 @@
 }
 
 .percentage-bar{
-	background-color: #0042A0;
-	border-radius: 0.7rem;
+	color: #0042A0;
 	width: 10rem;
-	height: 0.7rem;
+	height: 3rem;
 	margin: 1rem 0 0.2rem 0;
 }
 

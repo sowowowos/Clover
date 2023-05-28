@@ -102,9 +102,47 @@
 
 			</div>
 
+
 			<div class="container d-flex" style="min-height: 100vh;">
 				<div class="col-3" style="margin-top: 4rem; padding: 0 3rem;"
 					th:insert="sideBar :: sideBar">
+
+			
+			<!-- 메뉴 -->
+			<div class="row" style="margin: 0 9rem auto;">
+				<div class="col-3" style="padding: 1rem">
+					<div th:insert="sideBar :: sideBar"> </div> 
+				</div> 
+				
+	
+				<!-- 투자한 펀딩 목록 -->
+				<div class="col-7 main-section">
+				   	<p class="section-title">내 펀딩</p>
+				    <p style="margin: 0 0 3rem 1rem; font-size:1rem; font-weight: 530;">현재 진행 중인 펀딩</p>
+				    
+				    	<!-- 카드 -->
+				    	<div th:each="myFund : ${myFunds}" class="card mb-5 main-section">
+					        <img  src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sitta.jpeg?raw=true">
+					        <div class="card-body">    
+					       	  <h3 th:text="${myFund.company.name}" class="card-company-name"></h3>
+					            <div class="d-flex justify-content-between">
+					                <p class="card-title" th:text="${myFund.title}"></p>
+					                <div class="card-dday">D-60</div>
+					            </div>                  
+					            <div class="d-flex justify-content-end">
+					                <div class="text-color-navy" th:text="${#temporals.format(myFund.startDate, 'yy.MM.dd')}"></div>
+					                <div class="text-color-navy mx-1"> - </div>
+					                <div class="text-color-navy" th:text="${#temporals.format(myFund.endDate, 'yy.MM.dd')}"></div>
+					            </div>
+					            <div class="text-end mt-2 mb-2" style="color: #D9D9D9;">
+					                <div th:text="${myFund.targetMaxAmount}"></div>
+					            </div>
+					            <div class="">
+					               <progress th:value="${myFund.currentAmount}" th:max="${myFund.targetMaxAmount}" style="width: 25rem; height: 1.7rem; margin: 0 0 0 3rem;" ></progress>
+					            </div>
+				        </div> 
+				    </div>
+
 				</div>
 				<div class="col-8 ms-auto me-auto" style="margin-top: 1.5rem;">
 					
