@@ -36,6 +36,7 @@
 <body>
 	<div>
 	  <div th:insert="navbar :: navbar"> </div> 
+	  <div th:insert="banner :: banner"></div>
 		<div class="container">
 			<section class="section">
 				<article class="container" style="max-width: 30rem">
@@ -189,9 +190,8 @@
 				</article>
 			</section>
 		</div>
-		<div class="footer"></div>
 	</div>
-
+<div th:insert="footer :: footer"> </div>
 
 	<script>
 		function checkEmail() {
