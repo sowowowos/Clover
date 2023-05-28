@@ -249,6 +249,9 @@ public class FundingController {
 		LocalDateTime dateTimeStartDate = dateStartDate.atStartOfDay();
 		LocalDateTime dateTimeEndDate = dateEndDate.atStartOfDay();
 		
+		
+		String company_name = company.getName() + ".png";
+		
 		Funding funding = Funding.builder().title(title).content(content).targetMinAmount(targetMinAmount)
 				.targetMaxAmount(targetMaxAmount)
 				.currentAmount(0L)
@@ -256,6 +259,7 @@ public class FundingController {
 				.endDate(dateTimeEndDate)
 				.dividend(dividend)
 				.status(0)
+				.imgName(company_name)
 				.company(company).build();
 
 		fundingService.fundSubmit(funding);
