@@ -1,13 +1,11 @@
 package loverduck.clover.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
+import lombok.RequiredArgsConstructor;
+import loverduck.clover.entity.Company;
+import loverduck.clover.entity.Funding;
+import loverduck.clover.entity.PointHistory;
+import loverduck.clover.entity.Users;
+import loverduck.clover.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -15,26 +13,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.RequiredArgsConstructor;
-import loverduck.clover.entity.Company;
-import loverduck.clover.entity.Funding;
-import loverduck.clover.entity.PointHistory;
-import loverduck.clover.entity.Users;
-import loverduck.clover.repository.PointHistoryRepository;
-import loverduck.clover.service.CompanyServiceImpl;
-import loverduck.clover.service.FundingService;
-import loverduck.clover.service.KakaoServiceImpl;
-import loverduck.clover.service.PointHistoryService;
-import loverduck.clover.service.UsersService;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 회원가입 , 로그인 , 마이페이지
@@ -44,9 +31,9 @@ import loverduck.clover.service.UsersService;
 public class UserController {
 
     private final UsersService usersService;
-    
+
     private final FundingService fundingService;
-    
+
     private final PointHistoryService pointHistoryService;
 
     @Autowired
@@ -54,24 +41,24 @@ public class UserController {
 
     @Autowired
     private CompanyServiceImpl companyService;
-    
-    
+
+
     @ModelAttribute("user")
     public Users getUser(HttpSession session) {
         return (Users) session.getAttribute("user");
     }
-    
+
     @ModelAttribute("company")
     public Company getCompany(HttpSession session) {
         return (Company) session.getAttribute("compnay");
-    } 
-  
+    }
+
     /**
      * 메인
      */
     @GetMapping("/")
     public String mainPage() {
-    	
+
         return "mypage/index";
     }
 
@@ -186,7 +173,7 @@ public class UserController {
             dbCompany.setLogoPath(filename);
 
             Users dbUser = Users.builder()
-            		.userid(userid)
+                    .userid(userid)
                     .password(password)
                     .email(email)
                     .name(name)
@@ -204,7 +191,7 @@ public class UserController {
 
             int userCreateForm = usersService.register(dbUser);
             int companyCreate = usersService.register2(dbCompany);
-            
+            usersService.mappingCompanyUser(dbUser, dbCompany);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -357,42 +344,41 @@ public class UserController {
     }
 
     /**
-	 * 카톡 로그인 후 투자자 회원으로 시작하기
-	 */
-	@PostMapping("/updateInvestorKakao")
-	public String kakaoInvestorUpdate(String name, String nickname, String password,String phone,String postalCode,String address, String detailAddress ,
-			 @RequestParam("logo") MultipartFile logoFile, HttpSession session)  {
-		
-		Users dbUser = (Users) session.getAttribute("user");
-		String email = dbUser.getEmail();
-		
-		try {
-           String origFilename = logoFile.getOriginalFilename();
-           String filename = new MD5Generator(origFilename).toString();
-           /* 실행되는 위치의 'files' 폴더에 파일이 저장됩니다. */
-           String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\uploadLogo";
-           /* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
-           if (!new File(savePath).exists()) {
-               try{
-                   new File(savePath).mkdir();
-               }
-               catch(Exception e){
-                   e.getStackTrace();
-               }
-           }
-           String filePath = savePath + "\\" + filename;
-           logoFile.transferTo(new File(filePath));
-           
-           Users UpUser = usersService.updateAll(name, nickname, filename, 1, phone, postalCode, address, detailAddress, email);
-           session.setAttribute("user", UpUser);
-         
-       } catch(Exception e) {
-           e.printStackTrace();
-       }
-		
-		
-		return "redirect:/";
-	}
+     * 카톡 로그인 후 투자자 회원으로 시작하기
+     */
+    @PostMapping("/updateInvestorKakao")
+    public String kakaoInvestorUpdate(String name, String nickname, String password, String phone, String postalCode, String address, String detailAddress,
+                                      @RequestParam("logo") MultipartFile logoFile, HttpSession session) {
+
+        Users dbUser = (Users) session.getAttribute("user");
+        String email = dbUser.getEmail();
+
+        try {
+            String origFilename = logoFile.getOriginalFilename();
+            String filename = new MD5Generator(origFilename).toString();
+            /* 실행되는 위치의 'files' 폴더에 파일이 저장됩니다. */
+            String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\uploadLogo";
+            /* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
+            if (!new File(savePath).exists()) {
+                try {
+                    new File(savePath).mkdir();
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
+            }
+            String filePath = savePath + "\\" + filename;
+            logoFile.transferTo(new File(filePath));
+
+            Users UpUser = usersService.updateAll(name, nickname, filename, 1, phone, postalCode, address, detailAddress, email);
+            session.setAttribute("user", UpUser);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return "redirect:/";
+    }
 
     /**
      * 카톡 로그인 후 기업 회원으로 시작하기 폼
@@ -404,58 +390,57 @@ public class UserController {
         return "mypage/updateCorpKakao";
     }
 
-	/**
-	 * 카톡 로그인 후 기업 회원으로 시작하기
-	 */
-	@PostMapping("/updateCorpKakao")
-	public String kakaoCorpUpdate(String name, String nickname,String phone,String postalCode,String address,
-			String detailAddress , String no, String sector, String homepage, @RequestParam("logo") MultipartFile logoFile, HttpSession session)  {
-		Users dbUser = (Users) session.getAttribute("user");
-		String email = dbUser.getEmail();
-		
-		
-		try {
-           String origFilename = logoFile.getOriginalFilename();
-           String filename = new MD5Generator(origFilename).toString();
-           /* 실행되는 위치의 'files' 폴더에 파일이 저장됩니다. */
-           String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\uploadLogo";
-           /* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
-           if (!new File(savePath).exists()) {
-               try{
-                   new File(savePath).mkdir();
-               }
-               catch(Exception e){
-                   e.getStackTrace();
-               }
-           }
-           String filePath = savePath + "\\" + filename;
-           logoFile.transferTo(new File(filePath));  
-           
-           Users UpUser = usersService.updateAll(name, nickname,filename, 0, phone, postalCode, address, detailAddress, email);
-   		session.setAttribute("user", UpUser);
-   		
-   		Company dbCompany = Company.builder().no(no).name(nickname)
-   				.address(address)
-   				.detailAddress(detailAddress)
-   				.phone(phone)
-   				.email(email)
-   				.homepage(homepage)
-   				.logo(filename)
-   				.type(0)
-   				.sector(sector)
-   				.build();
-   				
+    /**
+     * 카톡 로그인 후 기업 회원으로 시작하기
+     */
+    @PostMapping("/updateCorpKakao")
+    public String kakaoCorpUpdate(String name, String nickname, String phone, String postalCode, String address,
+                                  String detailAddress, String no, String sector, String homepage, @RequestParam("logo") MultipartFile logoFile, HttpSession session) {
+        Users dbUser = (Users) session.getAttribute("user");
+        String email = dbUser.getEmail();
+
+
+        try {
+            String origFilename = logoFile.getOriginalFilename();
+            String filename = new MD5Generator(origFilename).toString();
+            /* 실행되는 위치의 'files' 폴더에 파일이 저장됩니다. */
+            String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\uploadLogo";
+            /* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
+            if (!new File(savePath).exists()) {
+                try {
+                    new File(savePath).mkdir();
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
+            }
+            String filePath = savePath + "\\" + filename;
+            logoFile.transferTo(new File(filePath));
+
+            Users UpUser = usersService.updateAll(name, nickname, filename, 0, phone, postalCode, address, detailAddress, email);
+            session.setAttribute("user", UpUser);
+
+            Company dbCompany = Company.builder().no(no).name(nickname)
+                    .address(address)
+                    .detailAddress(detailAddress)
+                    .phone(phone)
+                    .email(email)
+                    .homepage(homepage)
+                    .logo(filename)
+                    .type(0)
+                    .sector(sector)
+                    .build();
+
 //    		Company dbCompany = new Company(null, no, nickname, address, detailAddress, phone, email, homepage, null, null, 0, sector, null, null, null);
-   		int companyCreate = usersService.register2(dbCompany);
-   		session.setAttribute("company", dbCompany);
-           
-       } catch(Exception e) {
-           e.printStackTrace();
-       }
-		
-		return "redirect:/";
-	}
-	
+            int companyCreate = usersService.register2(dbCompany);
+            session.setAttribute("company", dbCompany);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/";
+    }
+
 
     /**
      * 마이페이지 - 투자자 (개인정보 수정폼)
@@ -544,22 +529,22 @@ public class UserController {
     @RequestMapping("mypage/investor/{id}")
     public String mypageInvestor(@PathVariable Long id, Model model, @ModelAttribute("user") Users user) {
         if (user != null) {
-        	// 유저가 투자한 펀딩 목록 
+            // 유저가 투자한 펀딩 목록
             List<Funding> myFunds = usersService.findMyFundingsByUserId(user);
-            
+
             model.addAttribute("myFunds", myFunds);
-            
+
             Long wallet_id = user.getWallet().getId();
             model.addAttribute("wallet_id", wallet_id);
-            
+
             Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
-            model.addAttribute("nowPoint", nowPoint);   
-            
+            model.addAttribute("nowPoint", nowPoint);
+
             return "mypage/mypageInvestor";
-            
-        } 
+
+        }
         return "redirect:/loginForm";
-        
+
     }
 
     /**
@@ -567,18 +552,18 @@ public class UserController {
      */
     @RequestMapping("/mypage/company/{id}")
     public String mypageCorp(@PathVariable Long id, Model model, @ModelAttribute("company") Company company) {
-    	if (company != null) {
-    		// 기업이 진행 중인 펀딩 목록 
-    	    List<Funding> nowFunds = fundingService.findNowFundingsById(company.getId());
-    	    model.addAttribute("nowFunds", nowFunds);
-    	    
-    	    // 기업의 완료된 펀딩 목록 
-    	    List<Funding> doneFunds = fundingService.findDoneFundingsById(company.getId());
-    	    model.addAttribute("doneFunds", doneFunds);
-    	    
-    	    return "/mypage/company";
-    	} 
-    	return "redirect:/loginForm";
+        if (company != null) {
+            // 기업이 진행 중인 펀딩 목록
+            List<Funding> nowFunds = fundingService.findNowFundingsById(company.getId());
+            model.addAttribute("nowFunds", nowFunds);
+
+            // 기업의 완료된 펀딩 목록
+            List<Funding> doneFunds = fundingService.findDoneFundingsById(company.getId());
+            model.addAttribute("doneFunds", doneFunds);
+
+            return "/mypage/company";
+        }
+        return "redirect:/loginForm";
     }
 
     ///////////////////////////////////////////////////////////////
@@ -588,21 +573,21 @@ public class UserController {
      */
     @RequestMapping("/mypage/investor/{id}/allocationHistoryInvestor")
     public String allocationHistoryInvestor(@PathVariable("id") Long wallet_id, Model model, @ModelAttribute("user") Users user) {
-    	if (user != null) {
-    		System.out.println("user_id 2" + wallet_id);
-    		
-    		Long wallet = user.getWallet().getId();
-    		model.addAttribute("wallet", wallet);
-			
-			Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
-	        model.addAttribute("nowPoint", nowPoint);   
-             
-    		List<PointHistory> allocations = usersService.allocationHistoryInvestor(wallet_id);
-    		model.addAttribute("allocations", allocations);
-    		
-    		return "mypage/allocationHistoryInvestor";
-    	}
-    	
+        if (user != null) {
+            System.out.println("user_id 2" + wallet_id);
+
+            Long wallet = user.getWallet().getId();
+            model.addAttribute("wallet", wallet);
+
+            Integer nowPoint = pointHistoryService.updateWalletAmount(wallet_id);
+            model.addAttribute("nowPoint", nowPoint);
+
+            List<PointHistory> allocations = usersService.allocationHistoryInvestor(wallet_id);
+            model.addAttribute("allocations", allocations);
+
+            return "mypage/allocationHistoryInvestor";
+        }
+
         return "redirect:/loginForm";
     }
 
@@ -660,14 +645,14 @@ public class UserController {
      */
     @GetMapping("/fundSubmitHistory")
     public String historyCorp(Model model, HttpSession session) {
-    	
-    	Company company = (Company) session.getAttribute("company");
-    	Long company_id = company.getId();
-    	List<Funding> fundingList = fundingService.fundingSubmitList(company_id);
-    	
-    	model.addAttribute("fundingList", fundingList);
-    	
-    	
+
+        Company company = (Company) session.getAttribute("company");
+        Long company_id = company.getId();
+        List<Funding> fundingList = fundingService.fundingSubmitList(company_id);
+
+        model.addAttribute("fundingList", fundingList);
+
+
         return "mypage/fundSubmitHistory";
     }
 
@@ -683,7 +668,6 @@ public class UserController {
 
         return "mypage/pointCharge";
     }
-    
 
 
 }

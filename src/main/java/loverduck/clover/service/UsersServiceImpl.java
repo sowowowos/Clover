@@ -1,28 +1,13 @@
 package loverduck.clover.service;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import loverduck.clover.entity.Company;
-import loverduck.clover.entity.Funding;
-import loverduck.clover.entity.Ordered;
-import loverduck.clover.entity.PointHistory;
-import loverduck.clover.entity.QOrdered;
-import loverduck.clover.entity.QPointHistory;
-import loverduck.clover.entity.Users;
-import loverduck.clover.entity.Wallet;
-import loverduck.clover.repository.CompanyRepository;
-import loverduck.clover.repository.FundingReplyRepository;
-import loverduck.clover.repository.FundingRepository;
-import loverduck.clover.repository.OrderedRepository;
-import loverduck.clover.repository.PointHistoryRepository;
-import loverduck.clover.repository.UsersRepository;
-import loverduck.clover.repository.WalletRepository;
+import loverduck.clover.entity.*;
+import loverduck.clover.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,9 +17,9 @@ public class UsersServiceImpl implements UsersService {
     private final UsersRepository usersRep;
     private final CompanyRepository companyRep;
     private final WalletRepository walletRep;
-    private final FundingRepository fundingRepository;  
+    private final FundingRepository fundingRepository;
     private final PointHistoryRepository pointHistoryRepository;
-    
+
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
@@ -133,30 +118,37 @@ public class UsersServiceImpl implements UsersService {
 //        List<Funding> myFundings = fundingRepository.findMyFundingsByUserId(user_id);
 //        return myFundings;
 //    }
-    
+
     /**
-     * 마이페이지 - 내가 투자한 현재 진행 중인 펀딩 목록 출력 
+     * 마이페이지 - 내가 투자한 현재 진행 중인 펀딩 목록 출력
      */
-    
+
     @Override
     public List<Funding> findMyFundingsByUserId(Users user) {
-    	LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
         return jpaQueryFactory.selectFrom(QOrdered.ordered)
-        		.select(QOrdered.ordered.funding)
+                .select(QOrdered.ordered.funding)
 //        		.where(QOrdered.ordered.funding.startDate.after(now))
 //        		.where(QOrdered.ordered.funding.endDate.before(now))
-        		.where(QOrdered.ordered.user.eq(user))
-        		.fetch();
+                .where(QOrdered.ordered.user.eq(user))
+                .fetch();
     }
-    
-	/**
-	 * 마이페이지 - 배당 내역 출력 (정산) 
-	 */
-	public List<PointHistory> allocationHistoryInvestor(Long wallet_id){
-//		System.out.println("user_id 1" + wallet_id);
-		List<PointHistory> allocations = pointHistoryRepository.findAllocationsByUserId(wallet_id);
-		return allocations;
-	}
 
-	
+    @Override
+    public void mappingCompanyUser(Users user, Company company) {
+        jpaQueryFactory.update(QUsers.users)
+                .set(QUsers.users.company, company)
+                .execute();
+    }
+
+    /**
+     * 마이페이지 - 배당 내역 출력 (정산)
+     */
+    public List<PointHistory> allocationHistoryInvestor(Long wallet_id) {
+//		System.out.println("user_id 1" + wallet_id);
+        List<PointHistory> allocations = pointHistoryRepository.findAllocationsByUserId(wallet_id);
+        return allocations;
+    }
+
+
 }
