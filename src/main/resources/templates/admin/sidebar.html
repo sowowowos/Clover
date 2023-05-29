@@ -1,37 +1,46 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>sidebar</title>
-    
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>sidebar</title>
 
-*{
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap')
+	;
+
+* {
 	font-family: 'Noto Sans KR', sans-serif;
 }
 </style>
 </head>
 <body>
-<div class="col-xl-3 mt-5 p-0" th:fragment="sidebar">
-    <div class="menu text-center mt-3 p-0">
-        <ul class="p-lg-4 m-0 list-group " style="border-radius: 1rem;">
-            <li class="list-group-item p-4" ><a class="text-decoration-none text-dark" href="#" disabled>대시보드</a>
-            </li>
-            <li class="list-group-item p-4"><a class="text-decoration-none text-dark" href="manageCorp.html"
-                                               th:href="@{/admin/company}">기업회원 관리</a></li>
-			<li class="list-group-item p-4" style="color: #0042A0;"><a class="text-decoration-none text-dark" href="manageFund.html" 
-                                               th:href="@{/admin/funding}">펀딩 관리</a></li>                                               
-            <li class="list-group-item p-4"><a class="text-decoration-none text-dark" href="#" disabled>공지사항 관리</a>
-            </li>
-            <li class="list-group-item p-4"><a class="text-decoration-none text-dark" href="#" disabled>문의사항 관리</a>
-            </li>
-            
-        </ul>
-    </div>
-</div>
+	<div class="" th:fragment="sidebar">
+		<div class="menu text-center p-0">
+			<ul class="list-group " style="border-radius: 1rem;">
+				<li class=" menu-main list-group-item p-4">
+					<a class="text-decoration-none text-color-navy" href="#" disabled>대시보드</a>
+				</li>
+				<li class="menu-main list-group-item p-4">
+					<a class="text-decoration-none text-color-navy" href="manageCorp.html"
+						th:href="@{/admin/company}">기업회원 관리</a>
+				</li>
+				<li class="menu-main list-group-item p-4" style="color: #0042A0;"><a
+					class="text-decoration-none text-color-navy" href="manageFund.html"
+					th:href="@{/admin/funding}">펀딩 관리</a></li>
+				<li class="menu-main list-group-item p-4"><a
+					class="text-decoration-none text-color-navy" href="#" disabled>공지사항
+						관리</a></li>
+				<li class="menu-main list-group-item p-4"><a
+					class="text-decoration-none text-color-navy" href="#" disabled>문의사항
+						관리</a></li>
+
+			</ul>
+		</div>
+
+	</div>
 </body>
 </html>

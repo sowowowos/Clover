@@ -99,3 +99,22 @@
 	display: inline-block;
 	text-align: center;
 }
+
+
+/*관리자 페이지에서만 사용*/
+.text-color-navy {
+    color: #0042A0;
+}
+.menu-main {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0042A0;
+}
+
+.funding-title {
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 120px;
+}
