@@ -32,15 +32,15 @@
 		<div class="banner"></div>
 		<div class="m-auto container row" style="margin: 0 9rem auto;">
 			<!-- 메뉴 -->
-			<div class="col-3" style="padding: 1rem" >
+			<div class="col-3" style="margin-top: 4rem; padding: 0 3rem;" >
 					<div th:insert="sideBarCorp :: sideBarCorp"> </div> 
 			</div> 
 
 			<!-- 펀딩신청폼 컨테이너-->
 			
 			<form action="/fundSubmitForm"  method="post" 
-			 	  class="submit-container col-9 p-5" style="min-height: 100vh;"><!-- th:action="@{/fundSubmitForm}"  -->
-				<div class="fw-bold fs-2 m-2" style="color:#0042A0;">펀딩신청</div>
+			 	  class="submit-container col-9" style="min-height: 100vh;"><!-- th:action="@{/fundSubmitForm}"  -->
+				<div class="fw-bold fs-3 " style="color:#0042A0; margin-top: 3.5rem;">펀딩신청</div>
 				<hr>
 
 				<!-- 펀딩절차설명  -->
