@@ -311,11 +311,7 @@ public class UserController {
         System.out.println(email +" email");
         Users us2 = usersService.getUsers(email);
      
-//        
-//        System.out.println("확인: "+us2.getType());
-//        System.out.println("확인wrong: "+us.getType());
-        if (us2.getType() != 0 && us2.getType() !=1) {
-//        	return "redirect:/fundingList";
+        if (us2.getType()==null) {
             return "mypage/choose";
         }
         session.setAttribute("user", us2);

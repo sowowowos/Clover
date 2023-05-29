@@ -66,7 +66,8 @@
 				                </a>
 						        <div class="card-content">
 						            <div class="d-flex align-items-center">
-						                <img class="card-logo" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/granhand_logo_01.png?raw=true" alt="Card image cap"/>
+						            <!-- 로고 이미지 -->
+						                <img class="card-logo" th:src="@{../logo/}+${funding.imgName}" alt="Card image cap"/>
 						                <div class="card-title" th:text="${funding.company.name}" style=" font-size: 1.2rem; margin: 0 1rem 0 0;"></div>
 						            </div>
 						            <p class="card-text">

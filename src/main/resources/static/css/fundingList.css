@@ -127,12 +127,14 @@
 }
 
 .card-logo {
-	width: 3.5rem;
-	height: 0.5rem;
-	box-sizing: border-box;
-	text-align: center;
-	position: relative;
+/* 	width: 3.5rem; */
+/* 	height: 0.5rem; */
+/* 	box-sizing: border-box; */
+/* 	text-align: center; */
+/* 	position: relative; */
 	margin: 0 1rem 0 0;
+	height: auto;
+	width: 3.5rem;
 }
 
 .card-liked {
