@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,12 @@ public class FundingController {
     @RequestMapping("/fundingList")
     public String fundingList(Model model) {
         List<Funding> fundingList = fundingService.fundingList();
+        Map<Long, Long> days = new HashMap<>();
+        fundingList.forEach(e -> {
+            long daysDifference = ChronoUnit.DAYS.between( LocalDateTime.now(), e.getEndDate());
+            days.put(e.getId(), daysDifference);
+        });
+        model.addAttribute("days", days);
         model.addAttribute("fundingList", fundingList);
         return "/fundingList";
     }
@@ -77,7 +84,8 @@ public class FundingController {
         if (commentList != null && !commentList.isEmpty()) {
             model.addAttribute("commentList", commentList);
         }
-
+        long days = ChronoUnit.DAYS.between( LocalDateTime.now(), fund.getEndDate());
+        model.addAttribute("days", days);
         
 		return "/fundingDetail";
 	}

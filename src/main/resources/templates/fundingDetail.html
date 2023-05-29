@@ -63,10 +63,10 @@
 				    		
 				    		<!-- 펀딩기간 & 디데이 -->
 				    		<div class="d-flex justify-content-end align-items-center">
-					    		<div class="dday">D-32</div>
+					    		<div class="dday" th:text="'D-'+${days}">D-32</div>
 				    		</div>
 				    		<div class="d-flex justify-content-end align-items-centers mt-2 mb-4">
-				    			<div class="text-color-navy" style="font-size: 0.8rem"th:text="${#temporals.format(fund.startDate, 'yy-MM-dd')}"></div>
+				    			<div class="text-color-navy" style="font-size: 0.8rem" th:text="${#temporals.format(fund.startDate, 'yy-MM-dd')}"></div>
 			    				<div class="text-color-navy mx-1" style="font-size: 0.8rem"> - </div>
 			    				<div class="text-color-navy" style="font-size: 0.8rem" th:text="${#temporals.format(fund.endDate, 'yy-MM-dd')}"></div>
 				    		</div>
