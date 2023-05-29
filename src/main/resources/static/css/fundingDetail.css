@@ -174,7 +174,7 @@
 }
 
 .finance-container{
-	margin: 0 10rem auto;
+	margin: 0 20rem auto;
 }
 
 .finance-title{
@@ -215,5 +215,53 @@
 
 .tab_menu > p > a:hover {
   color: #0042A0;
+}
+
+/* 재무분석 */
+
+table {
+    width: 80%;
+    border: 1px solid #DEDEDE;
+    border-collapse: collapse;
+    margin: 0 0 0 15rem;
+}
+  
+tr > th{
+    border: 1px solid #DEDEDE;
+    padding: 1rem;
+}
+  
+tr > td{
+    border: 1px solid #DEDEDE;
+    padding: 1rem;
+}
+
+.explain{
+	color: #0042A0;
+}
+
+.explain:hover{
+	color: #FFFFFF;
+	background-color: #0042A0;
+}
+ 
+.chart{
+	margin: 5rem 0 0 15rem;
+}
+
+.btn{
+	color: #0042A0;
+}
+/* Tooltip */
+.tooltip-inner {
+    background-color: #0042A0 !important;
+    color: #fff;
+    opacity:0.9;
+    margin: 1rem;
+}
+
+.bs-tooltip-bottom .arrow::before, 
+.bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
+    border-bottom-color: green !important;
 }
 
