@@ -137,13 +137,19 @@
 						<!-- 기업소개 -->
 						<div id="tab1" class="cont" style="display:block; margin: 3rem 2rem auto;">
 						    <div class="intro-container">
-						    	<div class="">
-						            <img class="intro-img" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sitta.jpeg?raw=true"/>
-						        </div>
-						        <div class="col-4 mx-5 justify-content-end">
-						            <div class="intro-title" th:text="${fund.title}"></div>
-						            <div class="intro-content" th:text="${fund.content}"></div>
-						        </div>
+						    	<div class="col-8">
+                                    <img 
+                                        src="../img/intro.png"
+                                         style="margin: 0.5rem 0 auto;">
+                                </div>
+                                <!-- 원래는 아래 부분이 기업소개 -->
+<!-- 						    	<div class=""> -->
+<!-- 						            <img class="intro-img" src="../img/kb_detail_bottom.png"/> -->
+<!-- 						        </div> -->
+<!-- 						        <div class="col-4 mx-5 justify-content-end"> -->
+<!-- 						            <div class="intro-title" th:text="${fund.title}"></div> -->
+<!-- 						            <div class="intro-content" th:text="${fund.content}"></div> -->
+<!-- 						        </div> -->
 						        
 						    </div>
 						
@@ -279,7 +285,7 @@
                             <div class="card-body d-flex flex-colum">
                                 <div class="col-3">
                                     <img width="280" height="180"
-                                         src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/sitta.jpeg?raw=true"
+                                        src="../detailFunding/국민은행main.png"
                                          style="margin: 0.5rem 0 auto;">
                                 </div>
                                 <div class="col-7 justify-content-end" style="margin: 2rem 0 0 8rem;">
