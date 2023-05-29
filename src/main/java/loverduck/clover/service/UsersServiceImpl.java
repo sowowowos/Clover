@@ -152,4 +152,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
 
+	@Override
+	public Users getUsers(String email) {
+		Users dbUser = usersRep.findByEmail(email);
+		return dbUser;
+	}
+
+
 }

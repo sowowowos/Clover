@@ -32,6 +32,10 @@ public interface UsersService {
      */
     Users logincheck(String email, String password);
 
+    /**
+     * 이메일로 유저가져오기
+     */
+    Users getUsers(String email);
 
     /**
      * 진짜 - 이메일 중복 체크
