@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
-import loverduck.clover.entity.Company;
 import loverduck.clover.entity.Funding;
 import loverduck.clover.entity.FundingReply;
 import loverduck.clover.entity.QFunding;
@@ -52,7 +51,7 @@ public class FundingServiceImpl implements FundingService{
 
 	@Override
 	public List<Funding> fundingList() {
-		List<Funding> funds = fundingRepository.findAll();
+		List<Funding> funds = qFactory.selectFrom(QFunding.funding).orderBy(QFunding.funding.id.asc()).fetch();
 //		System.out.println("size ! -> " + funds.size());
 		return funds;
 	}
