@@ -101,7 +101,7 @@
 	</nav>
 	
 	<!-- 로그아웃 -->
-	<nav th:fragment="navbar" th:unless="${session.user?.id}" class="navbar" style="padding: 1rem 1rem">
+	<nav th:fragment="navbar" th:unless="${session.user?.id}" class="navbar fixed-top bg-navbar" style="padding: 1rem 1rem">
 	  <div class="container-fluid">
 	    <a class="navbar-brand" th:href="@{/fundingList}">
     		<img class="logo" src="https://github.com/CLOVER-DUCK/Clover/blob/develop/src/main/resources/static/img/logo.png?raw=true"/>
