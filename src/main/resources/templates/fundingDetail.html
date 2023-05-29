@@ -37,7 +37,7 @@
 				    		<div class="row">
 				    			<progress th:value="${fund.currentAmount}" th:max="${fund.targetMaxAmount}" style="width: 25rem; height: 1.7rem; margin: 0 0 0 8rem;" ></progress>
 
-				    			<div style="color: #D9D9D9"><span th:text="${fund.targetMaxAmount}" style="color: #D9D9D9"></span>원</div>
+				    			<div style="color: #D9D9D9"><span th:text="${ #numbers.formatInteger(fund.targetMaxAmount,0,'COMMA')}" style="color: #D9D9D9"></span>원</div>
 				    			
 				    		
 				    		</div>
@@ -275,7 +275,7 @@
                                                  th:text="${#temporals.format(nowFund.endDate, 'yy.MM.dd')}"></div>
                                         </div>
                                         <div class="text-end mt-2" style="color: #D9D9D9;">
-                                            <div th:text="${nowFund.targetMaxAmount}"></div>
+                                            <div th:text="${#numbers.formatInteger(nowFund.targetMaxAmount,0,'COMMA')}"></div>
                                         </div>
                                         <div class="">
                                             <div class="percentage-bar"></div>
@@ -305,7 +305,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div>달성 금액 : <span class="text-navy-style" th:text="${doneFund.currentAmount}"></span>
+                                <div>달성 금액 : <span class="text-navy-style" th:text="${#numbers.formatInteger(doneFund.currentAmount,0,'COMMA')}"></span>
                                 </div>
                             </div>
                         </div>
