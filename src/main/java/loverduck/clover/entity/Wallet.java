@@ -25,7 +25,7 @@ public class Wallet {
     private Long amount;
 
     @JsonIgnore
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private Users user;
 
     /*

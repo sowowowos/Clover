@@ -29,25 +29,16 @@ public class FundingController {
 
     private final CrawlingService crawlingService;
     private final FundingService fundingService;
-    private final CompanyService companyService;
-    private final ObjectMapper objectMapper;
+    private final PointHistoryService pointHistoryService;
+    private final WalletService walletService;
+    private final UsersService usersService;
     //임시 - 적용시 지울것
     //private final UsersRepository usersRepository;
-
-    @Autowired
-    PointHistoryService pointHistoryService;
-
-    @Autowired
-    WalletService walletService;
-
 
     @ModelAttribute("user")
     public Users getUser(HttpSession session) {
         return (Users) session.getAttribute("user");
     }
-
-    @Autowired
-    UsersService usersService;
 
 
     /**
