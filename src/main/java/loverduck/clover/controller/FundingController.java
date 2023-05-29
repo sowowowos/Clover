@@ -315,7 +315,7 @@ public class FundingController {
 
         fundingService.fundSubmit(funding);
 
-        return "mypage/fundSubmitForm";
+        return "redirect:/fundSubmitHistory";
     }
 
     /**
