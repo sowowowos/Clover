@@ -81,7 +81,7 @@
 						        <ul class="list-group list-group-flush" style="margin: 0 0 1rem 0;">
 						            <li class="list-group-item list-group-item-border" th:text="${funding.company.description}" style="font-size: 0.9rem"></li>
 						            <li class="list-group-item list-group-item-border">
-						                <div class="percent" style="color: #0062ED;" th:text="${((funding.getCurrentAmount()*1.0)/funding.getTargetMaxAmount()*100)+'%'}">95%</div>
+						                <div class="percent" style="color: #0062ED;" th:text="${#numbers.formatInteger((funding.getCurrentAmount()*1.0)/funding.getTargetMaxAmount()*100,'0')+'%'}">95%</div>
 			    						<progress th:value="${funding.currentAmount}" th:max="${funding.targetMaxAmount}" style="width: 16rem; height: 1.3rem; margin: 0 0 0 0rem; color: #0042A0;" ></progress>
 						            </li>
 						        </ul>
