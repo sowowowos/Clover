@@ -98,11 +98,72 @@
 								th:id="${'flush-collapse'+company.id}"
 								data-bs-parent="#accordionFlushExample">
 								<div class="accordion-body text-start row">
-									<div class="col-12">
-										<div class="fs-4 mb-4 fw-bold" style="color: #0042A0;">기업
+								
+									<div>
+									</div>
+									<div class="fs-4 mb-4 fw-bold" style="color: #0042A0;">기업
 											자체 입력 정보</div>
+									
+									<!-- <div class="d-flex mt-1 mb-1">
+										<div class="col-2 fw-semibold">펀딩 제목</div>										
+										<div class="col-10" th:text="${funding.title}"></div>
+									</div>
+									<div class="d-flex mt-1 mb-1">
+										<div class="col-2 fw-semibold">펀딩 소개</div>	
+										<div class="col-10" th:text="${funding.content}"></div>
+									</div>
+									<div class="d-flex mt-1 mb-1">
+										<div class="col-2 fw-semibold">최저 달성 금액</div>	
+										<div class="col-10" th:text="${#numbers.formatInteger(funding.targetMinAmount, 0, 'COMMA')+'원'}"></div>
+									</div>
+									<div class="d-flex mt-1 mb-1">
+										<div class="col-2 fw-semibold">최고 달성 금액</div>
+										<div class="col-10" th:text="${#numbers.formatInteger(funding.targetMaxAmount, 0, 'COMMA')+'원'}"></div>
+									</div>
+									<div class="d-flex mt-1 mb-1">
+										<div class="col-2 fw-semibold">펀딩 기간</div>
+										<div class="col-10" th:utext="${funding.startDate + ' ~ ' +funding.endDate}">
+		                            </div>
+									</div>
+									<div class="d-flex mt-1 mb-3">
+										<div class="col-2 fw-semibold">배당금(%)</div>
+										<div class="col-10" th:text="${funding.dividend}+'%'"></div>									
+									</div> -->
+									
+									<div class="d-flex mt-1 mb-1">
+										<div class="col-2 fw-semibold">기업명</div>										
+										<div class="col-10" th:text="${company.name}"></div>
+									</div>
+									<div class="d-flex mt-1 mb-1">
+										<div class="col-2 fw-semibold">사업자등록번호</div>										
+										<div class="col-10" th:text="${company.no}"></div>
+									</div>
+									<div class="d-flex mt-1 mb-1">
+										<div class="col-2 fw-semibold">산업명</div>										
+										<div class="col-10" th:text="${company.sector}"></div>
+									</div>
+									<div class="d-flex mt-1 mb-1">
+										<div class="col-2 fw-semibold">이메일</div>										
+										<div class="col-10" th:text="${company.email}"></div>
+									</div>
+									<div class="d-flex mt-1 mb-1">
+										<div class="col-2 fw-semibold">기업 공식 URL</div>										
+										<div class="col-10" th:text="${company.homepage}"></div>
+									</div>
+									<div class="d-flex mt-1 mb-1">
+										<div class="col-2 fw-semibold">기업 전화번호</div>										
+										<div class="col-10" th:text="${company.phone}"></div>
+									</div>
+									<div class="d-flex mt-1 mb-1">
+										<div class="col-2 fw-semibold">주소</div>										
+										<div class="col-10" th:text="${company.address} + ' ' + ${company.detailAddress}"></div>
+									</div>
+									
+									
+									
+										
 
-										<div class="row">
+										<!-- <div class="row">
 											<div class="mb-4 col-4">
 												<label for="name"> 기업명
 													<ruby>*
@@ -138,7 +199,7 @@
 											</div>
 										</div>
 
-										<!-- 주소 -->
+										주소
 										<div class="mb-4 ">
 
 											<label for="exampleInputPostalcode">주소
@@ -174,9 +235,8 @@
 											</label> <input type="email" class="form-control"
 												id="exampleInputEmail1" th:value="${company.email}"
 												readonly="readonly">
-										</div>
+										</div> -->
 
-									</div>
 									<!--                             <p class="col-12" th:utext="${''+ -->
 									<!--                             company.logo + '<br>' + -->
 									<!--                             company.description + '<br>' + -->
