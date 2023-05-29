@@ -268,7 +268,7 @@ public class UserController {
                 session.setAttribute("company", dbCom);
             }
 
-            return "redirect:/";
+            return "redirect:/fundingList";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
             return "login";
@@ -285,36 +285,43 @@ public class UserController {
 
         HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_Token);
 
+        String email = (String) userInfo.get("email");
+        String nickname = (String) userInfo.get("nickname");
+        session.setAttribute("loginEmail", email);
 //	    클라이언트의 이메일이 존재할 때 세션에 해당 이메일 등록 토큰은 x
         if (userInfo.get("email") != null) {
+        	System.out.println("카카오톡 가입 시작");
 //			session.setAttribute("loginEmail", userInfo.get("email"));
 //			session.setAttribute("access_Token", access_Token);
-
-            String email = (String) userInfo.get("email");
-            String nickname = (String) userInfo.get("nickname");
-            session.setAttribute("loginEmail", email);
-
-            Users dbUser = new Users(email, access_Token, email, nickname, nickname);
-//			Wallet wallet = new Wallet(null, (long) 0, dbUser);
-//			dbUser.builder().wallet(wallet).build();
-
-            session.setAttribute("user", dbUser);
 
             boolean emailExists = usersService.checkEmailExists(email);
             if (emailExists == false) {
                 //이메일 존재 안할때 저장하기
+            	Users dbUser = new Users(email, access_Token, email, nickname, nickname);
+                session.setAttribute("user", dbUser);
+            	System.out.println("카카오톡 가입");
                 usersService.register(dbUser);
-            } else {
-                return "redirect:/";
             }
         }
 
+        
+        System.out.println("카카오톡 가입확인 후 나가기");
         Users us = (Users) session.getAttribute("user");
 
-        if (us.getType() == null) {
+        System.out.println(email +" email");
+        Users us2 = usersService.getUsers(email);
+     
+//        
+//        System.out.println("확인: "+us2.getType());
+//        System.out.println("확인wrong: "+us.getType());
+        if (us2.getType() != 0 && us2.getType() !=1) {
+//        	return "redirect:/fundingList";
             return "mypage/choose";
         }
-        return "redirect:/";
+        session.setAttribute("user", us2);
+        System.out.println("확인2: "+us2.getType());
+        System.out.println("확인3: "+us2.getEmail());
+        return "redirect:/fundingList";
 
 
     }
@@ -368,13 +375,14 @@ public class UserController {
 
             Users UpUser = usersService.updateAll(name, nickname, filename, 1, phone, postalCode, address, detailAddress, email);
             session.setAttribute("user", UpUser);
+            System.out.println(UpUser.getType()+" 유저 타입");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-        return "redirect:/";
+        return "redirect:/fundingList";
     }
 
     /**
@@ -435,7 +443,7 @@ public class UserController {
             e.printStackTrace();
         }
 
-        return "redirect:/";
+        return "redirect:/fundingList";
     }
 
 

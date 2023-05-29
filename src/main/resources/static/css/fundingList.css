@@ -3,6 +3,12 @@
    font-family: 'Noto Sans KR', sans-serif;
 }
 
+.card-img-top{
+	width:auto;
+	height: 167px;
+	overflow: hidden;
+}
+
 .section-border {
 	padding-top: 2rem;
 }
