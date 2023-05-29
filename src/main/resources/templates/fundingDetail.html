@@ -160,92 +160,110 @@
                         <div class="finance-container row">
                             <!-- <div th:text="${fund.company.name}" class="finance-title col-12"></div>
                             <hr> -->
-                            <div class="col-2"></div>
-                            <table class="col-8">
-                                <tr>
-                                    <th>대표자</th>
-                                    <td></td>
-                                    <th>설립일</th>
-                                    <td></td>
+                            
+                            <table class="col-7">
+                                <tr style="padding: 0.5rem;">
+                                    <th style="font-size: 1rem; font-weight: 600; color: #0042A0; text-align: center; padding: 1.2rem 1.5rem;">
+                                    	대표자</th>
+                                    <td>이재근</td>
+                                    <th style="font-size: 1rem; font-weight: 600; color: #0042A0; text-align: center; padding: 1.2rem 1.5rem;">
+                                    	설립일</th>
+                                    <td>2001년 11월 01일</td>
                                 </tr>
                                 <tr>
-                                    <th>기업규모</th>
-                                    <td th:text="${companyDetail?.getCompSize()}"></td>
-                                    <th>기업형태</th>
-                                    <td></td>
+                                    <th style="font-size: 1rem; font-weight: 600; color: #0042A0; text-align: center; padding: 1.2rem 1.5rem;">
+                                    	기업규모</th>
+                                    <td>대기업</td>
+                                    <th style="font-size: 1rem; font-weight: 600; color: #0042A0; text-align: center; padding: 1.2rem 1.5rem;">
+                                    	기업형태</th>
+                                    <td>외감</td>
                                 </tr>
                                 <tr>
-                                    <th>매출액</th>
-                                    <td></td>
-                                    <th>영업이익</th>
-                                    <td></td>
+                                    <th style="font-size: 1rem; font-weight: 600; color: #0042A0; text-align: center; padding: 1.2rem 1.5rem;">
+                                    	매출액</th>
+                                    <td>연결 재무제표 : 49조 7,213억<br>
+										별도 재무제표 : 47조 7,130억</td>
+                                    <th style="font-size: 1rem; font-weight: 600; color: #0042A0; text-align: center; padding: 1.2rem 1.5rem;">
+                                    	영업이익</th>
+                                    <td>연결 재무제표 : 3조 8,350억<br>
+										별도 재무제표 : 4조 3,289억</td>
                                 </tr>
                                 <tr>
-                                    <th>당기손익</th>
-                                    <td></td>
-                                    <th>신용등급</th>
-                                    <td></td>
+                                    <th style="font-size: 1rem; font-weight: 600; color: #0042A0; text-align: center; padding: 1.2rem 1.5rem;">
+                                    	당기손익</th>
+                                    <td>연결 재무제표 : 2조 7,283억<br>
+										별도 재무제표 : 2조 9,082억</td>
+                                    <th style="font-size: 1rem; font-weight: 600; color: #0042A0; text-align: center; padding: 1.2rem 1.5rem;">
+                                    	신용등급</th>
+                                    <td>최상 (2023.04)</td>
                                 </tr>
                                 <tr>
-                                    <th>사원수</th>
-                                    <td></td>
-                                    <th>상세업종</th>
-                                    <td></td>
+                                    <th style="font-size: 1rem; font-weight: 600; color: #0042A0; text-align: center; padding: 1.2rem 1.5rem;">
+                                    	사원수</th>
+                                    <td>16,903명 (2022.12)</td>
+                                    <th style="font-size: 1rem; font-weight: 600; color: #0042A0; text-align: center; padding: 1.2rem 1.5rem;">
+                                    	상세업종</th>
+                                    <td>국내은행</td>
                                 </tr>
 
                             </table>
-                            <div class="col-2">
-                                <button type="button" class="btn btn-outline-dark"
+                            <div class="col-1">
+                                <button type="" class="btn" style="margin: 0rem 0rem; color: #0042A0;"
                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                         data-bs-custom-class="custom-tooltip"
                                         data-bs-html="true"
                                         data-bs-title="
+                                        <p></p>
+                                        <h5>
+                                         신용등급이란?
+                                        </h5>
+                                        <p></p>
                                         <p>
-                                        연결재무제표
+                                        	기업이나 개인에게 돈을 빌려줄 때 갚을 수 있는지에 대한 평가를 내리는 것이에요.
                                         </p>
                                         <p>
-                                        A기업이 B기업 지분의 50% 이상을 보유하여 두 회사가 지배(A기업)와 종속관계(B기업)에 있는 경우, A회사가 B회사의 실적을 반영하여 작성한 재무제표를 연결재무제표라고 합니다.
-                                        * 단, 지분율이 50%에는 못 미치는 관계기업에 대해서도 연결재무제표 작성 대상으로 삼는 경우도 있습니다.
+                                         	등급을 나눌 때에는 빚이 얼마나 있는지, 얼만큼 거래를 해왔는지 등 평가를 내려요. 
                                         </p>
                                         <p>
-                                        별도재무제표
+                                         	즉, 신용등급이 좋은 기업은 많은 거래를 하고, 빚이 있어도 제때 갚는 기업을 뜻해요.
                                         </p>
-                                        <p>
-                                        A기업과 B기업이 지배와 종속관계에 있어 연결재무정보를 작성하지 않더라도 추가로 별도재무제표를 공시하는데, 종속회사의 실적이 반영되지 않은 A기업 별도의 재무제표를 별도재무제표라고 합니다.
-                                        </p>
-">
-                                    ?
+                                        <p></p>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
+									  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+									  <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+									</svg>
                                 </button>
                             </div>
                         </div>
 
                         <!-- 재무제표 -->
                         <div class="row">
-                            <div class="col-2"></div>
-                            <div class="col-8">
-                                <canvas id="myChart" class="w-100 h-auto"></canvas>
+                            <div class="col-7">
+                                <canvas id="myChart" class="w-100 h-auto chart"></canvas>
                             </div>
-                            <div class="col-2">
-                                <button type="button" class="btn btn-outline-dark"
+               
+                            <div class="col-1">
+                                <button type="" class="btn" style="margin: 8rem 15rem; color: #0042A0;"
                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                         data-bs-custom-class="custom-tooltip"
                                         data-bs-html="true"
                                         data-bs-title="
+                                        <p></p>
+                                        <h5>
+                                        영업이익이란?
+                                        </h5>
+                                        <p></p>
                                         <p>
-                                        연결재무제표
+                                            영업이익은 영업활동을 통해 순수하게 남은 이익을 말해요.
                                         </p>
                                         <p>
-                                        A기업이 B기업 지분의 50% 이상을 보유하여 두 회사가 지배(A기업)와 종속관계(B기업)에 있는 경우, A회사가 B회사의 실적을 반영하여 작성한 재무제표를 연결재무제표라고 합니다.
-                                        * 단, 지분율이 50%에는 못 미치는 관계기업에 대해서도 연결재무제표 작성 대상으로 삼는 경우도 있습니다.
+                                            만약 러버가 10만원을 벌었다면 원가 3만원과 판매관리비 2만원이 빠지면 영업이익은 5만원이 되는거예요.
                                         </p>
-                                        <p>
-                                        별도재무제표
-                                        </p>
-                                        <p>
-                                        A기업과 B기업이 지배와 종속관계에 있어 연결재무정보를 작성하지 않더라도 추가로 별도재무제표를 공시하는데, 종속회사의 실적이 반영되지 않은 A기업 별도의 재무제표를 별도재무제표라고 합니다.
-                                        </p>
-">
-                                    ?
+                                        <p></p>">
+                                   	<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
+									  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+									  <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+									</svg>
                                 </button>
                             </div>
                         </div>
@@ -627,5 +645,14 @@
             );
         });
 </script>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            placement: 'bottom'
+        });
+    });
+</script>
+
 </body>
 </html>
