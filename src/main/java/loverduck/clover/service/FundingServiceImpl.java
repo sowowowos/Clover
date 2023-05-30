@@ -88,17 +88,26 @@ public class FundingServiceImpl implements FundingService{
 	
 	@Override
 	public List<Funding> searchFundingByTitle(String keyword) {
-        return fundingRepository.findByTitleContaining(keyword);
+		return qFactory.selectFrom(QFunding.funding)
+				.where(QFunding.funding.title.contains(keyword))
+				.orderBy(QFunding.funding.id.asc())
+				.fetch();
     }
 	
 	@Override
 	public List<Funding> searchFundingByCompany(String keyword){
-		return fundingRepository.findByCompanyName(keyword);
+		return qFactory.selectFrom(QFunding.funding)
+				.where(QFunding.funding.company.name.contains(keyword))
+				.orderBy(QFunding.funding.id.asc())
+				.fetch();
 	}
 	
 	@Override
 	public List<Funding> searchFundingByContent(String keyword) {
-		return fundingRepository.findByContent(keyword);
+		return qFactory.selectFrom(QFunding.funding)
+				.where(QFunding.funding.content.contains(keyword))
+				.orderBy(QFunding.funding.id.asc())
+				.fetch();
 	}
 
 	@Override

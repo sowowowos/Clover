@@ -271,6 +271,24 @@ public class FundingController {
         List<Funding> searchResults2 = fundingService.searchFundingByCompany(keyword);
         List<Funding> searchResults3 = fundingService.searchFundingByContent(keyword);
 
+        Map<Long, Long> days1 = new HashMap<>();
+        searchResults1.forEach(e -> {
+            long daysDifference = ChronoUnit.DAYS.between( LocalDateTime.now(), e.getEndDate());
+            days1.put(e.getId(), daysDifference);
+        });
+        Map<Long, Long> days2 = new HashMap<>();
+        searchResults2.forEach(e -> {
+            long daysDifference = ChronoUnit.DAYS.between( LocalDateTime.now(), e.getEndDate());
+            days2.put(e.getId(), daysDifference);
+        });
+        Map<Long, Long> days3 = new HashMap<>();
+        searchResults3.forEach(e -> {
+            long daysDifference = ChronoUnit.DAYS.between( LocalDateTime.now(), e.getEndDate());
+            days3.put(e.getId(), daysDifference);
+        });
+        model.addAttribute("days1", days1);
+        model.addAttribute("days2", days2);
+        model.addAttribute("days3", days3);
 
         model.addAttribute("searchResults1", searchResults1);
         model.addAttribute("searchResults2", searchResults2);
