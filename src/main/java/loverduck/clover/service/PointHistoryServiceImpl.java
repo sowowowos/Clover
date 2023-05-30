@@ -81,7 +81,19 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 		return pointHistoryList;
 	}
 
-	
+	@Override
+	public List<PointHistory> pointDividendHistory(Long id) {
+
+		List<PointHistory> pointHistoryList = qFactory.selectFrom(qpointHistory)
+				.where(qpointHistory.wallet.id.eq(id))
+				.where(qpointHistory.type.eq(3))
+				.orderBy(qpointHistory.createdAt.desc())
+				.fetch();
+
+		return pointHistoryList;
+	}
+
+
 	/**
 	 * 포인트 충전/사용/환전/배당 내역에 따른 wallet amount 값 변경
 	 */

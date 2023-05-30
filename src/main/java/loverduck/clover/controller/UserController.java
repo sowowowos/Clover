@@ -596,6 +596,9 @@ public class UserController {
             List<PointHistory> allocations = usersService.allocationHistoryInvestor(wallet_id);
             model.addAttribute("allocations", allocations);
 
+            //회원별 포인트 상세 내역 출력
+            List<PointHistory> phDetailList =  pointHistoryService.pointDividendHistory(wallet_id);
+            model.addAttribute("phDetailList", phDetailList);
             return "mypage/allocationHistoryInvestor";
         }
 

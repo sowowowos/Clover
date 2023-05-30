@@ -95,6 +95,9 @@ public class FundingController {
 	 */
 	@RequestMapping("/fundingPay")
 	public String fundingPay(Model model, @ModelAttribute("user") Users user) {
+        if(user== null) {
+            return "redirect:/loginForm";
+        }
 		
 		//세션 담기
 		model.addAttribute("user", user);
