@@ -18,13 +18,10 @@
 <title>CLOVER</title>
 <!-- 펀딩 검색 결과 페이지 -->
 </head>
-<body>
+<body style="padding-top:5.5rem;">
 	<div>
 		<div th:insert="navbar :: navbar"> </div> 
-		
-		<div class="banner">
-			<img style="width:100%; height : 23rem;" src="https://cdn.wadiz.kr/ft/images/green001/2023/0518/20230518153207100_2615.jpg/wadiz/resize/5200/format/jpg/quality/85/"/>
-		</div>
+    	<div th:insert="banner :: banner"></div>
 		
 		<div class="category d-flex flex-row">
 			<ul class="category-list list-group list-group-horizontal ">
@@ -160,7 +157,7 @@
 				</div>
 			
 			</div>
-			<div class="footer"></div>
+			<div th:insert="footer :: footer"> </div>	
 		</div>
 
 
